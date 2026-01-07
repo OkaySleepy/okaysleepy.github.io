@@ -5,786 +5,591 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SleepyBH - Minecraft Developer</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --macos-bg: #f5f5f7;
+            --macos-card: #ffffff;
+            --macos-text: #1d1d1f;
+            --macos-text-secondary: #86868b;
+            --macos-border: #d2d2d7;
+            --macos-blue: #007AFF;
+            --macos-green: #34C759;
+            --macos-orange: #FF9500;
+            --macos-red: #FF3B30;
+            --macos-purple: #AF52DE;
+            --macos-shadow: rgba(0, 0, 0, 0.05);
+            --macos-shadow-lg: rgba(0, 0, 0, 0.1);
+            --macos-glass: rgba(255, 255, 255, 0.8);
+            --macos-sidebar: #f8f9fa;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%2354c3ff" d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/></svg>') 12 12, auto;
-        }
-
-        :root {
-            --primary-bg: #0a0a0a;
-            --accent-color: #54c3ff;
-            --minecraft-green: #44bd32;
-            --text-color: #ffffff;
-            --card-bg: rgba(15, 15, 15, 0.8);
-            --border-color: rgba(84, 195, 255, 0.2);
-            --section-padding: 100px 0;
-            --code-font: 'Fira Code', monospace;
-        }
-
-        body.light-mode {
-            --primary-bg: #f0f8ff;
-            --text-color: #333;
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --border-color: rgba(84, 195, 255, 0.5);
-            background: linear-gradient(rgba(240, 248, 255, 0.9), rgba(240, 248, 255, 0.95)), 
-                        url('https://images.unsplash.com/photo-1511882150382-421056c89033?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') center center no-repeat;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.9)), 
-                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2000&q=80') center center no-repeat;
-            background-size: cover;
-            background-attachment: fixed;
-            color: var(--text-color);
+            background-color: var(--macos-bg);
+            color: var(--macos-text);
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
-            background-color: var(--primary-bg);
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-
-        /* Custom cursor for interactive elements */
-        .cursor-pointer, a, button, .copy-btn, .nav-links a, .theme-toggle, .menu-btn {
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><rect x="11" y="0" width="2" height="24" fill="%2354c3ff"/><rect x="0" y="11" width="24" height="2" fill="%2354c3ff"/></svg>') 12 12, pointer !important;
-        }
-
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.15;
-            pointer-events: none;
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
-            position: relative;
-            z-index: 1;
         }
 
-        /* Navigation */
-        nav {
+        /* macOS Window Frame */
+        .macos-window {
             position: fixed;
-            width: 85%;
-            top: 30px;
-            background: rgba(10, 10, 10, 0.9);
-            padding: 15px 0;
-            z-index: 1000;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 2px solid var(--accent-color);
-            border-radius: 18px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s ease;
+            width: calc(100% - 40px);
+            max-width: 1400px;
+            height: calc(100vh - 40px);
+            background: var(--macos-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            z-index: 1;
+            border: 1px solid var(--macos-border);
         }
 
-        body.light-mode nav {
-            background: rgba(255, 255, 255, 0.9);
-            border-bottom: 2px solid #54c3ff;
-        }
-
-        nav.scrolled {
-            top: 20px;
-            width: 92%;
-            padding: 12px 0;
-            background: rgba(5, 5, 5, 0.95);
-        }
-
-        body.light-mode nav.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-        }
-
-        nav .container {
+        /* Title Bar */
+        .title-bar {
+            height: 52px;
+            background: linear-gradient(to bottom, #f5f5f7, #e8e8ed);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
-            margin: 0;
-            gap: 100px;
+            padding: 0 20px;
+            border-bottom: 1px solid var(--macos-border);
+            position: relative;
+            z-index: 100;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .traffic-lights {
+            display: flex;
+            gap: 8px;
+            margin-right: 40px;
+        }
+
+        .traffic-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .traffic-light.close { background: #FF5F57; }
+        .traffic-light.minimize { background: #FFBD2E; }
+        .traffic-light.maximize { background: #28CA42; }
+
+        .traffic-light:hover {
+            transform: scale(1.1);
+        }
+
+        .window-title {
+            font-size: 13px;
+            color: var(--macos-text-secondary);
+            font-weight: 500;
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 240px;
+            height: calc(100% - 52px);
+            background: var(--macos-sidebar);
+            border-right: 1px solid var(--macos-border);
+            position: absolute;
+            top: 52px;
+            left: 0;
+            padding: 30px 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            padding: 0 24px 40px;
+            border-bottom: 1px solid var(--macos-border);
+            margin-bottom: 30px;
         }
 
         .logo {
             font-size: 24px;
-            font-weight: bold;
-            color: var(--accent-color);
-            font-family: var(--code-font);
-            text-decoration: none;
-            letter-spacing: 1.2px;
-            cursor: pointer;
-            text-shadow: 0 0 10px rgba(84, 195, 255, 0.3);
-            margin-right: 80px;
-        }
-
-        .logo:hover {
-            text-shadow: 0 0 15px var(--accent-color);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 50px;
-            align-items: center;
-            margin-left: auto;
-        }
-
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: all 0.3s;
-            font-family: var(--code-font);
-            font-size: 16px;
-            letter-spacing: 1px;
-            position: relative;
-            padding: 8px 2px;
-            opacity: 0.9;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-color);
-            opacity: 1;
-            text-shadow: 0 0 8px rgba(84, 195, 255, 0.3);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 8px rgba(84, 195, 255, 0.5);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 24px;
-            transition: all 0.3s;
-        }
-
-        .menu-btn:hover {
-            color: var(--accent-color);
-        }
-
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 24px;
-            transition: all 0.3s;
-            margin-left: 20px;
-        }
-
-        .theme-toggle:hover {
-            color: var(--accent-color);
-            transform: rotate(30deg);
-        }
-
-        /* Hero Section */
-        #hero {
-            min-height: 100vh;
+            font-weight: 700;
+            color: var(--macos-text);
             display: flex;
             align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding-top: 120px;
+            gap: 12px;
         }
 
-        .hero-content {
-            text-align: left;
-            max-width: 800px;
-            position: relative;
-            z-index: 2;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 40px;
-            border-radius: 10px;
-            border: 2px solid var(--accent-color);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        body.light-mode .hero-content {
-            background: rgba(255, 255, 255, 0.8);
-            border: 2px solid #54c3ff;
-            box-shadow: 0 10px 30px rgba(84, 195, 255, 0.2);
-        }
-
-        .minecraft-command {
-            font-family: var(--code-font);
-            color: var(--minecraft-green);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .command-block {
-            width: 20px;
-            height: 20px;
-            background: var(--accent-color);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .typing-effect {
-            overflow: hidden;
-            border-right: 2px solid var(--accent-color);
-            white-space: nowrap;
-            margin: 0;
-            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-        }
-
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 100% }
-        }
-
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent-color) }
-        }
-
-        #hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, var(--accent-color), var(--minecraft-green));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.5px;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            font-family: var(--code-font);
-            color: var(--accent-color);
-        }
-
-        #hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.9;
-            max-width: 600px;
-        }
-
-        .xp-bar {
-            height: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--minecraft-green);
-            border-radius: 5px;
-            margin: 25px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        body.light-mode .xp-bar {
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .xp-progress {
-            height: 100%;
-            background: var(--minecraft-green);
-            width: 0;
-            transition: width 2s ease;
-        }
-
-        .xp-level {
-            position: absolute;
-            right: -30px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--minecraft-green);
-            font-family: var(--code-font);
-            font-size: 14px;
-        }
-
-        .minecraft-btn {
-            display: inline-block;
-            background: #3f3f3f;
-            border: 2px solid #1f1f1f;
-            padding: 14px 28px;
-            color: var(--text-color);
-            text-decoration: none;
-            margin: 10px 10px 10px 0;
-            font-family: var(--code-font);
-            transition: all 0.3s;
-            position: relative;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        .minecraft-btn:hover {
-            background: var(--accent-color);
-            transform: translateY(-3px);
-            color: var(--primary-bg);
-            box-shadow: 0 5px 15px rgba(84, 195, 255, 0.3);
-        }
-
-        .minecraft-btn::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border: 2px solid var(--accent-color);
-            opacity: 0;
-            transition: all 0.3s;
-        }
-
-        .minecraft-btn:hover::before {
-            opacity: 1;
-        }
-
-        .minecraft-btn.accent {
-            background: var(--accent-color);
-            color: #000;
-        }
-
-        .minecraft-btn.accent:hover {
-            background: #3aa4d8;
-        }
-
-        /* Section Styles */
-        section {
-            padding: var(--section-padding);
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 50px;
-            font-family: var(--code-font);
-            color: var(--accent-color);
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60%;
-            height: 3px;
-            background: var(--accent-color);
-            transition: width 0.3s;
-        }
-
-        .section-title:hover::after {
-            width: 100%;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 30px;
-            transition: all 0.3s;
-            border: 1px solid var(--border-color);
-            height: 100%;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        body.light-mode .card {
-            box-shadow: 0 8px 32px rgba(84, 195, 255, 0.2);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent-color);
-            box-shadow: 0 15px 35px rgba(84, 195, 255, 0.15);
-        }
-
-        .card h3 {
-            color: var(--accent-color);
-            font-family: var(--code-font);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            margin-bottom: 15px;
-            color: var(--text-color);
-            line-height: 1.7;
-        }
-
-        .personal-info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .info-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 12px;
-            background: rgba(84, 195, 255, 0.1);
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--macos-blue), var(--macos-purple));
             border-radius: 8px;
-        }
-
-        .info-icon {
-            font-size: 1.5rem;
-            color: var(--accent-color);
-        }
-
-        /* Skills Section */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .skill-card {
             display: flex;
-            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .nav-items {
+            list-style: none;
+        }
+
+        .nav-item {
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--macos-text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 122, 255, 0.05);
+            color: var(--macos-text);
+        }
+
+        .nav-item.active {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--macos-blue);
+            border-left-color: var(--macos-blue);
+        }
+
+        .nav-item i {
+            width: 20px;
             text-align: center;
         }
 
-        .skill-icon {
-            font-size: 3.5rem;
-            color: var(--accent-color);
-            margin-bottom: 20px;
+        /* Main Content */
+        .main-content {
+            margin-left: 240px;
+            height: calc(100% - 52px);
+            overflow-y: auto;
+            padding: 40px;
         }
 
-        .skill-card h3 {
-            margin-bottom: 15px;
+        /* macOS Cards */
+        .macos-card {
+            background: var(--macos-card);
+            border-radius: 12px;
+            padding: 24px;
+            border: 1px solid var(--macos-border);
+            box-shadow: 0 4px 6px var(--macos-shadow);
+            transition: all 0.3s ease;
+            margin-bottom: 24px;
         }
 
-        .skill-level {
-            width: 100%;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            margin-top: 15px;
-            overflow: hidden;
+        .macos-card:hover {
+            box-shadow: 0 8px 24px var(--macos-shadow-lg);
+            transform: translateY(-2px);
         }
 
-        body.light-mode .skill-level {
-            background: rgba(0, 0, 0, 0.1);
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: var(--accent-color);
-            width: 0;
-            transition: width 1.5s ease;
-        }
-
-        /* Experience Section */
-        .experience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .experience-card {
-            position: relative;
-            padding-left: 40px;
-        }
-
-        .experience-card::before {
-            content: '';
-            position: absolute;
-            left: 10px;
-            top: 10px;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-color);
-            border-radius: 50%;
-            z-index: 1;
-        }
-
-        .experience-card::after {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 30px;
-            bottom: 10px;
-            width: 2px;
-            background: var(--accent-color);
-            opacity: 0.3;
-        }
-
-        .experience-card h4 {
-            color: var(--accent-color);
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-        }
-
-        .experience-date {
-            font-family: var(--code-font);
-            color: var(--minecraft-green);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .project-card .project-links {
-            margin-top: 20px;
+        .card-header {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--macos-border);
         }
 
-        .download-counter {
-            display: inline-block;
-            background: rgba(84, 195, 255, 0.2);
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-family: var(--code-font);
-            font-size: 0.9rem;
-            margin-top: 10px;
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--macos-text);
         }
 
-        /* Statistics Section */
-        #statistics {
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 2px solid var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
+        .card-subtitle {
+            font-size: 14px;
+            color: var(--macos-text-secondary);
+            margin-top: 4px;
         }
 
-        body.light-mode #statistics {
-            background: rgba(240, 248, 255, 0.7);
-            border-top: 2px solid #54c3ff;
-            border-bottom: 2px solid #54c3ff;
+        /* Hero Section */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 60px;
         }
 
-        .stats-container {
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-avatar {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--macos-blue), var(--macos-purple));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.2);
+        }
+
+        .hero-title {
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--macos-blue), var(--macos-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--macos-text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+
+        .tag {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--macos-blue);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
         }
 
         .stat-card {
             text-align: center;
-            padding: 30px 20px;
-            border-radius: 10px;
-            background: rgba(84, 195, 255, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: scale(1.05);
-            background: rgba(84, 195, 255, 0.15);
+            padding: 24px;
         }
 
         .stat-number {
-            font-size: 3.5rem;
+            font-size: 36px;
             font-weight: 700;
-            color: var(--accent-color);
-            font-family: var(--code-font);
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(84, 195, 255, 0.5);
+            color: var(--macos-blue);
+            margin-bottom: 8px;
         }
 
         .stat-label {
-            font-size: 1.2rem;
-            color: var(--text-color);
+            font-size: 14px;
+            color: var(--macos-text-secondary);
         }
 
-        .rating-stars {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .star {
-            color: #ddd;
-            font-size: 1.5rem;
-        }
-
-        .star.filled {
-            color: gold;
-        }
-
-        .star.half-filled {
-            position: relative;
-            display: inline-block;
-            color: #ddd;
-        }
-
-        .star.half-filled::after {
-            content: '\2605';
-            position: absolute;
-            left: 0;
-            width: 50%;
-            overflow: hidden;
-            color: gold;
-        }
-
-        /* Code Snippet Section */
-        .snippet-grid {
+        /* Skills Grid */
+        .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
         }
 
-        .snippet-card {
+        .skill-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--macos-border);
+        }
+
+        .skill-name {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .skill-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 122, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--macos-blue);
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--macos-border);
+            border-radius: 4px;
+            margin: 0 16px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--macos-blue), var(--macos-purple));
+            border-radius: 4px;
+        }
+
+        .skill-percent {
+            font-family: 'SF Mono', monospace;
+            font-size: 14px;
+            color: var(--macos-text-secondary);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 24px;
+        }
+
+        .project-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .project-image {
+            height: 160px;
+            background: linear-gradient(135deg, var(--macos-blue), var(--macos-purple));
             position: relative;
         }
 
-        .snippet-card pre {
-            background: rgba(0, 0, 0, 0.7);
+        .project-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: var(--macos-card);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--macos-blue);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .project-description {
+            font-size: 14px;
+            color: var(--macos-text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .project-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--macos-border);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--macos-text-secondary);
+        }
+
+        /* macOS Buttons */
+        .macos-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--macos-blue);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .macos-btn:hover {
+            background: #0056CC;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .macos-btn.secondary {
+            background: transparent;
+            color: var(--macos-text);
+            border: 1px solid var(--macos-border);
+        }
+
+        .macos-btn.secondary:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        /* Code Snippet */
+        .code-snippet {
+            background: #1d1d1f;
             border-radius: 8px;
             padding: 20px;
+            margin: 16px 0;
             overflow-x: auto;
-            font-family: var(--code-font);
-            font-size: 0.9rem;
-            border: 1px solid var(--accent-color);
-            position: relative;
+            font-family: 'SF Mono', monospace;
+            font-size: 13px;
+            color: #f5f5f7;
         }
 
-        body.light-mode .snippet-card pre {
-            background: rgba(255, 255, 255, 0.9);
+        .code-line {
+            line-height: 1.8;
         }
 
-        .snippet-card .copy-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--accent-color);
-            color: #000;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-family: var(--code-font);
-            font-size: 0.8rem;
-            transition: all 0.3s;
-        }
+        .code-comment { color: #6c6c70; }
+        .code-keyword { color: #FF7AB2; }
+        .code-string { color: #64D2FF; }
+        .code-function { color: #FFD700; }
+        .code-number { color: #FF9500; }
 
-        .snippet-card .copy-btn:hover {
-            background: #3aa4d8;
-        }
-
-        /* Achievements Section */
-        #achievements {
-            background: rgba(0, 0, 0, 0.5);
-            border-top: 2px solid var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-        }
-
-        body.light-mode #achievements {
-            background: rgba(240, 248, 255, 0.7);
-            border-top: 2px solid #54c3ff;
-            border-bottom: 2px solid #54c3ff;
-        }
-
-        .achievements-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .achievement-card {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: 10px;
-            background: rgba(84, 195, 255, 0.1);
-            transition: all 0.3s;
-            opacity: 0.5;
-        }
-
-        .achievement-card.unlocked {
-            opacity: 1;
-            background: rgba(84, 195, 255, 0.2);
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(84, 195, 255, 0.5);
-        }
-
-        .achievement-card .achievement-icon {
-            font-size: 3rem;
-            color: var(--accent-color);
-            margin-bottom: 15px;
-        }
-
-        .achievement-card h3 {
-            margin-bottom: 10px;
-            font-family: var(--code-font);
-            color: var(--accent-color);
-        }
-
-        /* Contact Section */
+        /* Contact Form */
         .contact-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 24px;
         }
 
-        .contact-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .contact-icon {
-            font-size: 3rem;
-            color: var(--accent-color);
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .contact-card h3 {
-            margin-bottom: 10px;
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--macos-text);
         }
 
-        .contact-info {
-            margin-top: 15px;
-            font-family: var(--code-font);
-            color: var(--minecraft-green);
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--macos-border);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: var(--macos-card);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--macos-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
         }
 
         /* Footer */
-        footer {
-            padding: 60px 0 40px;
+        .footer {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--macos-border);
             text-align: center;
-            border-top: 1px solid var(--border-color);
+            color: var(--macos-text-secondary);
+            font-size: 14px;
         }
 
-        footer p {
-            opacity: 0.7;
-            font-size: 0.9rem;
-            margin: 5px 0;
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            background: var(--macos-sidebar);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--macos-text);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .social-link:hover {
+            background: var(--macos-blue);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 200px;
+            }
+            
+            .main-content {
+                margin-left: 200px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .macos-window {
+                top: 10px;
+                left: 10px;
+                width: calc(100% - 20px);
+                height: calc(100vh - 20px);
+                border-radius: 12px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .hero-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 30px;
+            }
+            
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Animations */
@@ -799,757 +604,548 @@
             }
         }
 
-        @keyframes unlock {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+        .animate-in {
+            animation: fadeInUp 0.5s ease forwards;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            nav .container {
-                padding: 0 30px;
-                gap: 50px;
-            }
-            
-            .nav-links {
-                gap: 30px;
-            }
-            
-            #hero h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            nav {
-                width: 95%;
-            }
-            
-            nav.scrolled {
-                width: 97%;
-            }
-            
-            .menu-btn, .theme-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                width: 100%;
-                background: rgba(15, 15, 15, 0.98);
-                padding: 20px;
-                flex-direction: column;
-                gap: 20px;
-                transform: translateY(-150%);
-                opacity: 0;
-                transition: all 0.3s ease;
-                pointer-events: none;
-                backdrop-filter: blur(10px);
-                -webkit-backdrop-filter: blur(10px);
-                border-bottom: 2px solid var(--accent-color);
-                border-radius: 0 0 20px 20px;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
-            }
-            
-            .hero-content {
-                padding: 30px 20px;
-            }
-            
-            #hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .minecraft-btn {
-                display: block;
-                width: 100%;
-                margin: 10px 0;
-                text-align: center;
-            }
-        }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
-    <!-- Matrix Rain Background -->
-    <canvas id="matrixRain" class="matrix-rain"></canvas>
-    
-    <!-- Navigation -->
-    <nav id="navbar">
-        <div class="container">
-            <a href="#" class="logo">SleepyBH</a>
-            <button class="menu-btn">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#projects">Projects</a>
-                <a href="#statistics">Statistics</a>
-                <a href="#code-snippets">Code</a>
-                <a href="#achievements">Achievements</a>
-                <a href="#contact">Contact</a>
+    <!-- macOS Window -->
+    <div class="macos-window">
+        <!-- Title Bar -->
+        <div class="title-bar">
+            <div class="traffic-lights">
+                <div class="traffic-light close" onclick="closeWindow()"></div>
+                <div class="traffic-light minimize" onclick="minimizeWindow()"></div>
+                <div class="traffic-light maximize" onclick="maximizeWindow()"></div>
             </div>
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i>
-            </button>
+            <div class="window-title">SleepyBH — Minecraft Developer Portfolio</div>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <div class="container hero-content">
-            <div class="minecraft-command">
-                <span class="command-block"></span>
-                <span class="typing-effect">/welcome SleepyBH</span>
-            </div>
-            <h1>Plugin Developer & Server Manager</h1>
-            <div class="hero-subtitle">Management & Development Expertise</div>
-            <p>Creating innovative server solutions with 4 years of experience in Minecraft plugin development and server management</p>
-            
-            <div class="xp-bar">
-                <div class="xp-progress" id="xp-progress"></div>
-                <span class="xp-level">Lv.4</span>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#projects" class="minecraft-btn accent cursor-pointer">View Projects</a>
-                <a href="#contact" class="minecraft-btn cursor-pointer">Contact Me</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="card">
-                <p>Hello! I'm SleepyBH, a 15-year-old Minecraft enthusiast from Denmark. I live with my family including my mom, dad, little brother and our wonderful pets - 3 dogs, 2 cats, and 5 bunnies!</p>
-                <p>When I'm not developing plugins or managing Minecraft servers, you'll find me skiing down slopes, exploring new games, or spending time with my pets.</p>
-                <p>My journey in Minecraft started 4 years ago with Skript and evolved into full Java development. I specialize in creating plugins that enhance gameplay and improve server management, helping communities grow and thrive.</p>
-                
-                <div class="personal-info-grid">
-                    <div class="info-item">
-                        <div class="info-icon"><i class="fas fa-birthday-cake"></i></div>
-                        <div><strong>Age:</strong> 15 years old</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                        <div><strong>Location:</strong> Denmark</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="fas fa-user-friends"></i></div>
-                        <div><strong>Family:</strong> Mom, Dad, Little brother</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="fas fa-paw"></i></div>
-                        <div><strong>Pets:</strong> 3 dogs, 2 cats, 5 bunnies</div>
-                    </div>
-                    <div class="info-item">
-                        <div class="info-icon"><i class="fas fa-skiing"></i></div>
-                        <div><strong>Hobbies:</strong> Skiing, gaming</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <h3>JavaScript</h3>
-                    <p>Building interactive web interfaces and server-side applications</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 90%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Lua</h3>
-                    <p>Scripting game mechanics and mod development</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 85%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-icon">
                         <i class="fas fa-cube"></i>
                     </div>
-                    <h3>Skript</h3>
-                    <p>Creating Minecraft plugins without Java knowledge</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 95%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <h3>Python</h3>
-                    <p>Developing tools, automation scripts, and backend services</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 80%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fas fa-microchip"></i>
-                    </div>
-                    <h3>C++</h3>
-                    <p>Performance-critical applications and game engine development</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 75%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <h3>Server Management</h3>
-                    <p>4 years of experience managing Minecraft servers</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 92%"></div>
-                    </div>
-                </div>
-                
-                <div class="skill-card card">
-                    <div class="skill-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3>Configurator</h3>
-                    <p>Custom configuration systems for server setups</p>
-                    <div class="skill-level">
-                        <div class="skill-progress" style="width: 88%"></div>
-                    </div>
+                    SleepyBH
                 </div>
             </div>
+            <ul class="nav-items">
+                <li><a href="#hero" class="nav-item active" onclick="setActive(this)">
+                    <i class="fas fa-user"></i>About
+                </a></li>
+                <li><a href="#skills" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-code"></i>Skills
+                </a></li>
+                <li><a href="#experience" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-briefcase"></i>Experience
+                </a></li>
+                <li><a href="#projects" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-project-diagram"></i>Projects
+                </a></li>
+                <li><a href="#stats" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-chart-line"></i>Statistics
+                </a></li>
+                <li><a href="#code" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-terminal"></i>Code Snippets
+                </a></li>
+                <li><a href="#contact" class="nav-item" onclick="setActive(this)">
+                    <i class="fas fa-envelope"></i>Contact
+                </a></li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Experience Section -->
-    <section id="experience">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="experience-grid">
-                <div class="experience-card card">
-                    <h4>ScytheMC</h4>
-                    <span class="experience-date">2025 - Present</span>
-                    <p><strong>Admin</strong></p>
-                    <p>Manage server operations and player communities on ScytheMC. Implement custom features and ensure smooth gameplay experience for all players.</p>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Hero Section -->
+            <section id="hero" class="animate-in">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Minecraft Plugin Developer & Server Manager</h1>
+                        <p class="hero-subtitle">Creating innovative server solutions with 4 years of experience</p>
+                        
+                        <div class="tag-container">
+                            <span class="tag">Java Developer</span>
+                            <span class="tag">Server Management</span>
+                            <span class="tag">Plugin Development</span>
+                            <span class="tag">Community Management</span>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="macos-card stat-card">
+                                <div class="stat-number">4+</div>
+                                <div class="stat-label">Years Experience</div>
+                            </div>
+                            <div class="macos-card stat-card">
+                                <div class="stat-number">117+</div>
+                                <div class="stat-label">Orders Served</div>
+                            </div>
+                            <div class="macos-card stat-card">
+                                <div class="stat-number">4.7</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                            <div class="macos-card stat-card">
+                                <div class="stat-number">37K+</div>
+                                <div class="stat-label">Total Downloads</div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 24px;">
+                            <a href="#contact" class="macos-btn">
+                                <i class="fas fa-paper-plane"></i>Get in Touch
+                            </a>
+                            <a href="#projects" class="macos-btn secondary" style="margin-left: 12px;">
+                                <i class="fas fa-eye"></i>View Projects
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-avatar animate-in delay-1">
+                        <i class="fas fa-cube"></i>
+                    </div>
                 </div>
-                
-                <div class="experience-card card">
-                    <h4>SwiftBox</h4>
-                    <span class="experience-date">2025 - Present</span>
-                    <p><strong>Staff - Manager</strong></p>
-                    <p>Manage the staff team on SwiftBox by overseeing promotions, demotions, and staff waves. Ensure team performance and server integrity.</p>
-                </div>
-                
-                <div class="experience-card card">
-                    <h4>DripLeaf</h4>
-                    <span class="experience-date">2025 - Present</span>
-                    <p><strong>Admin</strong></p>
-                    <p>Moderate ElytraPvP gameplay on DripLeaf by enforcing rules, preventing unfair advantages, and conducting screenshares to detect cheats.</p>
-                </div>
-                
-                <div class="experience-card card">
-                    <h4>Azera</h4>
-                    <span class="experience-date">2025 - Present</span>
-                    <p><strong>Trial Management</strong></p>
-                    <p>Assisted in server management, handled player applications.</p>
-                </div>
-                
-                <div class="experience-card card">
-                    <h4>MaceSmp</h4>
-                    <span class="experience-date">2025 - Present</span>
-                    <p><strong>Admin</strong></p>
-                    <p>Maintain fair gameplay on MaceSMP by monitoring player activity, handling rule violations, and preventing cheating.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            <div class="projects-grid">
-                <div class="card">
-                    <h3>ReportSystem</h3>
-                    <p>Advanced player reporting and moderation system with Discord integration and MySQL database logging.</p>
-                    <div class="download-counter">37 Downloads</div>
-                    <div class="project-links">
-                        <a href="https://github.com/SleepyBH/reportplugin" target="_blank" class="minecraft-btn cursor-pointer">GitHub</a>
+            <!-- About Section -->
+            <section id="about" class="animate-in delay-1">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <div>
+                            <h2 class="card-title">About Me</h2>
+                            <p class="card-subtitle">15-year-old developer from Denmark</p>
+                        </div>
+                    </div>
+                    <p>Hello! I'm SleepyBH, a passionate Minecraft developer with 4 years of experience creating plugins and managing servers. I started with Skript and evolved into full Java development, specializing in creating solutions that enhance gameplay and improve server management.</p>
+                    
+                    <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: rgba(52, 199, 89, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-green);">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 500;">Location</div>
+                                <div style="font-size: 14px; color: var(--macos-text-secondary);">Denmark</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: rgba(255, 149, 0, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-orange);">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 500;">Pets</div>
+                                <div style="font-size: 14px; color: var(--macos-text-secondary);">3 dogs, 2 cats, 5 bunnies</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 32px; height: 32px; background: rgba(0, 122, 255, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-blue);">
+                                <i class="fas fa-skiing"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 500;">Hobbies</div>
+                                <div style="font-size: 14px; color: var(--macos-text-secondary);">Skiing, gaming</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="card">
-                    <h3>ItemFlip</h3>
-                    <p>Automated item trading and market system with real-time price updates and profit calculation.</p>
-                    <div class="download-counter">37 Downloads</div>
-                    <div class="project-links">
-                        <a href="https://github.com/SleepyBH/ItemFlipPlugin" target="_blank" class="minecraft-btn cursor-pointer">GitHub</a>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>ChestDrop</h3>
-                    <p>Custom chest loot and drop system with configurable drop rates and animated effects.</p>
-                    <div class="download-counter">12 Downloads</div>
-                    <div class="project-links">
-                        <a href="https://github.com/SleepyBH/ChestDrop" target="_blank" class="minecraft-btn cursor-pointer">GitHub</a>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3>Duelssystem</h3>
-                    <p>Advanced player duel and PvP system with statistics tracking and spectator mode.</p>
-                    <div class="download-counter">181 Downloads</div>
-                    <div class="project-links">
-                        <a href="https://github.com/SleepyBH/Duelssystem" target="_blank" class="minecraft-btn cursor-pointer">GitHub</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Statistics Section -->
-    <section id="statistics">
-        <div class="container">
-            <h2 class="section-title">Service Statistics</h2>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-number">117+</div>
-                    <div class="stat-label">Orders Served</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">4.7</div>
-                    <div class="rating-stars">
-                        <span class="star filled">★</span>
-                        <span class="star filled">★</span>
-                        <span class="star filled">★</span>
-                        <span class="star half-filled">★</span>
-                        <span class="star">★</span>
+            <!-- Skills Section -->
+            <section id="skills" class="animate-in delay-2">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Technical Skills</h2>
                     </div>
-                    <div class="stat-label">Average Rating</div>
+                    <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fab fa-js"></i>
+                                </div>
+                                JavaScript
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                            <div class="skill-percent">90%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                Lua
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                            <div class="skill-percent">85%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                Skript
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                            <div class="skill-percent">95%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                Python
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                            <div class="skill-percent">80%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fas fa-microchip"></i>
+                                </div>
+                                C++
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 75%"></div>
+                            </div>
+                            <div class="skill-percent">75%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                Server Management
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                            <div class="skill-percent">92%</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number">7+</div>
-                    <div class="stat-label">Big Servers (2.5K+ members)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">13+</div>
-                    <div class="stat-label">Medium Servers (1.45K+ members)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">19+</div>
-                    <div class="stat-label">Small Servers (650+ members)</div>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Code Snippets Section -->
-    <section id="code-snippets">
-        <div class="container">
-            <h2 class="section-title">Code Snippets</h2>
-            <div class="snippet-grid">
-                <div class="snippet-card">
-                    <h3>Event Listener</h3>
-                    <pre id="snippet1">@EventHandler
-public void onPlayerJoin(PlayerJoinEvent event) {
-    Player player = event.getPlayer();
-    player.sendMessage(ChatColor.GREEN + "Welcome to the server!");
-    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1.0f, 1.0f);
-    // Add custom join effects
-    player.addPotionEffect(new PotionEffect(
-        PotionEffectType.GLOWING, 200, 1, true, true
-    ));
-}</pre>
-                    <button class="copy-btn cursor-pointer" data-target="snippet1">Copy Code</button>
+            <!-- Experience Section -->
+            <section id="experience" class="animate-in delay-1">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Experience</h2>
+                    </div>
+                    <div style="margin-top: 24px;">
+                        <div style="padding: 20px; border-bottom: 1px solid var(--macos-border);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <h3 style="font-weight: 600; font-size: 18px;">ScytheMC</h3>
+                                <span style="font-size: 14px; color: var(--macos-text-secondary);">2025 - Present</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <span style="background: rgba(0, 122, 255, 0.1); color: var(--macos-blue); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500;">Admin</span>
+                            </div>
+                            <p style="color: var(--macos-text-secondary); font-size: 14px;">Manage server operations and player communities on ScytheMC. Implement custom features and ensure smooth gameplay experience for all players.</p>
+                        </div>
+                        <div style="padding: 20px; border-bottom: 1px solid var(--macos-border);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <h3 style="font-weight: 600; font-size: 18px;">SwiftBox</h3>
+                                <span style="font-size: 14px; color: var(--macos-text-secondary);">2025 - Present</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <span style="background: rgba(52, 199, 89, 0.1); color: var(--macos-green); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500;">Manager</span>
+                            </div>
+                            <p style="color: var(--macos-text-secondary); font-size: 14px;">Manage the staff team on SwiftBox by overseeing promotions, demotions, and staff waves. Ensure team performance and server integrity.</p>
+                        </div>
+                        <div style="padding: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <h3 style="font-weight: 600; font-size: 18px;">DripLeaf</h3>
+                                <span style="font-size: 14px; color: var(--macos-text-secondary);">2025 - Present</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                                <span style="background: rgba(255, 149, 0, 0.1); color: var(--macos-orange); padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 500;">Admin</span>
+                            </div>
+                            <p style="color: var(--macos-text-secondary); font-size: 14px;">Moderate ElytraPvP gameplay on DripLeaf by enforcing rules, preventing unfair advantages, and conducting screenshares to detect cheats.</p>
+                        </div>
+                    </div>
                 </div>
-                
-                <div class="snippet-card">
-                    <h3>Custom NBT Handling</h3>
-                    <pre id="snippet2">public ItemStack createCustomItem(Material material, String displayName, String nbtKey, String nbtValue) {
-    ItemStack item = new ItemStack(material);
-    ItemMeta meta = item.getItemMeta();
-    meta.setDisplayName(displayName);
-    item.setItemMeta(meta);
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="animate-in delay-2">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Projects</h2>
+                    </div>
+                    <div class="projects-grid">
+                        <div class="project-card macos-card">
+                            <div class="project-image">
+                                <span class="project-badge">37 Downloads</span>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">ReportSystem</h3>
+                                <p class="project-description">Advanced player reporting and moderation system with Discord integration and MySQL database logging.</p>
+                                <div class="project-stats">
+                                    <div class="stat">
+                                        <i class="fas fa-star" style="color: #FFD700;"></i>
+                                        <span>4.8</span>
+                                    </div>
+                                    <div class="stat">
+                                        <i class="fas fa-download" style="color: var(--macos-blue);"></i>
+                                        <span>37</span>
+                                    </div>
+                                </div>
+                                <a href="https://github.com/SleepyBH/reportplugin" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
+                                    <i class="fab fa-github"></i>View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                        <div class="project-card macos-card">
+                            <div class="project-image" style="background: linear-gradient(135deg, var(--macos-green), var(--macos-blue));">
+                                <span class="project-badge">181 Downloads</span>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Duelssystem</h3>
+                                <p class="project-description">Advanced player duel and PvP system with statistics tracking and spectator mode.</p>
+                                <div class="project-stats">
+                                    <div class="stat">
+                                        <i class="fas fa-star" style="color: #FFD700;"></i>
+                                        <span>4.9</span>
+                                    </div>
+                                    <div class="stat">
+                                        <i class="fas fa-download" style="color: var(--macos-blue);"></i>
+                                        <span>181</span>
+                                    </div>
+                                </div>
+                                <a href="https://github.com/SleepyBH/Duelssystem" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
+                                    <i class="fab fa-github"></i>View on GitHub
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Snippets -->
+            <section id="code" class="animate-in delay-1">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Code Snippets</h2>
+                    </div>
+                    <pre class="code-snippet">
+<span class="code-keyword">import</span> org.bukkit.<span class="code-function">event</span>.EventListener;
+<span class="code-keyword">import</span> org.bukkit.<span class="code-function">event</span>.player.PlayerJoinEvent;
+
+<span class="code-keyword">public class</span> <span class="code-function">WelcomePlugin</span> {
     
-    // Add NBT data
-    NBTItem nbtItem = new NBTItem(item);
-    nbtItem.setString(nbtKey, nbtValue);
-    return nbtItem.getItem();
+    <span class="code-comment">// Handle player join events</span>
+    @<span class="code-function">EventHandler</span>
+    <span class="code-keyword">public void</span> <span class="code-function">onPlayerJoin</span>(PlayerJoinEvent event) {
+        Player player = event.<span class="code-function">getPlayer</span>();
+        
+        <span class="code-comment">// Send welcome message</span>
+        player.<span class="code-function">sendMessage</span>(
+            ChatColor.<span class="code-function">GREEN</span> + <span class="code-string">"Welcome to the server, "</span> + 
+            player.<span class="code-function">getName</span>() + <span class="code-string">"!"</span>
+        );
+        
+        <span class="code-comment">// Add glowing effect for 10 seconds</span>
+        player.<span class="code-function">addPotionEffect</span>(
+            <span class="code-keyword">new</span> PotionEffect(
+                PotionEffectType.<span class="code-function">GLOWING</span>,
+                <span class="code-number">200</span>,  <span class="code-comment">// 10 seconds</span>
+                <span class="code-number">1</span>,
+                <span class="code-keyword">true</span>,
+                <span class="code-keyword">true</span>
+            )
+        );
+    }
 }</pre>
-                    <button class="copy-btn cursor-pointer" data-target="snippet2">Copy Code</button>
                 </div>
-                
-                <div class="snippet-card">
-                    <h3>GUI Creation</h3>
-                    <pre id="snippet3">public Inventory createShopGUI() {
-    Inventory inv = Bukkit.createInventory(null, 27, "Server Shop");
-    
-    // Add items to the shop
-    ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
-    ItemMeta meta = sword.getItemMeta();
-    meta.setDisplayName(ChatColor.AQUA + "Diamond Sword");
-    meta.setLore(Arrays.asList(ChatColor.GRAY + "Price: 10 diamonds"));
-    sword.setItemMeta(meta);
-    
-    // Add to inventory
-    inv.setItem(12, sword);
-    return inv;
-}</pre>
-                    <button class="copy-btn cursor-pointer" data-target="snippet3">Copy Code</button>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Achievements Section -->
-    <section id="achievements">
-        <div class="container">
-            <h2 class="section-title">Achievements</h2>
-            <p class="text-center" style="margin-bottom: 30px;">Unlock badges by exploring my portfolio!</p>
-            <div class="achievements-grid">
-                <div class="achievement-card" id="achievement1">
-                    <div class="achievement-icon">
-                        <i class="fas fa-scroll"></i>
+            <!-- Contact Section -->
+            <section id="contact" class="animate-in delay-2">
+                <div class="macos-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Get In Touch</h2>
                     </div>
-                    <h3>Scroll Master</h3>
-                    <p>Scroll to the bottom of the page</p>
-                </div>
-                
-                <div class="achievement-card" id="achievement2">
-                    <div class="achievement-icon">
-                        <i class="fas fa-mouse-pointer"></i>
+                    <div class="contact-grid">
+                        <div>
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-input" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-input" rows="5" placeholder="Your message..."></textarea>
+                            </div>
+                            <button class="macos-btn">
+                                <i class="fas fa-paper-plane"></i>Send Message
+                            </button>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 20px; font-weight: 600;">Contact Information</h3>
+                            <div style="margin-bottom: 30px;">
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 40px; height: 40px; background: rgba(0, 122, 255, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--macos-blue);">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 500;">Email</div>
+                                        <div style="color: var(--macos-text-secondary);">sleepyxemail@gmail.com</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                    <div style="width: 40px; height: 40px; background: rgba(88, 86, 214, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #5856D6;">
+                                        <i class="fab fa-discord"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 500;">Discord</div>
+                                        <div style="color: var(--macos-text-secondary);">okaysleepyx</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 40px; height: 40px; background: rgba(28, 28, 30, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #1C1C1E;">
+                                        <i class="fab fa-github"></i>
+                                    </div>
+                                    <div>
+                                        <div style="font-weight: 500;">GitHub</div>
+                                        <div style="color: var(--macos-text-secondary);">github.com/SleepyBH</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3>Project Explorer</h3>
-                    <p>Click on all project links</p>
                 </div>
-                
-                <div class="achievement-card" id="achievement3">
-                    <div class="achievement-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Code Ninja</h3>
-                    <p>Copy a code snippet</p>
-                </div>
-                
-                <div class="achievement-card" id="achievement4">
-                    <div class="achievement-icon">
-                        <i class="fas fa-sun"></i>
-                    </div>
-                    <h3>Day Explorer</h3>
-                    <p>Switch to light mode</p>
-                </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-grid">
-                <div class="contact-card card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email</h3>
-                    <p>Reach out for project inquiries or collaboration opportunities</p>
-                    <div class="contact-info">sleepyxemail@gmail.com</div>
-                    <a href="mailto:sleepyxemail@gmail.com" class="minecraft-btn cursor-pointer">Send Email</a>
-                </div>
-                
-                <div class="contact-card card">
-                    <div class="contact-icon">
+            <!-- Footer -->
+            <footer class="footer">
+                <p>© 2025 SleepyBH. Made with <span style="color: var(--macos-red);">♥</span> using macOS design principles.</p>
+                <div class="social-links">
+                    <a href="https://github.com/SleepyBH" target="_blank" class="social-link">
                         <i class="fab fa-github"></i>
-                    </div>
-                    <h3>GitHub</h3>
-                    <p>Explore my open-source projects and contributions</p>
-                    <div class="contact-info">github.com/SleepyBH</div>
-                    <a href="https://github.com/SleepyBH" target="_blank" class="minecraft-btn cursor-pointer">View Profile</a>
-                </div>
-                
-                <div class="contact-card card">
-                    <div class="contact-icon">
+                    </a>
+                    <a href="https://discord.com/users/1042473740145016863" target="_blank" class="social-link">
                         <i class="fab fa-discord"></i>
-                    </div>
-                    <h3>Discord</h3>
-                    <p>Connect with me directly for quick communication</p>
-                    <div class="contact-info">okaysleepyx</div>
-                    <a href="https://discord.com/users/1042473740145016863" target="_blank" class="minecraft-btn cursor-pointer">Add Friend</a>
-                </div>
-                
-                <div class="contact-card card">
-                    <div class="contact-icon">
+                    </a>
+                    <a href="https://tiktok.com/@okaysleepyx" target="_blank" class="social-link">
                         <i class="fab fa-tiktok"></i>
-                    </div>
-                    <h3>TikTok</h3>
-                    <p>Follow me for Minecraft tips and updates</p>
-                    <div class="contact-info">@okaysleepyx</div>
-                    <a href="https://tiktok.com/@okaysleepyx" target="_blank" class="minecraft-btn cursor-pointer">Follow Me</a>
+                    </a>
                 </div>
-            </div>
+            </footer>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>© 2025 SleepyBH. Crafted with passion and Java.</p>
-            <p id="unlockedCounter">Achievements Unlocked: <span id="achievementCount">0</span>/4</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // Matrix Rain Effect
-        const canvas = document.getElementById('matrixRain');
-        const ctx = canvas.getContext('2d');
-        
-        // Set canvas dimensions
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        
-        // Characters for the rain
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@%&*()_+-=[]{}|;:,.<>?/';
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        
-        // Create drops array
-        const drops = [];
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * fontSize;
-        }
-        
-        function drawMatrix() {
-            // Semi-transparent background to create trail effect
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // Set text style
-            ctx.fillStyle = '#0f0';
-            ctx.font = `${fontSize}px monospace`;
-            
-            // Draw characters
-            for (let i = 0; i < drops.length; i++) {
-                const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
-                // Reset drop if it reaches bottom or randomly
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-                
-                // Move drop down
-                drops[i]++;
-            }
-        }
-        
-        // Animation loop for matrix effect
-        setInterval(drawMatrix, 50);
-        
-        // Resize canvas when window resizes
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-        
-        // XP Progress Animation
-        setTimeout(() => {
-            document.getElementById('xp-progress').style.width = '80%';
-        }, 500);
-        
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        themeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const icon = themeToggle.querySelector('i');
-            if (document.body.classList.contains('light-mode')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-                unlockAchievement('achievement4');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        });
-        
-        // Achievement System
-        const achievements = {
-            achievement1: false, // Scroll to bottom
-            achievement2: false, // Click all projects
-            achievement3: false, // Copy code snippet
-            achievement4: false  // Switch to light mode
-        };
-        
-        function unlockAchievement(achievementId) {
-            if (!achievements[achievementId]) {
-                achievements[achievementId] = true;
-                const achievement = document.getElementById(achievementId);
-                achievement.classList.add('unlocked');
-                achievement.style.animation = 'unlock 0.5s ease forwards';
-                
-                // Update counter
-                const count = Object.values(achievements).filter(val => val).length;
-                document.getElementById('achievementCount').textContent = count;
-                
-                // Save to localStorage
-                localStorage.setItem('achievements', JSON.stringify(achievements));
-            }
-        }
-        
-        // Check scroll position
-        window.addEventListener('scroll', () => {
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100) {
-                unlockAchievement('achievement1');
-            }
-        });
-        
-        // Project links clicked
-        const projectLinks = document.querySelectorAll('.project-links a');
-        let clickedCount = 0;
-        
-        projectLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                clickedCount++;
-                if (clickedCount >= projectLinks.length) {
-                    unlockAchievement('achievement2');
-                }
-            });
-        });
-        
-        // Copy code snippets
-        const copyButtons = document.querySelectorAll('.copy-btn');
-        copyButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const targetId = button.getAttribute('data-target');
-                const snippet = document.getElementById(targetId).textContent;
-                navigator.clipboard.writeText(snippet).then(() => {
-                    button.textContent = 'Copied!';
-                    setTimeout(() => {
-                        button.textContent = 'Copy Code';
-                    }, 2000);
-                    unlockAchievement('achievement3');
-                });
-            });
-        });
-        
-        // Load achievements from localStorage
-        const savedAchievements = localStorage.getItem('achievements');
-        if (savedAchievements) {
-            const parsed = JSON.parse(savedAchievements);
-            for (const key in parsed) {
-                if (parsed[key]) {
-                    achievements[key] = true;
-                    document.getElementById(key).classList.add('unlocked');
-                    const count = Object.values(achievements).filter(val => val).length;
-                    document.getElementById('achievementCount').textContent = count;
-                }
-            }
-        }
-        
-        // Navigation scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-        
-        // Mobile menu toggle
-        const menuBtn = document.querySelector('.menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        
-        menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuBtn.querySelector('i').classList.toggle('fa-bars');
-            menuBtn.querySelector('i').classList.toggle('fa-times');
-        });
-        
-        // Close mobile menu when clicking a link
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                menuBtn.querySelector('i').classList.add('fa-bars');
-                menuBtn.querySelector('i').classList.remove('fa-times');
-            });
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Typing effect for command prompt
-        function typeCommand() {
-            const commands = [
-                '/welcome SleepyBH',
-                '/skills show',
-                '/experience check',
-                '/plugins list'
-            ];
-            let currentIndex = 0;
-            
-            setInterval(() => {
-                const commandElement = document.querySelector('.typing-effect');
-                commandElement.textContent = commands[currentIndex];
-                commandElement.style.animation = 'none';
+        // macOS Window Controls
+        function closeWindow() {
+            if (confirm('Are you sure you want to close this window?')) {
+                document.querySelector('.macos-window').style.opacity = '0';
                 setTimeout(() => {
-                    commandElement.style.animation = 'typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite';
-                }, 10);
-                
-                currentIndex = (currentIndex + 1) % commands.length;
-            }, 4000);
+                    document.querySelector('.macos-window').style.display = 'none';
+                }, 300);
+            }
         }
-        
-        typeCommand();
-        
-        // Animation on scroll
+
+        function minimizeWindow() {
+            const window = document.querySelector('.macos-window');
+            window.style.transform = 'translateX(-50%) scale(0.9)';
+            window.style.opacity = '0.5';
+            setTimeout(() => {
+                window.style.transform = 'translateX(-50%) scale(1)';
+                window.style.opacity = '1';
+            }, 1000);
+        }
+
+        function maximizeWindow() {
+            const window = document.querySelector('.macos-window');
+            if (window.style.width === '100%') {
+                window.style.width = 'calc(100% - 40px)';
+                window.style.height = 'calc(100vh - 40px)';
+                window.style.top = '20px';
+                window.style.left = '50%';
+                window.style.transform = 'translateX(-50%)';
+                window.style.borderRadius = '16px';
+            } else {
+                window.style.width = '100%';
+                window.style.height = '100vh';
+                window.style.top = '0';
+                window.style.left = '0';
+                window.style.transform = 'none';
+                window.style.borderRadius = '0';
+            }
+        }
+
+        // Navigation
+        function setActive(element) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Smooth scroll to section
+            const targetId = element.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.style.animation = 'fadeInUp 0.8s ease forwards';
+                    entry.target.classList.add('animate-in');
                 }
             });
-        }, { threshold: 0.1 });
-        
-        document.querySelectorAll('.card, .section-title, .experience-card, .skill-card, .stat-card, .snippet-card, .achievement-card').forEach(element => {
-            observer.observe(element);
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Form submission
+        document.querySelector('.macos-btn').addEventListener('click', function(e) {
+            if (this.closest('#contact')) {
+                e.preventDefault();
+                alert('Thank you for your message! I\'ll get back to you soon.');
+                document.querySelectorAll('.form-input').forEach(input => {
+                    input.value = '';
+                });
+            }
+        });
+
+        // Add some interactivity to cards
+        document.querySelectorAll('.macos-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
         });
     </script>
 </body>
