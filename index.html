@@ -42,6 +42,36 @@
             line-height: 1.6;
             overflow-x: hidden;
             min-height: 100vh;
+            transition: background-image 0.8s ease-in-out;
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Background Themes */
+        body.default-bg {
+            background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        body.galaxy-bg {
+            background-image: 
+                radial-gradient(ellipse at top, transparent 0%, #000000 70%),
+                radial-gradient(ellipse at bottom, #190A05 0%, transparent 70%),
+                radial-gradient(circle at 20% 50%, #1a0b2e 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, #0c1b33 0%, transparent 50%);
+            background-color: #000;
+        }
+
+        body.ocean-bg {
+            background-image: 
+                linear-gradient(to bottom, rgba(9, 35, 175, 0.8), rgba(0, 212, 255, 0.8)),
+                url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        }
+
+        body.sunset-bg {
+            background-image: 
+                linear-gradient(45deg, rgba(255, 107, 107, 0.8), rgba(255, 142, 83, 0.8), rgba(255, 199, 95, 0.8)),
+                url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
         }
 
         .container {
@@ -59,12 +89,28 @@
             width: calc(100% - 40px);
             max-width: 1400px;
             height: calc(100vh - 40px);
-            background: var(--macos-bg);
+            background: rgba(245, 245, 247, 0.9);
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             z-index: 1;
             border: 1px solid var(--macos-border);
+            backdrop-filter: blur(10px);
+            transition: background-color 0.8s ease-in-out;
+        }
+
+        /* Background Themes affect window */
+        body.galaxy-bg .macos-window {
+            background: rgba(15, 15, 20, 0.9);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.ocean-bg .macos-window {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        body.sunset-bg .macos-window {
+            background: rgba(255, 255, 255, 0.9);
         }
 
         /* Title Bar */
@@ -79,6 +125,22 @@
             z-index: 100;
             -webkit-user-select: none;
             user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .title-bar {
+            background: linear-gradient(to bottom, #1a1a2e, #16213e);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.ocean-bg .title-bar {
+            background: linear-gradient(to bottom, #0f3460, #1a1a2e);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.sunset-bg .title-bar {
+            background: linear-gradient(to bottom, #ff6b6b, #ff8e53);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .traffic-lights {
@@ -109,6 +171,76 @@
             font-weight: 500;
             flex: 1;
             text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .window-title {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            background: var(--macos-blue);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-left: 20px;
+        }
+
+        .theme-toggle-btn:hover {
+            background: #0056CC;
+            transform: translateY(-1px);
+        }
+
+        .theme-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 20px;
+            background: var(--macos-card);
+            border: 1px solid var(--macos-border);
+            border-radius: 8px;
+            padding: 8px;
+            min-width: 150px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 13px;
+            color: var(--macos-text);
+        }
+
+        .theme-option:hover {
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--macos-blue);
+        }
+
+        .theme-option i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
         }
 
         /* Sidebar Navigation */
@@ -122,12 +254,33 @@
             left: 0;
             padding: 30px 0;
             z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .sidebar {
+            background: rgba(26, 26, 46, 0.8);
+            border-right-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.ocean-bg .sidebar {
+            background: rgba(15, 52, 96, 0.8);
+            border-right-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.sunset-bg .sidebar {
+            background: rgba(255, 107, 107, 0.1);
+            border-right-color: rgba(255, 255, 255, 0.1);
         }
 
         .logo-container {
             padding: 0 24px 40px;
             border-bottom: 1px solid var(--macos-border);
             margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .logo-container {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .logo {
@@ -137,6 +290,11 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .logo {
+            color: white;
         }
 
         .logo-icon {
@@ -168,15 +326,29 @@
             position: relative;
         }
 
+        body.galaxy-bg .nav-item {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
         .nav-item:hover {
             background: rgba(0, 122, 255, 0.05);
             color: var(--macos-text);
+        }
+
+        body.galaxy-bg .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .nav-item.active {
             background: rgba(0, 122, 255, 0.1);
             color: var(--macos-blue);
             border-left-color: var(--macos-blue);
+        }
+
+        body.galaxy-bg .nav-item.active {
+            background: rgba(0, 122, 255, 0.2);
+            color: white;
         }
 
         .nav-item i {
@@ -204,9 +376,19 @@
             margin-bottom: 24px;
         }
 
+        body.galaxy-bg .macos-card {
+            background: rgba(26, 26, 46, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
         .macos-card:hover {
             box-shadow: 0 8px 24px var(--macos-shadow-lg);
             transform: translateY(-2px);
+        }
+
+        body.galaxy-bg .macos-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
         }
 
         .card-header {
@@ -216,18 +398,33 @@
             margin-bottom: 20px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--macos-border);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .card-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .card-title {
             font-size: 20px;
             font-weight: 600;
             color: var(--macos-text);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .card-title {
+            color: white;
         }
 
         .card-subtitle {
             font-size: 14px;
             color: var(--macos-text-secondary);
             margin-top: 4px;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .card-subtitle {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Hero Section */
@@ -252,6 +449,11 @@
             box-shadow: 0 10px 30px rgba(0, 122, 255, 0.2);
             overflow: hidden;
             border: 4px solid white;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .hero-avatar {
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .hero-avatar img {
@@ -274,6 +476,11 @@
             font-size: 20px;
             color: var(--macos-text-secondary);
             margin-bottom: 24px;
+            font-style: italic;
+        }
+
+        body.galaxy-bg .hero-subtitle {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .tag-container {
@@ -286,11 +493,18 @@
         .tag {
             background: rgba(0, 122, 255, 0.1);
             color: var(--macos-blue);
-            padding: 6px 12px;
+            padding: 8px 16px;
             border-radius: 20px;
             font-size: 14px;
             font-weight: 500;
             border: 1px solid rgba(0, 122, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .tag {
+            background: rgba(0, 122, 255, 0.2);
+            color: white;
+            border-color: rgba(0, 122, 255, 0.4);
         }
 
         /* Stats Grid */
@@ -311,11 +525,21 @@
             font-weight: 700;
             color: var(--macos-blue);
             margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .stat-number {
+            color: #64D2FF;
         }
 
         .stat-label {
             font-size: 14px;
             color: var(--macos-text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .stat-label {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Skills Grid */
@@ -332,6 +556,11 @@
             justify-content: space-between;
             padding: 12px 0;
             border-bottom: 1px solid var(--macos-border);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .skill-item {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .skill-name {
@@ -349,6 +578,12 @@
             align-items: center;
             justify-content: center;
             color: var(--macos-blue);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .skill-icon {
+            background: rgba(100, 210, 255, 0.2);
+            color: #64D2FF;
         }
 
         .skill-bar {
@@ -358,6 +593,11 @@
             border-radius: 4px;
             margin: 0 16px;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .skill-bar {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .skill-progress {
@@ -370,6 +610,11 @@
             font-family: 'SF Mono', monospace;
             font-size: 14px;
             color: var(--macos-text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .skill-percent {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Experience Section */
@@ -399,6 +644,11 @@
             margin-bottom: 16px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--macos-border);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
         }
 
         .experience-header i {
@@ -412,6 +662,11 @@
             border: 1px solid var(--macos-border);
             background: var(--macos-card);
             transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-item {
+            background: rgba(26, 26, 46, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         .experience-item:hover {
@@ -429,6 +684,12 @@
         .experience-title {
             font-weight: 600;
             font-size: 18px;
+            color: var(--macos-text);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-title {
+            color: white;
         }
 
         .experience-date {
@@ -437,6 +698,12 @@
             background: rgba(0, 122, 255, 0.1);
             padding: 4px 12px;
             border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-date {
+            background: rgba(100, 210, 255, 0.2);
+            color: #64D2FF;
         }
 
         .experience-position {
@@ -444,12 +711,22 @@
             font-weight: 500;
             margin-bottom: 12px;
             display: block;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-position {
+            color: #64D2FF;
         }
 
         .experience-description {
             color: var(--macos-text-secondary);
             font-size: 14px;
             line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .experience-description {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         /* Projects Grid */
@@ -481,6 +758,12 @@
             font-size: 12px;
             font-weight: 600;
             color: var(--macos-blue);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .project-badge {
+            background: rgba(26, 26, 46, 0.9);
+            color: #64D2FF;
         }
 
         .project-content {
@@ -491,6 +774,12 @@
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 8px;
+            color: var(--macos-text);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .project-title {
+            color: white;
         }
 
         .project-description {
@@ -498,6 +787,11 @@
             color: var(--macos-text-secondary);
             margin-bottom: 16px;
             line-height: 1.5;
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .project-description {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .project-stats {
@@ -507,6 +801,11 @@
             margin-top: 16px;
             padding-top: 16px;
             border-top: 1px solid var(--macos-border);
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .project-stats {
+            border-top-color: rgba(255, 255, 255, 0.1);
         }
 
         .stat {
@@ -515,6 +814,11 @@
             gap: 6px;
             font-size: 13px;
             color: var(--macos-text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .stat {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Achievements Section */
@@ -532,17 +836,44 @@
             border: 1px solid var(--macos-border);
             border-radius: 12px;
             transition: all 0.3s ease;
-            opacity: 0.7;
-            filter: grayscale(0.7);
+            opacity: 0.5;
+            filter: grayscale(1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.galaxy-bg .achievement-card {
+            background: rgba(26, 26, 46, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(175, 82, 222, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
         .achievement-card.unlocked {
             opacity: 1;
             filter: grayscale(0);
-            background: linear-gradient(135deg, rgba(0, 122, 255, 0.1), rgba(175, 82, 222, 0.1));
             border-color: var(--macos-blue);
             transform: scale(1.05);
             box-shadow: 0 8px 24px rgba(0, 122, 255, 0.15);
+        }
+
+        .achievement-card.unlocked::before {
+            opacity: 1;
+        }
+
+        body.galaxy-bg .achievement-card.unlocked {
+            background: rgba(26, 26, 46, 0.9);
+            box-shadow: 0 8px 24px rgba(0, 122, 255, 0.25);
         }
 
         .achievement-icon {
@@ -550,10 +881,16 @@
             color: var(--macos-text-secondary);
             margin-bottom: 16px;
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .achievement-card.unlocked .achievement-icon {
             color: var(--macos-blue);
+        }
+
+        body.galaxy-bg .achievement-card.unlocked .achievement-icon {
+            color: #64D2FF;
         }
 
         .achievement-title {
@@ -561,20 +898,32 @@
             margin-bottom: 8px;
             color: var(--macos-text);
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .achievement-card.unlocked .achievement-title {
             color: var(--macos-blue);
         }
 
+        body.galaxy-bg .achievement-card.unlocked .achievement-title {
+            color: white;
+        }
+
         .achievement-desc {
             font-size: 14px;
             color: var(--macos-text-secondary);
             transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
         .achievement-card.unlocked .achievement-desc {
             color: var(--macos-text);
+        }
+
+        body.galaxy-bg .achievement-card.unlocked .achievement-desc {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Code Snippet */
@@ -617,6 +966,11 @@
             font-size: 14px;
             font-weight: 500;
             color: var(--macos-text);
+            transition: color 0.3s ease;
+        }
+
+        body.galaxy-bg .form-label {
+            color: white;
         }
 
         .form-input {
@@ -627,12 +981,24 @@
             font-size: 14px;
             transition: all 0.2s ease;
             background: var(--macos-card);
+            color: var(--macos-text);
+        }
+
+        body.galaxy-bg .form-input {
+            background: rgba(26, 26, 46, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: white;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--macos-blue);
             box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
+        }
+
+        body.galaxy-bg .form-input:focus {
+            border-color: #64D2FF;
+            box-shadow: 0 0 0 3px rgba(100, 210, 255, 0.1);
         }
 
         /* Footer */
@@ -643,6 +1009,12 @@
             text-align: center;
             color: var(--macos-text-secondary);
             font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        body.galaxy-bg .footer {
+            border-top-color: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .social-links {
@@ -665,10 +1037,19 @@
             transition: all 0.2s ease;
         }
 
+        body.galaxy-bg .social-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
         .social-link:hover {
             background: var(--macos-blue);
             color: white;
             transform: translateY(-2px);
+        }
+
+        body.galaxy-bg .social-link:hover {
+            background: #64D2FF;
         }
 
         /* macOS Buttons */
@@ -700,8 +1081,17 @@
             border: 1px solid var(--macos-border);
         }
 
+        body.galaxy-bg .macos-btn.secondary {
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
         .macos-btn.secondary:hover {
             background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.galaxy-bg .macos-btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         /* Responsive Design */
@@ -774,6 +1164,12 @@
             }
         }
 
+        @keyframes backgroundFadeOut {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
         .animate-in {
             animation: fadeInUp 0.5s ease forwards;
         }
@@ -787,6 +1183,11 @@
             animation: unlockAchievement 0.5s ease forwards;
         }
 
+        /* Background change animation */
+        .background-changing {
+            animation: backgroundFadeOut 0.8s ease-in-out;
+        }
+
         /* Scrollbar Styling */
         .main-content::-webkit-scrollbar {
             width: 8px;
@@ -796,17 +1197,29 @@
             background: var(--macos-sidebar);
         }
 
+        body.galaxy-bg .main-content::-webkit-scrollbar-track {
+            background: rgba(26, 26, 46, 0.8);
+        }
+
         .main-content::-webkit-scrollbar-thumb {
             background: var(--macos-border);
             border-radius: 4px;
         }
 
+        body.galaxy-bg .main-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .main-content::-webkit-scrollbar-thumb:hover {
             background: var(--macos-text-secondary);
         }
+
+        body.galaxy-bg .main-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
-<body>
+<body class="default-bg">
     <!-- macOS Window -->
     <div class="macos-window">
         <!-- Title Bar -->
@@ -817,6 +1230,23 @@
                 <div class="traffic-light maximize" onclick="maximizeWindow()"></div>
             </div>
             <div class="window-title">SleepyBH — Minecraft Developer Portfolio</div>
+            <button class="theme-toggle-btn" id="themeToggleBtn">
+                <i class="fas fa-palette"></i> Theme
+            </button>
+            <div class="theme-dropdown" id="themeDropdown">
+                <div class="theme-option" data-theme="default">
+                    <i class="fas fa-desktop"></i> MacOS Default
+                </div>
+                <div class="theme-option" data-theme="galaxy">
+                    <i class="fas fa-star"></i> Galaxy
+                </div>
+                <div class="theme-option" data-theme="ocean">
+                    <i class="fas fa-water"></i> Ocean
+                </div>
+                <div class="theme-option" data-theme="sunset">
+                    <i class="fas fa-sun"></i> Sunset
+                </div>
+            </div>
         </div>
 
         <!-- Sidebar Navigation -->
@@ -831,10 +1261,10 @@
             </div>
             <ul class="nav-items">
                 <li><a href="#hero" class="nav-item active" onclick="setActive(this)">
-                    <i class="fas fa-user"></i>About
+                    <i class="fas fa-user"></i>Profile
                 </a></li>
                 <li><a href="#skills" class="nav-item" onclick="setActive(this)">
-                    <i class="fas fa-code"></i>Skills
+                    <i class="fas fa-code"></i>Expertise
                 </a></li>
                 <li><a href="#experience" class="nav-item" onclick="setActive(this)">
                     <i class="fas fa-briefcase"></i>Experience
@@ -860,29 +1290,29 @@
             <section id="hero" class="animate-in">
                 <div class="hero-section">
                     <div class="hero-content">
-                        <h1 class="hero-title">Minecraft Plugin Developer & Server Manager</h1>
-                        <p class="hero-subtitle">Creating innovative server solutions with 4 years of experience</p>
+                        <h1 class="hero-title">Crafting Digital Worlds</h1>
+                        <p class="hero-subtitle">Transforming Minecraft visions into reality through expert plugin development and server architecture</p>
                         
                         <div class="tag-container">
-                            <span class="tag">Java Developer</span>
-                            <span class="tag">Server Management</span>
-                            <span class="tag">Plugin Development</span>
-                            <span class="tag">Community Management</span>
-                            <span class="tag">PHP Developer</span>
+                            <span class="tag">Plugin Architect</span>
+                            <span class="tag">Server Specialist</span>
+                            <span class="tag">Game Mechanic Designer</span>
+                            <span class="tag">Community Engineer</span>
+                            <span class="tag">Backend Developer</span>
                         </div>
                         
                         <div class="stats-grid">
                             <div class="macos-card stat-card">
                                 <div class="stat-number">4+</div>
-                                <div class="stat-label">Years Experience</div>
+                                <div class="stat-label">Years Mastery</div>
                             </div>
                             <div class="macos-card stat-card">
                                 <div class="stat-number">117+</div>
-                                <div class="stat-label">Orders Served</div>
+                                <div class="stat-label">Projects Delivered</div>
                             </div>
                             <div class="macos-card stat-card">
-                                <div class="stat-number">4.7</div>
-                                <div class="stat-label">Average Rating</div>
+                                <div class="stat-number">4.7★</div>
+                                <div class="stat-label">Client Rating</div>
                             </div>
                             <div class="macos-card stat-card">
                                 <div class="stat-number">37K+</div>
@@ -892,59 +1322,15 @@
                         
                         <div style="margin-top: 24px;">
                             <a href="#contact" class="macos-btn">
-                                <i class="fas fa-paper-plane"></i>Get in Touch
+                                <i class="fas fa-rocket"></i>Start Project
                             </a>
                             <a href="#projects" class="macos-btn secondary" style="margin-left: 12px;">
-                                <i class="fas fa-eye"></i>View Projects
+                                <i class="fas fa-eye"></i>View Portfolio
                             </a>
                         </div>
                     </div>
                     <div class="hero-avatar animate-in delay-1">
-                        <!-- Replace this with your PHP image -->
                         <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="PHP Development">
-                    </div>
-                </div>
-            </section>
-
-            <!-- About Section -->
-            <section id="about" class="animate-in delay-1">
-                <div class="macos-card">
-                    <div class="card-header">
-                        <div>
-                            <h2 class="card-title">About Me</h2>
-                            <p class="card-subtitle">15-year-old developer from Denmark</p>
-                        </div>
-                    </div>
-                    <p>Hello! I'm SleepyBH, a passionate Minecraft developer with 4 years of experience creating plugins and managing servers. I started with Skript and evolved into full Java development, specializing in creating solutions that enhance gameplay and improve server management.</p>
-                    
-                    <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 32px; height: 32px; background: rgba(52, 199, 89, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-green);">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight: 500;">Location</div>
-                                <div style="font-size: 14px; color: var(--macos-text-secondary);">Denmark</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 32px; height: 32px; background: rgba(255, 149, 0, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-orange);">
-                                <i class="fas fa-paw"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight: 500;">Pets</div>
-                                <div style="font-size: 14px; color: var(--macos-text-secondary);">3 dogs, 2 cats, 5 bunnies</div>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div style="width: 32px; height: 32px; background: rgba(0, 122, 255, 0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--macos-blue);">
-                                <i class="fas fa-skiing"></i>
-                            </div>
-                            <div>
-                                <div style="font-weight: 500;">Hobbies</div>
-                                <div style="font-size: 14px; color: var(--macos-text-secondary);">Skiing, gaming</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -953,9 +1339,33 @@
             <section id="skills" class="animate-in delay-2">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Technical Skills</h2>
+                        <h2 class="card-title">Technical Expertise</h2>
                     </div>
                     <div class="skills-grid">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fab fa-html5"></i>
+                                </div>
+                                HTML5
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 92%"></div>
+                            </div>
+                            <div class="skill-percent">92%</div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fab fa-css3-alt"></i>
+                                </div>
+                                CSS3
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                            <div class="skill-percent">90%</div>
+                        </div>
                         <div class="skill-item">
                             <div class="skill-name">
                                 <div class="skill-icon">
@@ -1040,6 +1450,18 @@
                             </div>
                             <div class="skill-percent">92%</div>
                         </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <div class="skill-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                Database Design
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 87%"></div>
+                            </div>
+                            <div class="skill-percent">87%</div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1048,13 +1470,13 @@
             <section id="experience" class="animate-in delay-1">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Experience</h2>
+                        <h2 class="card-title">Professional Journey</h2>
                     </div>
                     <div class="experience-section">
                         <div class="experience-column">
                             <div class="experience-header">
                                 <i class="fas fa-rocket"></i>
-                                <h3 style="font-weight: 600;">Present Positions</h3>
+                                <h3 style="font-weight: 600;">Current Leadership</h3>
                             </div>
                             
                             <div class="experience-item">
@@ -1062,8 +1484,8 @@
                                     <div class="experience-title">MaceSMP</div>
                                     <span class="experience-date">2025 - Present</span>
                                 </div>
-                                <span class="experience-position">Owner & Lead Developer</span>
-                                <p class="experience-description">Managing all aspects of MaceSMP including development, staff management, and community engagement. Implementing custom plugins and features.</p>
+                                <span class="experience-position">Founder & Technical Director</span>
+                                <p class="experience-description">Orchestrating all technical operations including custom plugin development, server infrastructure, and community management strategies.</p>
                             </div>
                             
                             <div class="experience-item">
@@ -1071,15 +1493,15 @@
                                     <div class="experience-title">BlitzBox</div>
                                     <span class="experience-date">2025 - Present</span>
                                 </div>
-                                <span class="experience-position">Lead Developer</span>
-                                <p class="experience-description">Developing custom plugins and systems for BlitzBox server. Working on performance optimization and new feature implementation.</p>
+                                <span class="experience-position">Lead Systems Developer</span>
+                                <p class="experience-description">Architecting custom gaming systems, optimizing server performance, and implementing innovative gameplay mechanics.</p>
                             </div>
                         </div>
                         
                         <div class="experience-column">
                             <div class="experience-header">
                                 <i class="fas fa-history"></i>
-                                <h3 style="font-weight: 600;">Previous Experience</h3>
+                                <h3 style="font-weight: 600;">Strategic Experience</h3>
                             </div>
                             
                             <div class="experience-item">
@@ -1087,8 +1509,8 @@
                                     <div class="experience-title">SwiftBox</div>
                                     <span class="experience-date">2025 - 2025</span>
                                 </div>
-                                <span class="experience-position">Co-Owner</span>
-                                <p class="experience-description">Managed the staff team and server operations. Oversaw promotions, demotions, and staff training programs.</p>
+                                <span class="experience-position">Technical Co-Founder</span>
+                                <p class="experience-description">Co-led technical strategy, managed development teams, and implemented scalable server architectures.</p>
                             </div>
                             
                             <div class="experience-item">
@@ -1096,8 +1518,8 @@
                                     <div class="experience-title">PolishBox</div>
                                     <span class="experience-date">2025 - 2025</span>
                                 </div>
-                                <span class="experience-position">Junior Admin</span>
-                                <p class="experience-description">Assisted in server moderation and player support. Gained experience in server management and conflict resolution.</p>
+                                <span class="experience-position">Junior Systems Administrator</span>
+                                <p class="experience-description">Assisted in server infrastructure management and contributed to performance optimization initiatives.</p>
                             </div>
                             
                             <div class="experience-item">
@@ -1105,8 +1527,8 @@
                                     <div class="experience-title">DripLeaf</div>
                                     <span class="experience-date">2025 - 2025</span>
                                 </div>
-                                <span class="experience-position">Manager</span>
-                                <p class="experience-description">Managed ElytraPvP gameplay and enforced server rules. Conducted screenshares to detect and prevent cheating.</p>
+                                <span class="experience-position">Operations Manager</span>
+                                <p class="experience-description">Managed competitive gameplay systems and implemented anti-cheat measures for fair play environments.</p>
                             </div>
                             
                             <div class="experience-item">
@@ -1114,8 +1536,8 @@
                                     <div class="experience-title">ScytheMC</div>
                                     <span class="experience-date">2025 - 2025</span>
                                 </div>
-                                <span class="experience-position">System Administrator</span>
-                                <p class="experience-description">Managed server infrastructure and implemented custom features. Ensured server stability and performance optimization.</p>
+                                <span class="experience-position">Infrastructure Architect</span>
+                                <p class="experience-description">Designed and maintained server infrastructure while implementing custom feature development.</p>
                             </div>
                             
                             <div class="experience-item">
@@ -1123,8 +1545,8 @@
                                     <div class="experience-title">LittleGens22</div>
                                     <span class="experience-date">2025 - 2025</span>
                                 </div>
-                                <span class="experience-position">Staff Manager</span>
-                                <p class="experience-description">Managed staff team, conducted training sessions, and handled staff-related issues. Improved team efficiency and communication.</p>
+                                <span class="experience-position">Team Coordinator</span>
+                                <p class="experience-description">Coordinated staff operations, developed training protocols, and improved team communication systems.</p>
                             </div>
                         </div>
                     </div>
@@ -1135,7 +1557,7 @@
             <section id="projects" class="animate-in delay-2">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Projects</h2>
+                        <h2 class="card-title">Featured Projects</h2>
                     </div>
                     <div class="projects-grid">
                         <!-- ReportSystem -->
@@ -1145,7 +1567,7 @@
                             </div>
                             <div class="project-content">
                                 <h3 class="project-title">ReportSystem</h3>
-                                <p class="project-description">Advanced player reporting and moderation system with Discord integration and MySQL database logging.</p>
+                                <p class="project-description">Comprehensive player moderation platform with Discord integration and MySQL database systems for tracking and resolution.</p>
                                 <div class="project-stats">
                                     <div class="stat">
                                         <i class="fas fa-star" style="color: #FFD700;"></i>
@@ -1157,7 +1579,7 @@
                                     </div>
                                 </div>
                                 <a href="https://github.com/SleepyBH/reportplugin" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
-                                    <i class="fab fa-github"></i>View on GitHub
+                                    <i class="fab fa-github"></i>GitHub Repository
                                 </a>
                             </div>
                         </div>
@@ -1169,7 +1591,7 @@
                             </div>
                             <div class="project-content">
                                 <h3 class="project-title">ItemFlip</h3>
-                                <p class="project-description">Automated item trading and market system with real-time price updates and profit calculation.</p>
+                                <p class="project-description">Dynamic marketplace system with real-time economic calculations, automated trading, and profit analytics dashboard.</p>
                                 <div class="project-stats">
                                     <div class="stat">
                                         <i class="fas fa-star" style="color: #FFD700;"></i>
@@ -1181,7 +1603,7 @@
                                     </div>
                                 </div>
                                 <a href="https://github.com/SleepyBH/ItemFlipPlugin" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
-                                    <i class="fab fa-github"></i>View on GitHub
+                                    <i class="fab fa-github"></i>GitHub Repository
                                 </a>
                             </div>
                         </div>
@@ -1193,7 +1615,7 @@
                             </div>
                             <div class="project-content">
                                 <h3 class="project-title">ChestDrop</h3>
-                                <p class="project-description">Custom chest loot and drop system with configurable drop rates and animated effects.</p>
+                                <p class="project-description">Configurable loot system with animated particle effects, drop rate customization, and tier-based reward structures.</p>
                                 <div class="project-stats">
                                     <div class="stat">
                                         <i class="fas fa-star" style="color: #FFD700;"></i>
@@ -1205,7 +1627,7 @@
                                     </div>
                                 </div>
                                 <a href="https://github.com/SleepyBH/ChestDrop" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
-                                    <i class="fab fa-github"></i>View on GitHub
+                                    <i class="fab fa-github"></i>GitHub Repository
                                 </a>
                             </div>
                         </div>
@@ -1217,7 +1639,7 @@
                             </div>
                             <div class="project-content">
                                 <h3 class="project-title">Duelssystem</h3>
-                                <p class="project-description">Advanced player duel and PvP system with statistics tracking and spectator mode.</p>
+                                <p class="project-description">Advanced PvP arena system with comprehensive statistics tracking, spectator modes, and tournament management.</p>
                                 <div class="project-stats">
                                     <div class="stat">
                                         <i class="fas fa-star" style="color: #FFD700;"></i>
@@ -1229,7 +1651,7 @@
                                     </div>
                                 </div>
                                 <a href="https://github.com/SleepyBH/Duelssystem" target="_blank" class="macos-btn" style="margin-top: 16px; width: 100%; justify-content: center;">
-                                    <i class="fab fa-github"></i>View on GitHub
+                                    <i class="fab fa-github"></i>GitHub Repository
                                 </a>
                             </div>
                         </div>
@@ -1241,45 +1663,45 @@
             <section id="achievements" class="animate-in delay-1">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Achievements</h2>
+                        <h2 class="card-title">Milestones Unlocked</h2>
                     </div>
-                    <p style="margin-bottom: 24px; color: var(--macos-text-secondary);">Complete tasks to unlock achievements!</p>
+                    <p style="margin-bottom: 24px; color: var(--macos-text-secondary);">Complete interactive challenges to unlock achievements!</p>
                     <div class="achievements-grid">
                         <div class="achievement-card" id="achievement1">
                             <div class="achievement-icon">
                                 <i class="fas fa-scroll"></i>
                             </div>
-                            <h4 class="achievement-title">Scroll Master</h4>
-                            <p class="achievement-desc">Scroll to the bottom of the page</p>
+                            <h4 class="achievement-title">Exploration Complete</h4>
+                            <p class="achievement-desc">Journey to the bottom of the portfolio</p>
                         </div>
                         
                         <div class="achievement-card" id="achievement2">
                             <div class="achievement-icon">
                                 <i class="fas fa-mouse-pointer"></i>
                             </div>
-                            <h4 class="achievement-title">Project Explorer</h4>
-                            <p class="achievement-desc">Click on all project links</p>
+                            <h4 class="achievement-title">Project Investigator</h4>
+                            <p class="achievement-desc">Explore all project repositories</p>
                         </div>
                         
                         <div class="achievement-card" id="achievement3">
                             <div class="achievement-icon">
                                 <i class="fas fa-code"></i>
                             </div>
-                            <h4 class="achievement-title">Code Ninja</h4>
-                            <p class="achievement-desc">View the code snippets section</p>
+                            <h4 class="achievement-title">Code Connoisseur</h4>
+                            <p class="achievement-desc">Discover the code snippets section</p>
                         </div>
                         
                         <div class="achievement-card" id="achievement4">
                             <div class="achievement-icon">
                                 <i class="fas fa-paper-plane"></i>
                             </div>
-                            <h4 class="achievement-title">Message Sent</h4>
-                            <p class="achievement-desc">Click the contact button</p>
+                            <h4 class="achievement-title">Connection Established</h4>
+                            <p class="achievement-desc">Initiate contact protocol</p>
                         </div>
                     </div>
                     <div style="text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--macos-border);">
                         <div id="unlockedCounter" style="font-weight: 500; color: var(--macos-text);">
-                            Achievements Unlocked: <span id="achievementCount">0</span>/4
+                            Milestones Unlocked: <span id="achievementCount">0</span>/4
                         </div>
                     </div>
                 </div>
@@ -1289,7 +1711,7 @@
             <section id="code" class="animate-in delay-2">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Code Snippets</h2>
+                        <h2 class="card-title">Development Showcase</h2>
                     </div>
                     <pre class="code-snippet">
 <span class="code-keyword">import</span> org.bukkit.<span class="code-function">event</span>.EventListener;
@@ -1327,28 +1749,28 @@
             <section id="contact" class="animate-in delay-1">
                 <div class="macos-card">
                     <div class="card-header">
-                        <h2 class="card-title">Get In Touch</h2>
+                        <h2 class="card-title">Collaborate With Me</h2>
                     </div>
                     <div class="contact-grid">
                         <div>
                             <div class="form-group">
-                                <label class="form-label">Name</label>
-                                <input type="text" class="form-input" placeholder="Your name">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" class="form-input" placeholder="Enter your name">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Email</label>
+                                <label class="form-label">Email Address</label>
                                 <input type="email" class="form-input" placeholder="your@email.com">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Message</label>
-                                <textarea class="form-input" rows="5" placeholder="Your message..."></textarea>
+                                <label class="form-label">Project Details</label>
+                                <textarea class="form-input" rows="5" placeholder="Tell me about your project vision..."></textarea>
                             </div>
                             <button class="macos-btn" onclick="unlockAchievement('achievement4')">
-                                <i class="fas fa-paper-plane"></i>Send Message
+                                <i class="fas fa-rocket"></i>Launch Project
                             </button>
                         </div>
                         <div>
-                            <h3 style="margin-bottom: 20px; font-weight: 600;">Contact Information</h3>
+                            <h3 style="margin-bottom: 20px; font-weight: 600;">Connect Directly</h3>
                             <div style="margin-bottom: 30px;">
                                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                                     <div style="width: 40px; height: 40px; background: rgba(0, 122, 255, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--macos-blue);">
@@ -1385,7 +1807,7 @@
 
             <!-- Footer -->
             <footer class="footer">
-                <p>© 2025 SleepyBH. Made with <span style="color: var(--macos-red);">♥</span> using macOS design principles.</p>
+                <p>© 2025 SleepyBH. Crafting digital experiences with precision and passion.</p>
                 <div class="social-links">
                     <a href="https://github.com/SleepyBH" target="_blank" class="social-link">
                         <i class="fab fa-github"></i>
@@ -1439,6 +1861,62 @@
                 window.style.transform = 'none';
                 window.style.borderRadius = '0';
             }
+        }
+
+        // Theme Background Changer
+        const themeToggleBtn = document.getElementById('themeToggleBtn');
+        const themeDropdown = document.getElementById('themeDropdown');
+        const body = document.body;
+
+        themeToggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            themeDropdown.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function() {
+            themeDropdown.classList.remove('show');
+        });
+
+        themeDropdown.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        const themeOptions = document.querySelectorAll('.theme-option');
+        themeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                const theme = this.dataset.theme;
+                
+                // Add fade animation
+                body.classList.add('background-changing');
+                
+                // Change background with delay for animation
+                setTimeout(() => {
+                    body.className = theme + '-bg';
+                    themeDropdown.classList.remove('show');
+                    
+                    // Update title bar button text
+                    const themeName = this.textContent.trim();
+                    themeToggleBtn.innerHTML = `<i class="fas fa-palette"></i> ${themeName.split(' ')[0]}`;
+                    
+                    // Save to localStorage
+                    localStorage.setItem('portfolioTheme', theme);
+                }, 400);
+                
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    body.classList.remove('background-changing');
+                }, 800);
+            });
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('portfolioTheme');
+        if (savedTheme) {
+            setTimeout(() => {
+                body.className = savedTheme + '-bg';
+                const themeName = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
+                themeToggleBtn.innerHTML = `<i class="fas fa-palette"></i> ${themeName}`;
+            }, 100);
         }
 
         // Navigation
@@ -1516,7 +1994,7 @@
                 
                 // Show notification
                 const title = achievement.querySelector('.achievement-title').textContent;
-                showNotification(`Achievement Unlocked: ${title}`);
+                showNotification(`Milestone Unlocked: ${title}`);
             }
         }
 
@@ -1617,17 +2095,17 @@
                     isValid = false;
                     input.style.borderColor = 'var(--macos-red)';
                 } else {
-                    input.style.borderColor = 'var(--macos-border)';
+                    input.style.borderColor = '';
                 }
             });
             
             if (isValid) {
-                showNotification('Message sent successfully! I\'ll get back to you soon.');
+                showNotification('Project proposal received! I\'ll connect with you soon.');
                 inputs.forEach(input => {
                     input.value = '';
                 });
             } else {
-                showNotification('Please fill in all fields.');
+                showNotification('Please complete all fields to continue.');
             }
         });
     </script>
