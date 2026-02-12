@@ -11,24 +11,25 @@
         />
         <style>
             :root {
-                --ios-bg: #0b0b0f;
-                --ios-card: rgba(255, 255, 255, 0.08);
-                --ios-card-strong: rgba(255, 255, 255, 0.12);
-                --ios-border: rgba(255, 255, 255, 0.12);
-                --ios-text: rgba(255, 255, 255, 0.92);
-                --ios-muted: rgba(255, 255, 255, 0.6);
-                --ios-muted-2: rgba(255, 255, 255, 0.45);
-                --ios-shadow: rgba(0, 0, 0, 0.35);
-                --ios-accent: #0a84ff;
-                --ios-accent-2: #bf5af2;
-                --ios-green: #30d158;
-                --ios-orange: #ff9f0a;
-                --ios-red: #ff453a;
-                --radius-xl: 28px;
-                --radius-lg: 22px;
-                --radius-md: 16px;
-                --safe-top: env(safe-area-inset-top);
-                --safe-bottom: env(safe-area-inset-bottom);
+                --bg: rgb(245, 245, 247);
+                --card: rgb(255, 255, 255);
+                --text: rgb(29, 29, 31);
+                --muted: rgb(110, 110, 115);
+                --border: rgb(210, 210, 215);
+                --blue: rgb(0, 122, 255);
+                --purple: rgb(175, 82, 222);
+                --green: rgb(52, 199, 89);
+                --orange: rgb(255, 149, 0);
+                --red: rgb(255, 59, 48);
+                --shadow: rgba(0, 0, 0, 0.06);
+                --shadowLg: rgba(0, 0, 0, 0.14);
+                --glass: rgba(255, 255, 255, 0.72);
+                --glassStrong: rgba(255, 255, 255, 0.86);
+                --sidebar: rgba(250, 250, 252, 0.9);
+                --blur: blur(14px);
+                --radiusWin: 18px;
+                --radiusCard: 14px;
+                --radiusPill: 999px;
             }
 
             html {
@@ -43,1508 +44,2117 @@
             }
 
             body {
+                background-color: var(--bg);
+                color: var(--text);
+                line-height: 1.6;
+                overflow: hidden;
                 min-height: 100vh;
-                background: radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.22), transparent 45%),
-                    radial-gradient(circle at 85% 25%, rgba(191, 90, 242, 0.18), transparent 45%),
-                    radial-gradient(circle at 40% 85%, rgba(48, 209, 88, 0.14), transparent 45%),
-                    linear-gradient(180deg, #07070a 0%, #0b0b0f 40%, #07070a 100%);
-                color: var(--ios-text);
-                overflow-x: hidden;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
+                background-attachment: fixed;
+                background-size: cover;
+                background-position: center;
             }
 
             body.preload {
                 opacity: 0;
+                transition: none;
             }
 
-            .noise {
-                pointer-events: none;
+            body.default-bg {
+                background-image: radial-gradient(circle at 10% 10%, rgba(0, 122, 255, 0.12), transparent 42%),
+                    radial-gradient(circle at 90% 20%, rgba(175, 82, 222, 0.10), transparent 46%),
+                    radial-gradient(circle at 55% 90%, rgba(52, 199, 89, 0.08), transparent 48%),
+                    linear-gradient(135deg, rgb(245, 247, 250) 0%, rgb(195, 207, 226) 100%);
+            }
+
+            body.galaxy-bg {
+                background-color: rgb(0, 0, 0);
+                background-image: radial-gradient(ellipse at top, transparent 0, rgb(0, 0, 0) 70%),
+                    radial-gradient(ellipse at bottom, rgb(25, 10, 5) 0, transparent 70%),
+                    radial-gradient(circle at 20% 50%, rgb(26, 11, 46) 0, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgb(12, 27, 51) 0, transparent 50%),
+                    radial-gradient(circle at 55% 35%, rgba(100, 210, 255, 0.12), transparent 45%),
+                    radial-gradient(circle at 35% 80%, rgba(175, 82, 222, 0.14), transparent 50%);
+            }
+
+            body.ocean-bg {
+                background-image: linear-gradient(to bottom, rgba(9, 35, 175, 0.78), rgba(0, 212, 255, 0.72)),
+                    url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2070&q=80);
+            }
+
+            body.sunset-bg {
+                background-image: linear-gradient(
+                        45deg,
+                        rgba(255, 107, 107, 0.78),
+                        rgba(255, 142, 83, 0.74),
+                        rgba(255, 199, 95, 0.74)
+                    ),
+                    url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=2070&q=80);
+            }
+
+            .macos-window {
                 position: fixed;
-                inset: 0;
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-                mix-blend-mode: overlay;
-                opacity: 0.5;
-            }
-
-            .bg-orb {
-                position: fixed;
-                inset: -20vh;
-                filter: blur(60px);
-                opacity: 0.75;
-                z-index: 0;
-                background: radial-gradient(circle at 30% 30%, rgba(10, 132, 255, 0.26), transparent 55%),
-                    radial-gradient(circle at 70% 40%, rgba(191, 90, 242, 0.22), transparent 55%),
-                    radial-gradient(circle at 55% 80%, rgba(48, 209, 88, 0.16), transparent 55%);
-                animation: floatOrbs 12s ease-in-out infinite;
-            }
-
-            @keyframes floatOrbs {
-                0% {
-                    transform: translate3d(0, 0, 0) scale(1);
-                }
-                50% {
-                    transform: translate3d(2vw, -2vh, 0) scale(1.04);
-                }
-                100% {
-                    transform: translate3d(0, 0, 0) scale(1);
-                }
-            }
-
-            .shell {
-                position: relative;
-                z-index: 1;
-                min-height: 100vh;
-                display: grid;
-                place-items: center;
-                padding: 20px 14px calc(20px + var(--safe-bottom));
-            }
-
-            .phone {
-                width: min(430px, 100%);
-                height: min(900px, 92vh);
-                border-radius: 44px;
-                background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
-                border: 1px solid rgba(255, 255, 255, 0.14);
-                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
-                position: relative;
+                top: 18px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100% - 36px);
+                max-width: 1420px;
+                height: calc(100vh - 36px);
+                border-radius: var(--radiusWin);
                 overflow: hidden;
+                z-index: 2;
+                border: 1px solid var(--border);
+                box-shadow: 0 28px 80px rgba(0, 0, 0, 0.22);
+                background: var(--glass);
+                backdrop-filter: var(--blur);
+                opacity: 0;
+                animation: winIn 0.55s ease forwards;
+                animation-delay: 0.18s;
             }
 
-            .phone::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.10), transparent 42%);
-                pointer-events: none;
+            @keyframes winIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(8px) scale(0.985);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0) scale(1);
+                }
             }
 
-            .statusbar {
-                position: sticky;
-                top: 0;
-                z-index: 30;
-                height: calc(56px + var(--safe-top));
-                padding-top: var(--safe-top);
+            body.galaxy-bg .macos-window {
+                border-color: rgba(255, 255, 255, 0.10);
+                background: rgba(15, 15, 20, 0.62);
+            }
+
+            body.ocean-bg .macos-window {
+                background: rgba(255, 255, 255, 0.70);
+            }
+
+            body.sunset-bg .macos-window {
+                background: rgba(255, 255, 255, 0.72);
+            }
+
+            .title-bar {
+                height: 56px;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                padding-left: 18px;
-                padding-right: 18px;
-                background: rgba(10, 10, 14, 0.55);
-                backdrop-filter: blur(16px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                padding: 0 18px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                background: rgba(255, 255, 255, 0.66);
+                backdrop-filter: var(--blur);
+                position: relative;
+                z-index: 50;
+                user-select: none;
             }
 
-            .status-left {
+            body.galaxy-bg .title-bar {
+                background: rgba(18, 18, 24, 0.60);
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            body.ocean-bg .title-bar {
+                background: rgba(10, 20, 35, 0.52);
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            body.sunset-bg .title-bar {
+                background: rgba(25, 12, 12, 0.40);
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .traffic-lights {
                 display: flex;
+                gap: 8px;
+                margin-right: 14px;
                 align-items: center;
-                gap: 10px;
+            }
+
+            .traffic-light {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                cursor: pointer;
+                transition: transform 0.15s ease, filter 0.15s ease;
+            }
+
+            .traffic-light.close {
+                background: rgb(255, 95, 87);
+            }
+
+            .traffic-light.minimize {
+                background: rgb(255, 189, 46);
+            }
+
+            .traffic-light.maximize {
+                background: rgb(40, 202, 66);
+            }
+
+            .traffic-light:hover {
+                transform: scale(1.12);
+                filter: brightness(1.04);
+            }
+
+            .window-title {
+                flex: 1;
+                text-align: center;
+                font-size: 13px;
                 font-weight: 600;
+                color: rgba(60, 60, 67, 0.72);
                 letter-spacing: 0.2px;
-                color: rgba(255, 255, 255, 0.88);
-                font-size: 14px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                padding: 0 10px;
             }
 
-            .pill {
-                height: 28px;
+            body.galaxy-bg .window-title,
+            body.ocean-bg .window-title,
+            body.sunset-bg .window-title {
+                color: rgba(255, 255, 255, 0.78);
+            }
+
+            .title-actions {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .pill-btn {
+                height: 30px;
                 padding: 0 12px;
+                border-radius: var(--radiusPill);
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.62);
+                backdrop-filter: var(--blur);
+                color: rgba(29, 29, 31, 0.86);
+                font-size: 12px;
+                font-weight: 600;
+                cursor: pointer;
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.10);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                color: rgba(255, 255, 255, 0.82);
-                font-size: 12px;
-                font-weight: 600;
+                transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
             }
 
-            .pill i {
+            .pill-btn:hover {
+                transform: translateY(-1px);
+                background: rgba(255, 255, 255, 0.78);
+                border-color: rgba(0, 0, 0, 0.14);
+            }
+
+            body.galaxy-bg .pill-btn,
+            body.ocean-bg .pill-btn,
+            body.sunset-bg .pill-btn {
+                background: rgba(255, 255, 255, 0.10);
+                border-color: rgba(255, 255, 255, 0.14);
                 color: rgba(255, 255, 255, 0.86);
             }
 
-            .status-right {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                color: rgba(255, 255, 255, 0.82);
-                font-size: 12px;
-                font-weight: 600;
-            }
-
-            .status-dot {
-                width: 6px;
-                height: 6px;
-                border-radius: 50%;
-                background: var(--ios-green);
-                box-shadow: 0 0 0 4px rgba(48, 209, 88, 0.12);
-            }
-
-            .content {
-                height: calc(100% - 56px - var(--safe-top));
-                overflow: auto;
-                padding: 18px 16px 108px;
-                scroll-behavior: smooth;
-            }
-
-            .content::-webkit-scrollbar {
-                width: 8px;
-            }
-
-            .content::-webkit-scrollbar-track {
-                background: rgba(255, 255, 255, 0.05);
-            }
-
-            .content::-webkit-scrollbar-thumb {
+            body.galaxy-bg .pill-btn:hover,
+            body.ocean-bg .pill-btn:hover,
+            body.sunset-bg .pill-btn:hover {
                 background: rgba(255, 255, 255, 0.14);
-                border-radius: 999px;
+                border-color: rgba(255, 255, 255, 0.18);
             }
 
-            .content::-webkit-scrollbar-thumb:hover {
-                background: rgba(255, 255, 255, 0.22);
+            .theme-dropdown {
+                position: absolute;
+                top: 58px;
+                right: 16px;
+                min-width: 190px;
+                border-radius: 12px;
+                padding: 8px;
+                background: rgba(255, 255, 255, 0.78);
+                backdrop-filter: var(--blur);
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-8px);
+                transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+                z-index: 200;
             }
 
-            .card {
-                background: var(--ios-card);
-                border: 1px solid var(--ios-border);
-                border-radius: var(--radius-xl);
-                padding: 18px;
-                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
-                backdrop-filter: blur(16px);
-                transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            body.galaxy-bg .theme-dropdown,
+            body.ocean-bg .theme-dropdown,
+            body.sunset-bg .theme-dropdown {
+                background: rgba(18, 18, 24, 0.72);
+                border-color: rgba(255, 255, 255, 0.12);
             }
 
-            .card:hover {
-                transform: translateY(-2px);
-                border-color: rgba(10, 132, 255, 0.35);
-                background: rgba(255, 255, 255, 0.10);
+            .theme-dropdown.show {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
             }
 
-            .section {
-                margin-bottom: 14px;
-            }
-
-            .section-title {
+            .theme-option {
+                padding: 10px 10px;
+                border-radius: 10px;
+                cursor: pointer;
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                margin: 14px 6px 10px;
+                gap: 10px;
+                color: rgba(29, 29, 31, 0.88);
+                font-size: 13px;
+                font-weight: 600;
+                transition: background 0.15s ease, transform 0.15s ease;
             }
 
-            .section-title h2 {
+            body.galaxy-bg .theme-option,
+            body.ocean-bg .theme-option,
+            body.sunset-bg .theme-option {
+                color: rgba(255, 255, 255, 0.86);
+            }
+
+            .theme-option:hover {
+                background: rgba(0, 122, 255, 0.10);
+                transform: translateY(-1px);
+            }
+
+            body.galaxy-bg .theme-option:hover,
+            body.ocean-bg .theme-option:hover,
+            body.sunset-bg .theme-option:hover {
+                background: rgba(100, 210, 255, 0.12);
+            }
+
+            .layout {
+                position: relative;
+                height: calc(100% - 56px);
+                display: flex;
+            }
+
+            .sidebar {
+                width: 252px;
+                background: var(--sidebar);
+                border-right: 1px solid rgba(0, 0, 0, 0.08);
+                padding: 26px 0;
+                backdrop-filter: var(--blur);
+            }
+
+            body.galaxy-bg .sidebar,
+            body.ocean-bg .sidebar,
+            body.sunset-bg .sidebar {
+                background: rgba(255, 255, 255, 0.06);
+                border-right-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .logo-container {
+                padding: 0 22px 22px;
+                margin-bottom: 18px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            body.galaxy-bg .logo-container,
+            body.ocean-bg .logo-container,
+            body.sunset-bg .logo-container {
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .logo {
+                display: flex;
+                align-items: center;
+                gap: 12px;
                 font-size: 18px;
-                font-weight: 700;
-                letter-spacing: -0.3px;
+                font-weight: 800;
+                letter-spacing: -0.2px;
+                color: rgba(29, 29, 31, 0.92);
+            }
+
+            body.galaxy-bg .logo,
+            body.ocean-bg .logo,
+            body.sunset-bg .logo {
                 color: rgba(255, 255, 255, 0.92);
             }
 
-            .section-title span {
-                font-size: 12px;
-                color: var(--ios-muted);
-                font-weight: 600;
-            }
-
-            .hero {
-                display: grid;
-                gap: 14px;
-            }
-
-            .hero-top {
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 12px;
                 display: flex;
                 align-items: center;
-                gap: 14px;
+                justify-content: center;
+                color: rgb(255, 255, 255);
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
+                box-shadow: 0 12px 30px rgba(0, 122, 255, 0.22);
             }
 
-            .avatar {
-                width: 72px;
-                height: 72px;
-                border-radius: 22px;
-                overflow: hidden;
-                border: 1px solid rgba(255, 255, 255, 0.14);
-                background: linear-gradient(135deg, rgba(10, 132, 255, 0.32), rgba(191, 90, 242, 0.28));
-                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
-                flex: 0 0 auto;
+            .nav-items {
+                list-style: none;
+                padding: 6px 10px;
             }
 
-            .avatar img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                transform: scale(1.06);
+            .nav-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 14px;
+                border-radius: 12px;
+                margin: 6px 6px;
+                text-decoration: none;
+                color: rgba(60, 60, 67, 0.72);
+                font-size: 13px;
+                font-weight: 600;
+                border: 1px solid transparent;
+                transition: background 0.15s ease, transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+                cursor: pointer;
             }
 
-            .hero-headline {
+            body.galaxy-bg .nav-item,
+            body.ocean-bg .nav-item,
+            body.sunset-bg .nav-item {
+                color: rgba(255, 255, 255, 0.72);
+            }
+
+            .nav-item:hover {
+                background: rgba(0, 122, 255, 0.08);
+                border-color: rgba(0, 122, 255, 0.16);
+                transform: translateY(-1px);
+                color: rgba(29, 29, 31, 0.92);
+            }
+
+            body.galaxy-bg .nav-item:hover,
+            body.ocean-bg .nav-item:hover,
+            body.sunset-bg .nav-item:hover {
+                background: rgba(100, 210, 255, 0.10);
+                border-color: rgba(100, 210, 255, 0.18);
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .nav-item.active {
+                background: rgba(0, 122, 255, 0.12);
+                border-color: rgba(0, 122, 255, 0.22);
+                color: rgb(0, 122, 255);
+            }
+
+            body.galaxy-bg .nav-item.active,
+            body.ocean-bg .nav-item.active,
+            body.sunset-bg .nav-item.active {
+                background: rgba(100, 210, 255, 0.14);
+                border-color: rgba(100, 210, 255, 0.22);
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .nav-item i {
+                width: 18px;
+                text-align: center;
+                opacity: 0.95;
+            }
+
+            .main-content {
                 flex: 1;
-                min-width: 0;
+                overflow: auto;
+                padding: 34px;
             }
 
-            .hero-headline h1 {
-                font-size: 26px;
+            .main-content::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            .main-content::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, 0.04);
+            }
+
+            .main-content::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.16);
+                border-radius: 10px;
+            }
+
+            body.galaxy-bg .main-content::-webkit-scrollbar-track,
+            body.ocean-bg .main-content::-webkit-scrollbar-track,
+            body.sunset-bg .main-content::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.06);
+            }
+
+            body.galaxy-bg .main-content::-webkit-scrollbar-thumb,
+            body.ocean-bg .main-content::-webkit-scrollbar-thumb,
+            body.sunset-bg .main-content::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.14);
+            }
+
+            .macos-card {
+                background: var(--glassStrong);
+                border-radius: var(--radiusCard);
+                padding: 22px;
+                border: 1px solid rgba(0, 0, 0, 0.08);
+                box-shadow: 0 10px 26px var(--shadow);
+                transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+                margin-bottom: 22px;
+                backdrop-filter: var(--blur);
+            }
+
+            body.galaxy-bg .macos-card,
+            body.ocean-bg .macos-card,
+            body.sunset-bg .macos-card {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.12);
+                box-shadow: 0 10px 26px rgba(0, 0, 0, 0.30);
+            }
+
+            .macos-card:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 18px 44px var(--shadowLg);
+                border-color: rgba(0, 122, 255, 0.22);
+            }
+
+            body.galaxy-bg .macos-card:hover,
+            body.ocean-bg .macos-card:hover,
+            body.sunset-bg .macos-card:hover {
+                border-color: rgba(100, 210, 255, 0.24);
+            }
+
+            .card-header {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 14px;
+                margin-bottom: 18px;
+                padding-bottom: 14px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            body.galaxy-bg .card-header,
+            body.ocean-bg .card-header,
+            body.sunset-bg .card-header {
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .card-title {
+                font-size: 18px;
                 font-weight: 800;
-                letter-spacing: -0.5px;
-                line-height: 1.1;
-                background: linear-gradient(135deg, #64d2ff, #0a84ff, #bf5af2);
+                letter-spacing: -0.2px;
+                color: rgba(29, 29, 31, 0.92);
+            }
+
+            body.galaxy-bg .card-title,
+            body.ocean-bg .card-title,
+            body.sunset-bg .card-title {
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .hero-section {
+                display: flex;
+                align-items: center;
+                gap: 46px;
+            }
+
+            .hero-content {
+                flex: 1;
+            }
+
+            .hero-title {
+                font-size: 40px;
+                font-weight: 900;
+                letter-spacing: -0.6px;
+                line-height: 1.05;
+                margin-bottom: 14px;
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
 
-            .hero-headline p {
-                margin-top: 6px;
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.72);
-                line-height: 1.45;
+            .hero-subtitle {
+                font-size: 18px;
+                font-weight: 500;
+                color: rgba(60, 60, 67, 0.72);
+                margin-bottom: 18px;
+                max-width: 720px;
             }
 
-            .tag-row {
+            body.galaxy-bg .hero-subtitle,
+            body.ocean-bg .hero-subtitle,
+            body.sunset-bg .hero-subtitle {
+                color: rgba(255, 255, 255, 0.78);
+            }
+
+            .tag-container {
                 display: flex;
                 flex-wrap: wrap;
                 gap: 8px;
-                margin-top: 10px;
+                margin-bottom: 20px;
             }
 
             .tag {
-                padding: 7px 10px;
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.10);
-                border: 1px solid rgba(255, 255, 255, 0.10);
+                padding: 8px 12px;
+                border-radius: var(--radiusPill);
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.1px;
+                color: rgba(0, 122, 255, 1);
+                background: rgba(0, 122, 255, 0.10);
+                border: 1px solid rgba(0, 122, 255, 0.16);
+            }
+
+            body.galaxy-bg .tag,
+            body.ocean-bg .tag,
+            body.sunset-bg .tag {
+                color: rgba(255, 255, 255, 0.90);
+                background: rgba(100, 210, 255, 0.14);
+                border-color: rgba(100, 210, 255, 0.22);
+            }
+
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 14px;
+                margin-top: 18px;
+            }
+
+            .stat-card {
+                text-align: center;
+                padding: 18px;
+            }
+
+            .stat-number {
+                font-size: 28px;
+                font-weight: 900;
+                letter-spacing: -0.3px;
+                color: rgba(0, 122, 255, 1);
+                margin-bottom: 4px;
+            }
+
+            body.galaxy-bg .stat-number,
+            body.ocean-bg .stat-number,
+            body.sunset-bg .stat-number {
+                color: rgba(100, 210, 255, 0.96);
+            }
+
+            .stat-label {
                 font-size: 12px;
                 font-weight: 700;
-                color: rgba(255, 255, 255, 0.82);
-                letter-spacing: 0.2px;
+                color: rgba(60, 60, 67, 0.72);
             }
 
-            .stats {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                margin-top: 10px;
+            body.galaxy-bg .stat-label,
+            body.ocean-bg .stat-label,
+            body.sunset-bg .stat-label {
+                color: rgba(255, 255, 255, 0.66);
             }
 
-            .stat {
-                padding: 14px;
-                border-radius: var(--radius-lg);
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                display: grid;
-                gap: 4px;
-            }
-
-            .stat strong {
-                font-size: 18px;
-                font-weight: 800;
-                color: rgba(255, 255, 255, 0.94);
-                letter-spacing: -0.2px;
-            }
-
-            .stat span {
-                font-size: 12px;
-                color: rgba(255, 255, 255, 0.62);
-                font-weight: 700;
-            }
-
-            .cta-row {
+            .actions-row {
                 display: flex;
-                gap: 10px;
-                margin-top: 12px;
+                gap: 12px;
+                margin-top: 18px;
+                flex-wrap: wrap;
             }
 
-            .btn {
-                flex: 1;
-                height: 44px;
-                border-radius: 14px;
+            .macos-btn {
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
                 gap: 10px;
+                border-radius: 12px;
+                padding: 10px 16px;
                 font-size: 13px;
                 font-weight: 800;
-                letter-spacing: 0.2px;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                background: rgba(255, 255, 255, 0.10);
-                color: rgba(255, 255, 255, 0.92);
+                letter-spacing: 0.15px;
                 text-decoration: none;
-                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+                cursor: pointer;
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.70);
+                color: rgba(29, 29, 31, 0.92);
+                backdrop-filter: var(--blur);
+                transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
             }
 
-            .btn.primary {
-                border-color: rgba(10, 132, 255, 0.35);
-                background: linear-gradient(135deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.75));
-                box-shadow: 0 14px 30px rgba(10, 132, 255, 0.18);
+            .macos-btn.primary {
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
+                color: rgb(255, 255, 255);
+                border-color: rgba(0, 122, 255, 0.24);
+                box-shadow: 0 14px 28px rgba(0, 122, 255, 0.18);
             }
 
-            .btn:hover {
+            .macos-btn:hover {
                 transform: translateY(-1px);
-                border-color: rgba(255, 255, 255, 0.22);
-                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(0, 122, 255, 0.22);
+                background: rgba(255, 255, 255, 0.82);
+                box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
             }
 
-            .btn.primary:hover {
-                background: linear-gradient(135deg, rgba(10, 132, 255, 1), rgba(191, 90, 242, 0.85));
-                border-color: rgba(10, 132, 255, 0.55);
+            .macos-btn.primary:hover {
+                box-shadow: 0 18px 40px rgba(0, 122, 255, 0.22);
             }
 
-            .grid {
+            body.galaxy-bg .macos-btn,
+            body.ocean-bg .macos-btn,
+            body.sunset-bg .macos-btn {
+                background: rgba(255, 255, 255, 0.10);
+                border-color: rgba(255, 255, 255, 0.14);
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            body.galaxy-bg .macos-btn:hover,
+            body.ocean-bg .macos-btn:hover,
+            body.sunset-bg .macos-btn:hover {
+                background: rgba(255, 255, 255, 0.14);
+                border-color: rgba(100, 210, 255, 0.20);
+            }
+
+            .hero-avatar {
+                width: 210px;
+                height: 210px;
+                border-radius: 22px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.50);
+                box-shadow: 0 22px 60px rgba(0, 122, 255, 0.18);
+                background: rgba(255, 255, 255, 0.30);
+                flex: 0 0 auto;
+            }
+
+            body.galaxy-bg .hero-avatar,
+            body.ocean-bg .hero-avatar,
+            body.sunset-bg .hero-avatar {
+                border-color: rgba(255, 255, 255, 0.18);
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .hero-avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: scale(1.02);
+            }
+
+            .skills-grid {
                 display: grid;
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px 18px;
+                margin-top: 14px;
             }
 
-            .skills {
-                display: grid;
-                gap: 10px;
-            }
-
-            .skill {
-                display: grid;
-                grid-template-columns: auto 1fr auto;
+            .skill-item {
+                display: flex;
                 align-items: center;
                 gap: 12px;
-                padding: 12px 12px;
-                border-radius: var(--radius-lg);
-                background: rgba(255, 255, 255, 0.07);
-                border: 1px solid rgba(255, 255, 255, 0.10);
+                padding: 10px 0;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
             }
 
-            .skill .icon {
+            body.galaxy-bg .skill-item,
+            body.ocean-bg .skill-item,
+            body.sunset-bg .skill-item {
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .skill-name {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-width: 150px;
+                font-weight: 800;
+                font-size: 13px;
+            }
+
+            .skill-icon {
                 width: 34px;
                 height: 34px;
                 border-radius: 12px;
-                display: grid;
-                place-items: center;
-                background: rgba(10, 132, 255, 0.18);
-                color: rgba(255, 255, 255, 0.92);
-                border: 1px solid rgba(10, 132, 255, 0.18);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 122, 255, 0.10);
+                border: 1px solid rgba(0, 122, 255, 0.14);
+                color: rgba(0, 122, 255, 1);
             }
 
-            .skill .name {
-                font-weight: 800;
-                font-size: 13px;
-                color: rgba(255, 255, 255, 0.90);
+            body.galaxy-bg .skill-icon,
+            body.ocean-bg .skill-icon,
+            body.sunset-bg .skill-icon {
+                background: rgba(100, 210, 255, 0.12);
+                border-color: rgba(100, 210, 255, 0.18);
+                color: rgba(100, 210, 255, 0.96);
             }
 
-            .skill .bar {
-                grid-column: 2 / 4;
+            .skill-bar {
+                flex: 1;
                 height: 8px;
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.10);
+                border-radius: var(--radiusPill);
+                background: rgba(0, 0, 0, 0.10);
                 overflow: hidden;
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                margin-top: 8px;
             }
 
-            .skill .fill {
+            body.galaxy-bg .skill-bar,
+            body.ocean-bg .skill-bar,
+            body.sunset-bg .skill-bar {
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            .skill-progress {
                 height: 100%;
-                width: var(--w, 50%);
-                background: linear-gradient(90deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.85));
-                border-radius: 999px;
+                border-radius: var(--radiusPill);
+                background: linear-gradient(90deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
             }
 
-            .skill .pct {
+            .skill-percent {
+                width: 46px;
+                text-align: right;
                 font-family: "SF Mono", ui-monospace, Menlo, Monaco, "SF Mono", monospace;
                 font-size: 12px;
-                color: rgba(255, 255, 255, 0.64);
                 font-weight: 700;
+                color: rgba(60, 60, 67, 0.72);
             }
 
-            .two-col {
+            body.galaxy-bg .skill-percent,
+            body.ocean-bg .skill-percent,
+            body.sunset-bg .skill-percent {
+                color: rgba(255, 255, 255, 0.72);
+            }
+
+            .experience-section {
                 display: grid;
-                gap: 10px;
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+                margin-top: 12px;
             }
 
-            .pill-title {
+            .experience-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding-bottom: 10px;
+                margin-bottom: 12px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                font-weight: 900;
+                letter-spacing: -0.2px;
+            }
+
+            body.galaxy-bg .experience-header,
+            body.ocean-bg .experience-header,
+            body.sunset-bg .experience-header {
+                border-bottom-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .experience-header i {
+                color: rgba(52, 199, 89, 1);
+            }
+
+            .experience-item {
+                padding: 16px;
+                border-radius: 14px;
+                border: 1px solid rgba(0, 0, 0, 0.08);
+                background: rgba(255, 255, 255, 0.70);
+                backdrop-filter: var(--blur);
+                transition: transform 0.18s ease, border-color 0.18s ease;
+                margin-bottom: 12px;
+            }
+
+            body.galaxy-bg .experience-item,
+            body.ocean-bg .experience-item,
+            body.sunset-bg .experience-item {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.12);
+            }
+
+            .experience-item:hover {
+                transform: translateY(-1px);
+                border-color: rgba(0, 122, 255, 0.22);
+            }
+
+            body.galaxy-bg .experience-item:hover,
+            body.ocean-bg .experience-item:hover,
+            body.sunset-bg .experience-item:hover {
+                border-color: rgba(100, 210, 255, 0.22);
+            }
+
+            .experience-role {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
                 gap: 10px;
             }
 
-            .pill-title h3 {
-                font-size: 14px;
+            .experience-title {
                 font-weight: 900;
-                color: rgba(255, 255, 255, 0.92);
                 letter-spacing: -0.2px;
             }
 
-            .date {
-                font-size: 11px;
-                font-weight: 900;
-                color: rgba(255, 255, 255, 0.80);
-                padding: 6px 10px;
-                border-radius: 999px;
-                background: rgba(10, 132, 255, 0.16);
-                border: 1px solid rgba(10, 132, 255, 0.20);
-            }
-
-            .role {
-                margin-top: 6px;
+            .experience-date {
                 font-size: 12px;
-                font-weight: 900;
-                color: rgba(100, 210, 255, 0.92);
-                letter-spacing: 0.2px;
+                font-weight: 800;
+                padding: 6px 10px;
+                border-radius: var(--radiusPill);
+                background: rgba(0, 122, 255, 0.10);
+                border: 1px solid rgba(0, 122, 255, 0.14);
+                color: rgba(0, 122, 255, 1);
+                white-space: nowrap;
             }
 
-            .desc {
+            body.galaxy-bg .experience-date,
+            body.ocean-bg .experience-date,
+            body.sunset-bg .experience-date {
+                background: rgba(100, 210, 255, 0.12);
+                border-color: rgba(100, 210, 255, 0.18);
+                color: rgba(100, 210, 255, 0.96);
+            }
+
+            .experience-position {
+                display: block;
+                margin-top: 6px;
+                font-weight: 800;
+                color: rgba(0, 122, 255, 1);
+            }
+
+            body.galaxy-bg .experience-position,
+            body.ocean-bg .experience-position,
+            body.sunset-bg .experience-position {
+                color: rgba(100, 210, 255, 0.96);
+            }
+
+            .experience-description {
                 margin-top: 8px;
                 font-size: 13px;
-                color: rgba(255, 255, 255, 0.66);
-                line-height: 1.5;
+                font-weight: 500;
+                color: rgba(60, 60, 67, 0.72);
             }
 
-            .link-row {
+            body.galaxy-bg .experience-description,
+            body.ocean-bg .experience-description,
+            body.sunset-bg .experience-description {
+                color: rgba(255, 255, 255, 0.70);
+            }
+
+            .discord-btn {
                 margin-top: 10px;
-                display: flex;
-                gap: 10px;
-            }
-
-            .mini-btn {
-                height: 38px;
-                flex: 1;
                 display: inline-flex;
                 align-items: center;
-                justify-content: center;
                 gap: 8px;
+                padding: 8px 12px;
+                border-radius: 12px;
                 font-size: 12px;
                 font-weight: 900;
-                border-radius: 14px;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                background: rgba(255, 255, 255, 0.08);
-                color: rgba(255, 255, 255, 0.90);
+                letter-spacing: 0.15px;
                 text-decoration: none;
-                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+                color: rgb(255, 255, 255);
+                background: rgba(88, 101, 242, 1);
+                border: 1px solid rgba(88, 101, 242, 0.22);
+                transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.2s ease;
             }
 
-            .mini-btn.discord {
-                background: rgba(88, 101, 242, 0.22);
-                border-color: rgba(88, 101, 242, 0.25);
-            }
-
-            .mini-btn.github {
-                background: rgba(255, 255, 255, 0.08);
-            }
-
-            .mini-btn:hover {
+            .discord-btn:hover {
                 transform: translateY(-1px);
-                background: rgba(255, 255, 255, 0.10);
-                border-color: rgba(255, 255, 255, 0.20);
+                filter: brightness(1.02);
+                box-shadow: 0 12px 26px rgba(88, 101, 242, 0.22);
             }
 
-            .tabs {
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                z-index: 40;
-                padding: 10px 12px calc(10px + var(--safe-bottom));
-                background: rgba(10, 10, 14, 0.62);
-                backdrop-filter: blur(16px);
-                border-top: 1px solid rgba(255, 255, 255, 0.10);
-            }
-
-            .tabs-inner {
-                display: grid;
-                grid-template-columns: repeat(5, 1fr);
-                gap: 8px;
-            }
-
-            .tab {
-                height: 46px;
-                border-radius: 18px;
-                display: grid;
-                place-items: center;
-                gap: 4px;
-                text-decoration: none;
-                color: rgba(255, 255, 255, 0.62);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                background: rgba(255, 255, 255, 0.06);
-                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-            }
-
-            .tab i {
-                font-size: 16px;
-            }
-
-            .tab span {
-                font-size: 10px;
-                font-weight: 900;
-                letter-spacing: 0.2px;
-            }
-
-            .tab.active {
-                color: rgba(255, 255, 255, 0.92);
-                background: linear-gradient(135deg, rgba(10, 132, 255, 0.85), rgba(191, 90, 242, 0.55));
-                border-color: rgba(10, 132, 255, 0.45);
-                box-shadow: 0 12px 26px rgba(10, 132, 255, 0.15);
-            }
-
-            .tab:active {
-                transform: scale(0.98);
-            }
-
-            .projects-toggle {
+            .project-categories {
                 display: flex;
                 gap: 10px;
                 padding: 10px;
-                border-radius: 20px;
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                margin-bottom: 10px;
+                border-radius: 14px;
+                background: rgba(0, 0, 0, 0.04);
+                border: 1px solid rgba(0, 0, 0, 0.08);
             }
 
-            .seg {
+            body.galaxy-bg .project-categories,
+            body.ocean-bg .project-categories,
+            body.sunset-bg .project-categories {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .project-category-btn {
                 flex: 1;
                 height: 38px;
-                border-radius: 16px;
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                background: rgba(255, 255, 255, 0.06);
-                color: rgba(255, 255, 255, 0.72);
+                border-radius: 12px;
+                border: 1px solid transparent;
+                background: transparent;
+                font-size: 13px;
                 font-weight: 900;
-                font-size: 12px;
-                letter-spacing: 0.2px;
+                letter-spacing: 0.15px;
+                color: rgba(60, 60, 67, 0.72);
                 cursor: pointer;
-                transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+                transition: background 0.15s ease, transform 0.15s ease, color 0.15s ease, border-color 0.15s ease;
             }
 
-            .seg.active {
+            body.galaxy-bg .project-category-btn,
+            body.ocean-bg .project-category-btn,
+            body.sunset-bg .project-category-btn {
+                color: rgba(255, 255, 255, 0.72);
+            }
+
+            .project-category-btn:hover {
+                transform: translateY(-1px);
+                background: rgba(0, 122, 255, 0.08);
+                border-color: rgba(0, 122, 255, 0.14);
+                color: rgba(29, 29, 31, 0.92);
+            }
+
+            body.galaxy-bg .project-category-btn:hover,
+            body.ocean-bg .project-category-btn:hover,
+            body.sunset-bg .project-category-btn:hover {
+                background: rgba(100, 210, 255, 0.10);
+                border-color: rgba(100, 210, 255, 0.18);
                 color: rgba(255, 255, 255, 0.92);
-                background: rgba(10, 132, 255, 0.22);
-                border-color: rgba(10, 132, 255, 0.25);
             }
 
-            .seg:active {
-                transform: scale(0.98);
+            .project-category-btn.active {
+                background: rgba(0, 122, 255, 0.12);
+                border-color: rgba(0, 122, 255, 0.20);
+                color: rgba(0, 122, 255, 1);
+            }
+
+            body.galaxy-bg .project-category-btn.active,
+            body.ocean-bg .project-category-btn.active,
+            body.sunset-bg .project-category-btn.active {
+                background: rgba(100, 210, 255, 0.14);
+                border-color: rgba(100, 210, 255, 0.22);
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .project-category {
+                display: none;
+                opacity: 0;
+                transform: translateY(12px);
+                transition: opacity 0.35s ease, transform 0.35s ease;
+                margin-top: 16px;
+            }
+
+            .project-category.active {
+                display: block;
+                opacity: 1;
+                transform: translateY(0);
             }
 
             .projects-grid {
                 display: grid;
-                gap: 10px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 14px;
+                margin-top: 14px;
             }
 
-            .project {
+            .project-card {
                 padding: 0;
                 overflow: hidden;
             }
 
-            .project-top {
-                height: 120px;
-                background: linear-gradient(135deg, rgba(10, 132, 255, 0.75), rgba(191, 90, 242, 0.55));
-                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+            .project-image {
+                height: 150px;
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
                 position: relative;
             }
 
-            .badge {
+            .project-badge {
                 position: absolute;
-                top: 12px;
-                right: 12px;
-                padding: 7px 10px;
-                border-radius: 999px;
-                background: rgba(10, 10, 14, 0.55);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                color: rgba(255, 255, 255, 0.88);
-                font-size: 11px;
+                top: 14px;
+                right: 14px;
+                padding: 6px 10px;
+                border-radius: var(--radiusPill);
+                background: rgba(255, 255, 255, 0.72);
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                font-size: 12px;
                 font-weight: 900;
-                letter-spacing: 0.2px;
-                backdrop-filter: blur(12px);
+                letter-spacing: 0.15px;
+                color: rgba(29, 29, 31, 0.92);
+                backdrop-filter: var(--blur);
             }
 
-            .project-body {
-                padding: 14px 14px 14px;
+            body.galaxy-bg .project-badge,
+            body.ocean-bg .project-badge,
+            body.sunset-bg .project-badge {
+                background: rgba(18, 18, 24, 0.62);
+                border-color: rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.90);
             }
 
-            .project-body h3 {
-                font-size: 15px;
+            .project-content {
+                padding: 16px;
+            }
+
+            .project-title {
+                font-size: 16px;
                 font-weight: 900;
-                color: rgba(255, 255, 255, 0.92);
                 letter-spacing: -0.2px;
+                margin-bottom: 8px;
             }
 
-            .project-body p {
-                margin-top: 6px;
+            .project-description {
                 font-size: 13px;
-                color: rgba(255, 255, 255, 0.62);
-                line-height: 1.45;
+                font-weight: 500;
+                color: rgba(60, 60, 67, 0.72);
+                line-height: 1.5;
             }
 
-            .meta-row {
-                margin-top: 10px;
+            body.galaxy-bg .project-description,
+            body.ocean-bg .project-description,
+            body.sunset-bg .project-description {
+                color: rgba(255, 255, 255, 0.70);
+            }
+
+            .project-stats {
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-                padding-top: 10px;
-                border-top: 1px solid rgba(255, 255, 255, 0.10);
-                color: rgba(255, 255, 255, 0.64);
+                gap: 14px;
+                margin-top: 12px;
+                padding-top: 12px;
+                border-top: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            body.galaxy-bg .project-stats,
+            body.ocean-bg .project-stats,
+            body.sunset-bg .project-stats {
+                border-top-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .stat {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
                 font-size: 12px;
                 font-weight: 800;
+                color: rgba(60, 60, 67, 0.72);
             }
 
-            .meta-row i {
-                margin-right: 6px;
-                color: rgba(255, 255, 255, 0.8);
+            body.galaxy-bg .stat,
+            body.ocean-bg .stat,
+            body.sunset-bg .stat {
+                color: rgba(255, 255, 255, 0.66);
             }
 
-            .codebox {
-                border-radius: var(--radius-xl);
-                background: rgba(10, 10, 14, 0.75);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                overflow: hidden;
-            }
-
-            .codebox .topbar {
-                height: 44px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0 14px;
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-                color: rgba(255, 255, 255, 0.72);
-                font-weight: 900;
-                font-size: 12px;
-                letter-spacing: 0.2px;
-            }
-
-            pre.code {
-                padding: 14px;
+            .code-snippet {
+                border-radius: 14px;
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(29, 29, 31, 1);
+                padding: 18px;
                 overflow: auto;
+                box-shadow: 0 14px 34px rgba(0, 0, 0, 0.20);
+            }
+
+            body.galaxy-bg .code-snippet,
+            body.ocean-bg .code-snippet,
+            body.sunset-bg .code-snippet {
+                border-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .code {
                 font-family: "SF Mono", ui-monospace, Menlo, Monaco, "SF Mono", monospace;
-                font-size: 12px;
-                line-height: 1.6;
-                color: rgba(255, 255, 255, 0.86);
+                font-size: 12.5px;
+                line-height: 1.7;
+                color: rgba(245, 245, 247, 0.92);
+                white-space: pre;
             }
 
-            pre.code::-webkit-scrollbar {
-                height: 8px;
+            .code .cm {
+                color: rgba(245, 245, 247, 0.42);
             }
 
-            pre.code::-webkit-scrollbar-thumb {
-                background: rgba(255, 255, 255, 0.14);
-                border-radius: 999px;
-            }
-
-            .kw {
-                color: #ff7ab2;
+            .code .kw {
+                color: rgba(255, 122, 178, 1);
                 font-weight: 800;
             }
 
-            .fn {
-                color: #ffd60a;
+            .code .st {
+                color: rgba(100, 210, 255, 1);
+                font-weight: 700;
+            }
+
+            .code .fn {
+                color: rgba(255, 214, 10, 1);
                 font-weight: 800;
             }
 
-            .st {
-                color: #64d2ff;
-                font-weight: 800;
-            }
-
-            .cm {
-                color: rgba(255, 255, 255, 0.38);
-            }
-
-            .num {
-                color: #ff9f0a;
+            .code .num {
+                color: rgba(255, 149, 0, 1);
                 font-weight: 800;
             }
 
             .contact-grid {
                 display: grid;
-                gap: 10px;
+                grid-template-columns: 1fr 1fr;
+                gap: 18px;
+                margin-top: 12px;
             }
 
-            .field {
-                display: grid;
-                gap: 8px;
+            .form-group {
+                margin-bottom: 14px;
             }
 
-            .label {
+            .form-label {
+                display: block;
+                margin-bottom: 8px;
                 font-size: 12px;
                 font-weight: 900;
-                color: rgba(255, 255, 255, 0.82);
-                letter-spacing: 0.2px;
+                letter-spacing: 0.15px;
+                color: rgba(29, 29, 31, 0.92);
             }
 
-            .input,
-            .textarea {
-                width: 100%;
-                border-radius: 16px;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                background: rgba(255, 255, 255, 0.07);
-                padding: 12px 12px;
-                color: rgba(255, 255, 255, 0.90);
-                outline: none;
-                font-weight: 700;
-                font-size: 13px;
-                transition: border-color 0.2s ease, background 0.2s ease;
-            }
-
-            .textarea {
-                min-height: 110px;
-                resize: vertical;
-            }
-
-            .input:focus,
-            .textarea:focus {
-                border-color: rgba(10, 132, 255, 0.55);
-                background: rgba(255, 255, 255, 0.09);
-            }
-
-            .direct {
-                display: grid;
-                gap: 10px;
-            }
-
-            .direct-item {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                padding: 12px;
-                border-radius: var(--radius-lg);
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-            }
-
-            .direct-icon {
-                width: 40px;
-                height: 40px;
-                border-radius: 16px;
-                display: grid;
-                place-items: center;
-                background: rgba(10, 132, 255, 0.18);
-                border: 1px solid rgba(10, 132, 255, 0.18);
+            body.galaxy-bg .form-label,
+            body.ocean-bg .form-label,
+            body.sunset-bg .form-label {
                 color: rgba(255, 255, 255, 0.92);
-                flex: 0 0 auto;
             }
 
-            .direct-item strong {
-                display: block;
-                font-size: 12px;
-                font-weight: 900;
-                color: rgba(255, 255, 255, 0.90);
-                letter-spacing: 0.2px;
-            }
-
-            .direct-item span {
-                display: block;
+            .form-input {
+                width: 100%;
+                padding: 12px 14px;
+                border-radius: 12px;
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.72);
+                backdrop-filter: var(--blur);
+                color: rgba(29, 29, 31, 0.92);
                 font-size: 13px;
-                font-weight: 800;
-                color: rgba(255, 255, 255, 0.66);
-                margin-top: 2px;
-                word-break: break-word;
+                font-weight: 600;
+                transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+            }
+
+            body.galaxy-bg .form-input,
+            body.ocean-bg .form-input,
+            body.sunset-bg .form-input {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .form-input:focus {
+                outline: none;
+                border-color: rgba(0, 122, 255, 0.32);
+                box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.10);
+                background: rgba(255, 255, 255, 0.82);
+            }
+
+            body.galaxy-bg .form-input:focus,
+            body.ocean-bg .form-input:focus,
+            body.sunset-bg .form-input:focus {
+                box-shadow: 0 0 0 4px rgba(100, 210, 255, 0.10);
+                background: rgba(255, 255, 255, 0.08);
             }
 
             .footer {
-                margin: 18px 6px 0;
-                color: rgba(255, 255, 255, 0.52);
-                font-size: 12px;
-                font-weight: 800;
+                margin-top: 26px;
+                padding-top: 18px;
+                border-top: 1px solid rgba(0, 0, 0, 0.08);
                 text-align: center;
+                color: rgba(60, 60, 67, 0.72);
+                font-size: 12px;
+                font-weight: 700;
             }
 
-            .social {
-                margin-top: 10px;
+            body.galaxy-bg .footer,
+            body.ocean-bg .footer,
+            body.sunset-bg .footer {
+                border-top-color: rgba(255, 255, 255, 0.10);
+                color: rgba(255, 255, 255, 0.66);
+            }
+
+            .social-links {
                 display: flex;
                 justify-content: center;
-                gap: 10px;
+                gap: 12px;
+                margin-top: 12px;
             }
 
-            .social a {
-                width: 44px;
-                height: 44px;
-                border-radius: 16px;
-                display: grid;
-                place-items: center;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                background: rgba(255, 255, 255, 0.06);
-                color: rgba(255, 255, 255, 0.88);
+            .social-link {
+                width: 38px;
+                height: 38px;
+                border-radius: 14px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.70);
+                backdrop-filter: var(--blur);
+                color: rgba(29, 29, 31, 0.92);
                 text-decoration: none;
-                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+                transition: transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
             }
 
-            .social a:hover {
+            .social-link:hover {
                 transform: translateY(-1px);
-                background: rgba(255, 255, 255, 0.10);
-                border-color: rgba(255, 255, 255, 0.20);
+                border-color: rgba(0, 122, 255, 0.22);
+                background: rgba(255, 255, 255, 0.82);
             }
 
-            .toast {
-                position: fixed;
-                left: 50%;
-                transform: translateX(-50%);
-                bottom: calc(120px + var(--safe-bottom));
-                padding: 12px 14px;
-                border-radius: 16px;
-                background: rgba(10, 10, 14, 0.70);
-                border: 1px solid rgba(255, 255, 255, 0.12);
+            body.galaxy-bg .social-link,
+            body.ocean-bg .social-link,
+            body.sunset-bg .social-link {
+                background: rgba(255, 255, 255, 0.08);
+                border-color: rgba(255, 255, 255, 0.12);
                 color: rgba(255, 255, 255, 0.92);
-                font-size: 12px;
-                font-weight: 900;
-                letter-spacing: 0.2px;
-                box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
-                backdrop-filter: blur(16px);
+            }
+
+            body.galaxy-bg .social-link:hover,
+            body.ocean-bg .social-link:hover,
+            body.sunset-bg .social-link:hover {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(100, 210, 255, 0.20);
+            }
+
+            .animate-in {
                 opacity: 0;
-                pointer-events: none;
-                transition: opacity 0.25s ease, transform 0.25s ease;
-                z-index: 80;
-                width: min(360px, calc(100% - 28px));
-                text-align: center;
+                transform: translateY(12px);
+                animation: fadeUp 0.55s ease forwards;
             }
 
-            .toast.show {
-                opacity: 1;
-                transform: translateX(-50%) translateY(-2px);
+            .delay-1 {
+                animation-delay: 0.08s;
             }
 
-            .fade {
-                opacity: 0;
-                transform: translateY(10px);
-                transition: opacity 0.6s ease, transform 0.6s ease;
+            .delay-2 {
+                animation-delay: 0.16s;
             }
 
-            .fade.in {
-                opacity: 1;
-                transform: translateY(0);
+            .delay-3 {
+                animation-delay: 0.24s;
             }
 
-            .splash {
+            @keyframes fadeUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @media (max-width: 1100px) {
+                .stats-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .projects-grid {
+                    grid-template-columns: 1fr;
+                }
+                .skills-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 860px) {
+                .sidebar {
+                    display: none;
+                }
+                .main-content {
+                    padding: 22px;
+                }
+                .hero-section {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 18px;
+                }
+                .hero-avatar {
+                    width: 100%;
+                    height: 200px;
+                }
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                }
+                .experience-section {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            .startup {
                 position: fixed;
                 inset: 0;
-                background: radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.26), transparent 55%),
-                    radial-gradient(circle at 85% 25%, rgba(191, 90, 242, 0.22), transparent 55%),
-                    linear-gradient(180deg, #07070a 0%, #0b0b0f 55%, #07070a 100%);
-                z-index: 200;
+                z-index: 9999;
                 display: grid;
                 place-items: center;
-                padding: 26px;
+                background: radial-gradient(circle at 20% 15%, rgba(0, 122, 255, 0.14), transparent 46%),
+                    radial-gradient(circle at 80% 25%, rgba(175, 82, 222, 0.12), transparent 52%),
+                    radial-gradient(circle at 50% 90%, rgba(52, 199, 89, 0.10), transparent 52%),
+                    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(245, 245, 247, 0.96));
+                backdrop-filter: blur(8px);
                 transition: opacity 0.55s ease, transform 0.55s ease;
             }
 
-            .splash.hide {
+            body.galaxy-bg .startup {
+                background: radial-gradient(circle at 20% 15%, rgba(100, 210, 255, 0.12), transparent 46%),
+                    radial-gradient(circle at 80% 25%, rgba(175, 82, 222, 0.14), transparent 52%),
+                    linear-gradient(180deg, rgba(10, 10, 14, 0.94), rgba(0, 0, 0, 0.94));
+            }
+
+            body.ocean-bg .startup {
+                background: radial-gradient(circle at 20% 15%, rgba(0, 212, 255, 0.10), transparent 46%),
+                    radial-gradient(circle at 80% 25%, rgba(0, 122, 255, 0.12), transparent 52%),
+                    linear-gradient(180deg, rgba(10, 20, 35, 0.92), rgba(10, 20, 35, 0.92));
+            }
+
+            body.sunset-bg .startup {
+                background: radial-gradient(circle at 20% 15%, rgba(255, 159, 10, 0.12), transparent 46%),
+                    radial-gradient(circle at 80% 25%, rgba(255, 69, 58, 0.12), transparent 52%),
+                    linear-gradient(180deg, rgba(25, 12, 12, 0.92), rgba(25, 12, 12, 0.92));
+            }
+
+            .startup.hide {
                 opacity: 0;
-                transform: scale(1.02);
+                transform: scale(1.01);
                 pointer-events: none;
             }
 
-            .splash-card {
-                width: min(430px, 100%);
-                border-radius: 44px;
+            .startup-card {
+                width: min(640px, calc(100% - 40px));
+                border-radius: 24px;
                 padding: 22px;
-                background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.14);
-                backdrop-filter: blur(18px);
-                box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.72);
+                backdrop-filter: var(--blur);
+                box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22);
             }
 
-            .splash-top {
+            body.galaxy-bg .startup-card,
+            body.ocean-bg .startup-card,
+            body.sunset-bg .startup-card {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.12);
+                box-shadow: 0 30px 90px rgba(0, 0, 0, 0.40);
+            }
+
+            .startup-top {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                gap: 12px;
+                gap: 14px;
             }
 
-            .splash-brand {
+            .startup-brand {
                 display: flex;
                 align-items: center;
                 gap: 12px;
             }
 
-            .splash-icon {
-                width: 52px;
-                height: 52px;
-                border-radius: 18px;
-                display: grid;
-                place-items: center;
-                background: linear-gradient(135deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.75));
-                box-shadow: 0 16px 34px rgba(10, 132, 255, 0.18);
-                color: white;
-                font-size: 18px;
-                border: 1px solid rgba(255, 255, 255, 0.10);
+            .startup-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: rgb(255, 255, 255);
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
+                box-shadow: 0 14px 34px rgba(0, 122, 255, 0.18);
+                border: 1px solid rgba(255, 255, 255, 0.32);
             }
 
-            .splash-brand strong {
-                display: block;
-                font-size: 14px;
+            body.galaxy-bg .startup-icon,
+            body.ocean-bg .startup-icon,
+            body.sunset-bg .startup-icon {
+                border-color: rgba(255, 255, 255, 0.14);
+            }
+
+            .startup-name {
                 font-weight: 900;
-                letter-spacing: 0.2px;
+                letter-spacing: -0.2px;
+                font-size: 14px;
+                color: rgba(29, 29, 31, 0.92);
+            }
+
+            .startup-sub {
+                margin-top: 2px;
+                font-size: 12px;
+                font-weight: 700;
+                color: rgba(60, 60, 67, 0.72);
+            }
+
+            body.galaxy-bg .startup-name,
+            body.ocean-bg .startup-name,
+            body.sunset-bg .startup-name {
                 color: rgba(255, 255, 255, 0.92);
             }
 
-            .splash-brand span {
-                display: block;
-                margin-top: 2px;
-                font-size: 12px;
-                font-weight: 800;
-                color: rgba(255, 255, 255, 0.62);
+            body.galaxy-bg .startup-sub,
+            body.ocean-bg .startup-sub,
+            body.sunset-bg .startup-sub {
+                color: rgba(255, 255, 255, 0.66);
             }
 
-            .splash-chip {
-                height: 32px;
-                padding: 0 12px;
-                border-radius: 999px;
+            .startup-chip {
+                padding: 8px 12px;
+                border-radius: var(--radiusPill);
+                border: 1px solid rgba(0, 0, 0, 0.10);
+                background: rgba(255, 255, 255, 0.66);
+                font-size: 12px;
+                font-weight: 900;
+                letter-spacing: 0.15px;
+                color: rgba(29, 29, 31, 0.90);
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
+            }
+
+            body.galaxy-bg .startup-chip,
+            body.ocean-bg .startup-chip,
+            body.sunset-bg .startup-chip {
                 background: rgba(255, 255, 255, 0.08);
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                color: rgba(255, 255, 255, 0.78);
-                font-size: 12px;
-                font-weight: 900;
-                letter-spacing: 0.2px;
+                border-color: rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.86);
             }
 
-            .splash-mid {
-                margin-top: 18px;
-                padding: 18px;
-                border-radius: 28px;
-                background: rgba(10, 10, 14, 0.55);
-                border: 1px solid rgba(255, 255, 255, 0.10);
+            .startup-mid {
+                margin-top: 16px;
+                padding: 16px;
+                border-radius: 18px;
+                border: 1px solid rgba(0, 0, 0, 0.08);
+                background: rgba(255, 255, 255, 0.62);
+                backdrop-filter: var(--blur);
             }
 
-            .splash-mid h1 {
-                font-size: 22px;
+            body.galaxy-bg .startup-mid,
+            body.ocean-bg .startup-mid,
+            body.sunset-bg .startup-mid {
+                background: rgba(255, 255, 255, 0.06);
+                border-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .startup-headline {
+                font-size: 18px;
                 font-weight: 900;
-                letter-spacing: -0.4px;
-                background: linear-gradient(135deg, #64d2ff, #0a84ff, #bf5af2);
+                letter-spacing: -0.3px;
+                background: linear-gradient(135deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
 
-            .splash-mid p {
+            .startup-text {
                 margin-top: 8px;
                 font-size: 13px;
-                font-weight: 800;
-                color: rgba(255, 255, 255, 0.62);
-                line-height: 1.45;
+                font-weight: 600;
+                color: rgba(60, 60, 67, 0.72);
+                max-width: 520px;
             }
 
-            .progress {
-                margin-top: 16px;
-                height: 10px;
-                border-radius: 999px;
-                background: rgba(255, 255, 255, 0.10);
-                border: 1px solid rgba(255, 255, 255, 0.10);
-                overflow: hidden;
+            body.galaxy-bg .startup-text,
+            body.ocean-bg .startup-text,
+            body.sunset-bg .startup-text {
+                color: rgba(255, 255, 255, 0.70);
             }
 
-            .progress > div {
-                height: 100%;
-                width: 0%;
-                border-radius: 999px;
-                background: linear-gradient(90deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.85));
-                transition: width 0.6s ease;
-            }
-
-            .splash-foot {
+            .startup-meta {
                 margin-top: 14px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                color: rgba(255, 255, 255, 0.55);
-                font-size: 12px;
-                font-weight: 900;
-                letter-spacing: 0.2px;
+                gap: 12px;
+                flex-wrap: wrap;
             }
 
-            @media (max-width: 380px) {
-                .tabs-inner {
-                    grid-template-columns: repeat(5, 1fr);
-                    gap: 6px;
+            .loading-dots {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(0, 122, 255, 0.85);
+                box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.12);
+                animation: dotPulse 1.1s ease-in-out infinite;
+            }
+
+            .dot:nth-child(2) {
+                animation-delay: 0.12s;
+                background: rgba(175, 82, 222, 0.85);
+                box-shadow: 0 0 0 4px rgba(175, 82, 222, 0.12);
+            }
+
+            .dot:nth-child(3) {
+                animation-delay: 0.24s;
+                background: rgba(52, 199, 89, 0.85);
+                box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.12);
+            }
+
+            @keyframes dotPulse {
+                0% {
+                    transform: translateY(0);
+                    opacity: 0.65;
                 }
-                .tab span {
-                    display: none;
+                50% {
+                    transform: translateY(-3px);
+                    opacity: 1;
                 }
-                .content {
-                    padding-left: 14px;
-                    padding-right: 14px;
+                100% {
+                    transform: translateY(0);
+                    opacity: 0.65;
                 }
+            }
+
+            .startup-right {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                font-size: 12px;
+                font-weight: 800;
+                color: rgba(60, 60, 67, 0.72);
+            }
+
+            body.galaxy-bg .startup-right,
+            body.ocean-bg .startup-right,
+            body.sunset-bg .startup-right {
+                color: rgba(255, 255, 255, 0.66);
+            }
+
+            .startup-bar {
+                margin-top: 14px;
+                height: 10px;
+                border-radius: var(--radiusPill);
+                background: rgba(0, 0, 0, 0.08);
+                overflow: hidden;
+                border: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            body.galaxy-bg .startup-bar,
+            body.ocean-bg .startup-bar,
+            body.sunset-bg .startup-bar {
+                background: rgba(255, 255, 255, 0.10);
+                border-color: rgba(255, 255, 255, 0.10);
+            }
+
+            .startup-fill {
+                height: 100%;
+                width: 0%;
+                border-radius: var(--radiusPill);
+                background: linear-gradient(90deg, rgba(0, 122, 255, 1), rgba(175, 82, 222, 1));
+                transition: width 0.5s ease;
             }
         </style>
     </head>
 
-    <body class="preload">
-        <div class="bg-orb"></div>
-        <div class="noise"></div>
-
-        <div class="splash" id="splash">
-            <div class="splash-card">
-                <div class="splash-top">
-                    <div class="splash-brand">
-                        <div class="splash-icon"><i class="fas fa-cube"></i></div>
+    <body class="default-bg preload">
+        <div class="startup" id="startup">
+            <div class="startup-card">
+                <div class="startup-top">
+                    <div class="startup-brand">
+                        <div class="startup-icon"><i class="fas fa-cube"></i></div>
                         <div>
-                            <strong>SleepyBH</strong>
-                            <span>Minecraft Developer</span>
+                            <div class="startup-name">SleepyBH</div>
+                            <div class="startup-sub">Minecraft Developer Portfolio</div>
                         </div>
                     </div>
-                    <div class="splash-chip"><i class="fas fa-bolt"></i> iOS Portfolio</div>
+                    <div class="startup-chip"><i class="fas fa-shield-heart"></i> Professional Mode</div>
                 </div>
 
-                <div class="splash-mid">
-                    <h1>Launching your experience</h1>
-                    <p>Loading sections, polishing visuals, preparing smooth animations.</p>
-                    <div class="progress"><div id="progressBar"></div></div>
-                </div>
+                <div class="startup-mid">
+                    <div class="startup-headline">Preparing your workspace</div>
+                    <div class="startup-text">
+                        Loading projects, experience, and contact details with a clean macOS and iOS-inspired glass
+                        design.
+                    </div>
 
-                <div class="splash-foot">
-                    <span id="splashTip">Tip: tap the tabs to navigate</span>
-                    <span id="splashPct">0%</span>
+                    <div class="startup-meta">
+                        <div class="loading-dots" aria-hidden="true">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="startup-right">
+                            <i class="fas fa-wand-magic-sparkles"></i>
+                            <span id="startupPct">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="startup-bar">
+                        <div class="startup-fill" id="startupFill"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="shell">
-            <div class="phone">
-                <div class="statusbar">
-                    <div class="status-left">
-                        <span id="timeText">9:41</span>
-                        <span class="pill"><i class="fas fa-sparkles"></i> Portfolio</span>
-                    </div>
-                    <div class="status-right">
-                        <span class="status-dot"></span>
-                        <span>Online</span>
-                    </div>
+        <div class="macos-window" id="window">
+            <div class="title-bar">
+                <div class="traffic-lights">
+                    <div class="traffic-light close" onclick="closeWindow()"></div>
+                    <div class="traffic-light minimize" onclick="minimizeWindow()"></div>
+                    <div class="traffic-light maximize" onclick="maximizeWindow()"></div>
                 </div>
 
-                <div class="content" id="content">
-                    <section class="section fade" id="hero">
-                        <div class="card hero">
-                            <div class="hero-top">
-                                <div class="avatar">
-                                    <img
-                                        alt="Developer"
-                                        src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
-                                    />
+                <div class="window-title">SleepyBH — Minecraft Developer Portfolio</div>
+
+                <div class="title-actions">
+                    <button class="pill-btn" id="themeToggleBtn" type="button">
+                        <i class="fas fa-palette"></i>
+                        <span id="themeLabel">Theme</span>
+                    </button>
+                </div>
+
+                <div class="theme-dropdown" id="themeDropdown">
+                    <div class="theme-option" data-theme="default"><i class="fas fa-desktop"></i> Mac Default</div>
+                    <div class="theme-option" data-theme="galaxy"><i class="fas fa-star"></i> Galaxy</div>
+                    <div class="theme-option" data-theme="ocean"><i class="fas fa-water"></i> Ocean</div>
+                    <div class="theme-option" data-theme="sunset"><i class="fas fa-sun"></i> Sunset</div>
+                </div>
+            </div>
+
+            <div class="layout">
+                <div class="sidebar">
+                    <div class="logo-container">
+                        <div class="logo">
+                            <div class="logo-icon"><i class="fas fa-cube"></i></div>
+                            SleepyBH
+                        </div>
+                    </div>
+
+                    <ul class="nav-items">
+                        <li><a class="nav-item active" data-target="hero"><i class="fas fa-user"></i>Profile</a></li>
+                        <li><a class="nav-item" data-target="skills"><i class="fas fa-code"></i>Expertise</a></li>
+                        <li><a class="nav-item" data-target="experience"><i class="fas fa-briefcase"></i>Experience</a></li>
+                        <li><a class="nav-item" data-target="projects"><i class="fas fa-project-diagram"></i>Projects</a></li>
+                        <li><a class="nav-item" data-target="code"><i class="fas fa-terminal"></i>Code</a></li>
+                        <li><a class="nav-item" data-target="contact"><i class="fas fa-envelope"></i>Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="main-content" id="mainContent">
+                    <section class="animate-in" id="hero">
+                        <div class="hero-section">
+                            <div class="hero-content">
+                                <h1 class="hero-title">Crafting Digital Worlds</h1>
+                                <p class="hero-subtitle">
+                                    Transforming Minecraft visions into reality through expert plugin development and server
+                                    architecture
+                                </p>
+
+                                <div class="tag-container">
+                                    <span class="tag">Plugin Architect</span>
+                                    <span class="tag">Server Specialist</span>
+                                    <span class="tag">Game Mechanic Designer</span>
+                                    <span class="tag">Community Engineer</span>
+                                    <span class="tag">Backend Developer</span>
                                 </div>
-                                <div class="hero-headline">
-                                    <h1>Crafting Digital Worlds</h1>
-                                    <p>Transforming Minecraft visions into reality through expert plugin development and server architecture</p>
+
+                                <div class="stats-grid">
+                                    <div class="macos-card stat-card">
+                                        <div class="stat-number">4+</div>
+                                        <div class="stat-label">Years Mastery</div>
+                                    </div>
+                                    <div class="macos-card stat-card">
+                                        <div class="stat-number">117+</div>
+                                        <div class="stat-label">Projects Delivered</div>
+                                    </div>
+                                    <div class="macos-card stat-card">
+                                        <div class="stat-number">4.7★</div>
+                                        <div class="stat-label">Client Rating</div>
+                                    </div>
+                                    <div class="macos-card stat-card">
+                                        <div class="stat-number">37K+</div>
+                                        <div class="stat-label">Total Downloads</div>
+                                    </div>
+                                </div>
+
+                                <div class="actions-row">
+                                    <a class="macos-btn primary" data-target="contact"><i class="fas fa-rocket"></i>Start Project</a>
+                                    <a class="macos-btn" data-target="projects"><i class="fas fa-eye"></i>View Portfolio</a>
                                 </div>
                             </div>
 
-                            <div class="tag-row">
-                                <span class="tag">Plugin Architect</span>
-                                <span class="tag">Server Specialist</span>
-                                <span class="tag">Game Mechanic Designer</span>
-                                <span class="tag">Community Engineer</span>
-                                <span class="tag">Backend Developer</span>
-                            </div>
-
-                            <div class="stats">
-                                <div class="stat">
-                                    <strong>4+</strong>
-                                    <span>Years Mastery</span>
-                                </div>
-                                <div class="stat">
-                                    <strong>117+</strong>
-                                    <span>Projects Delivered</span>
-                                </div>
-                                <div class="stat">
-                                    <strong>4.7★</strong>
-                                    <span>Client Rating</span>
-                                </div>
-                                <div class="stat">
-                                    <strong>37K+</strong>
-                                    <span>Total Downloads</span>
-                                </div>
-                            </div>
-
-                            <div class="cta-row">
-                                <a class="btn primary" href="#contact" data-jump="contact"><i class="fas fa-rocket"></i> Start Project</a>
-                                <a class="btn" href="#projects" data-jump="projects"><i class="fas fa-eye"></i> View Work</a>
+                            <div class="hero-avatar animate-in delay-1">
+                                <img
+                                    alt="Development"
+                                    src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+                                />
                             </div>
                         </div>
                     </section>
 
-                    <section class="section fade" id="skills">
-                        <div class="section-title">
-                            <h2>Technical Expertise</h2>
-                            <span>iOS style progress</span>
-                        </div>
-
-                        <div class="card">
-                            <div class="skills">
-                                <div class="skill" style="--w: 92%">
-                                    <div class="icon"><i class="fab fa-html5"></i></div>
-                                    <div class="name">HTML5</div>
-                                    <div class="pct">92%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 90%">
-                                    <div class="icon"><i class="fab fa-css3-alt"></i></div>
-                                    <div class="name">CSS3</div>
-                                    <div class="pct">90%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 90%">
-                                    <div class="icon"><i class="fab fa-js"></i></div>
-                                    <div class="name">JavaScript</div>
-                                    <div class="pct">90%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 88%">
-                                    <div class="icon"><i class="fab fa-java"></i></div>
-                                    <div class="name">Java</div>
-                                    <div class="pct">88%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 85%">
-                                    <div class="icon"><i class="fab fa-php"></i></div>
-                                    <div class="name">PHP</div>
-                                    <div class="pct">85%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 85%">
-                                    <div class="icon"><i class="fas fa-code"></i></div>
-                                    <div class="name">Lua</div>
-                                    <div class="pct">85%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 95%">
-                                    <div class="icon"><i class="fas fa-cube"></i></div>
-                                    <div class="name">Skript</div>
-                                    <div class="pct">95%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 80%">
-                                    <div class="icon"><i class="fab fa-python"></i></div>
-                                    <div class="name">Python</div>
-                                    <div class="pct">80%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 92%">
-                                    <div class="icon"><i class="fas fa-server"></i></div>
-                                    <div class="name">Server Management</div>
-                                    <div class="pct">92%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-
-                                <div class="skill" style="--w: 87%">
-                                    <div class="icon"><i class="fas fa-database"></i></div>
-                                    <div class="name">Database Design</div>
-                                    <div class="pct">87%</div>
-                                    <div class="bar"><div class="fill"></div></div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="section fade" id="experience">
-                        <div class="section-title">
-                            <h2>Professional Journey</h2>
-                            <span>present and past</span>
-                        </div>
-
-                        <div class="grid">
-                            <div class="card">
-                                <div class="pill-title">
-                                    <h3><i class="fas fa-rocket" style="color: var(--ios-green); margin-right: 8px"></i>Current Leadership</h3>
-                                    <span class="date">Now</span>
-                                </div>
-
-                                <div class="grid" style="margin-top: 12px">
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>MaceSMP - Survival</h3>
-                                            <span class="date">2025 - Present</span>
-                                        </div>
-                                        <div class="role">Owner</div>
-                                        <div class="desc">Owner pluh.</div>
-                                        <div class="link-row">
-                                            <a class="mini-btn discord" href="https://discord.gg/SgY6XXp3tF" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-discord"></i> Join
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>MaceSMP - BoxGen</h3>
-                                            <span class="date">2025 - Present</span>
-                                        </div>
-                                        <div class="role">Owner</div>
-                                        <div class="desc">Owner pluh.</div>
-                                        <div class="link-row">
-                                            <a class="mini-btn discord" href="https://discord.gg/macesmp" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-discord"></i> Join
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>BlitzBox</h3>
-                                            <span class="date">2025 - Present</span>
-                                        </div>
-                                        <div class="role">Developer</div>
-                                        <div class="desc">One of the developers behind plugins and the AntiCheat system.</div>
-                                        <div class="link-row">
-                                            <a class="mini-btn discord" href="https://discord.gg/zDpmazrUve" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-discord"></i> Join
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>DripLeaf</h3>
-                                            <span class="date">2025 - Present</span>
-                                        </div>
-                                        <div class="role">Owner</div>
-                                        <div class="desc">Leading operations, team direction, and gameplay integrity for ElytraPvP.</div>
-                                    </div>
-                                </div>
+                    <section class="animate-in delay-2" id="skills">
+                        <div class="macos-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Technical Expertise</h2>
                             </div>
 
-                            <div class="card">
-                                <div class="pill-title">
-                                    <h3><i class="fas fa-history" style="color: var(--ios-orange); margin-right: 8px"></i>Strategic Experience</h3>
-                                    <span class="date">Past</span>
+                            <div class="skills-grid">
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-html5"></i></div>
+                                        HTML5
+                                    </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                    <div class="skill-percent">92%</div>
                                 </div>
 
-                                <div class="grid" style="margin-top: 12px">
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>SwiftBox</h3>
-                                            <span class="date">2025</span>
-                                        </div>
-                                        <div class="role">Co-Owner</div>
-                                        <div class="desc">Managed the staff team by overseeing promotions, demotions, and staff waves. Ensured team performance and server integrity.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-css3-alt"></i></div>
+                                        CSS3
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                    <div class="skill-percent">90%</div>
+                                </div>
 
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>PolishBox</h3>
-                                            <span class="date">2025</span>
-                                        </div>
-                                        <div class="role">JrAdmin</div>
-                                        <div class="desc">Assisted in server management and handled player applications. Built experience in server administration and player support.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-js"></i></div>
+                                        JavaScript
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 90%"></div></div>
+                                    <div class="skill-percent">90%</div>
+                                </div>
 
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>ScytheMC</h3>
-                                            <span class="date">2025</span>
-                                        </div>
-                                        <div class="role">System Admin</div>
-                                        <div class="desc">Managed server operations and player communities. Implemented custom features and ensured smooth gameplay experience.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-java"></i></div>
+                                        Java
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 88%"></div></div>
+                                    <div class="skill-percent">88%</div>
+                                </div>
 
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>LittleGens22</h3>
-                                            <span class="date">2025</span>
-                                        </div>
-                                        <div class="role">Staff Manager</div>
-                                        <div class="desc">Managed the staff team, conducted training sessions, and handled staff related issues to improve team efficiency.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-php"></i></div>
+                                        PHP
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
+                                    <div class="skill-percent">85%</div>
+                                </div>
 
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>Atlas Roblox Scripts</h3>
-                                            <span class="date">Past</span>
-                                        </div>
-                                        <div class="role">Supporter</div>
-                                        <div class="desc">Provided support and community assistance for scripts and releases.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fas fa-code"></i></div>
+                                        Lua
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 85%"></div></div>
+                                    <div class="skill-percent">85%</div>
+                                </div>
 
-                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
-                                        <div class="pill-title">
-                                            <h3>Smppixel</h3>
-                                            <span class="date">Past</span>
-                                        </div>
-                                        <div class="role">Staff Manager</div>
-                                        <div class="desc">Led staffing operations, onboarding, and coordination to keep moderation and support running smoothly.</div>
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fas fa-cube"></i></div>
+                                        Skript
                                     </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 95%"></div></div>
+                                    <div class="skill-percent">95%</div>
+                                </div>
+
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fab fa-python"></i></div>
+                                        Python
+                                    </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 80%"></div></div>
+                                    <div class="skill-percent">80%</div>
+                                </div>
+
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fas fa-server"></i></div>
+                                        Server Management
+                                    </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 92%"></div></div>
+                                    <div class="skill-percent">92%</div>
+                                </div>
+
+                                <div class="skill-item">
+                                    <div class="skill-name">
+                                        <div class="skill-icon"><i class="fas fa-database"></i></div>
+                                        Database Design
+                                    </div>
+                                    <div class="skill-bar"><div class="skill-progress" style="width: 87%"></div></div>
+                                    <div class="skill-percent">87%</div>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <section class="section fade" id="projects">
-                        <div class="section-title">
-                            <h2>Featured Projects</h2>
-                            <span>plugins and skripts</span>
-                        </div>
-
-                        <div class="card">
-                            <div class="projects-toggle">
-                                <button class="seg active" id="segPlugins" type="button">Plugins</button>
-                                <button class="seg" id="segSkripts" type="button">Skripts</button>
+                    <section class="animate-in delay-1" id="experience">
+                        <div class="macos-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Professional Journey</h2>
                             </div>
 
-                            <div class="projects-grid" id="pluginsList">
-                                <div class="card project">
-                                    <div class="project-top">
-                                        <div class="badge">37 Downloads</div>
+                            <div class="experience-section">
+                                <div>
+                                    <div class="experience-header">
+                                        <i class="fas fa-rocket"></i>
+                                        <div>Current Leadership</div>
                                     </div>
-                                    <div class="project-body">
-                                        <h3>ReportSystem</h3>
-                                        <p>Advanced player reporting and moderation system with Discord integration and MySQL database logging.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.8</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 37</div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">MaceSMP - Survival</div>
+                                            <span class="experience-date">2025 - Present</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/reportplugin" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> GitHub
-                                            </a>
+                                        <span class="experience-position">Owner</span>
+                                        <p class="experience-description">Owner pluh.</p>
+                                        <a class="discord-btn" href="https://discord.gg/SgY6XXp3tF" target="_blank" rel="noreferrer">
+                                            <i class="fab fa-discord"></i> Join Survival Server
+                                        </a>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">MaceSMP - BoxGen</div>
+                                            <span class="experience-date">2025 - Present</span>
                                         </div>
+                                        <span class="experience-position">Owner</span>
+                                        <p class="experience-description">Owner pluh.</p>
+                                        <a class="discord-btn" href="https://discord.gg/macesmp" target="_blank" rel="noreferrer">
+                                            <i class="fab fa-discord"></i> Join BoxGen Server
+                                        </a>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">BlitzBox</div>
+                                            <span class="experience-date">2025 - Present</span>
+                                        </div>
+                                        <span class="experience-position">Developer</span>
+                                        <p class="experience-description">One of the developers behind plugins and the AntiCheat system.</p>
+                                        <a class="discord-btn" href="https://discord.gg/zDpmazrUve" target="_blank" rel="noreferrer">
+                                            <i class="fab fa-discord"></i> Join BlitzBox
+                                        </a>
+                                    </div>
+
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">DripLeaf</div>
+                                            <span class="experience-date">2025 - Present</span>
+                                        </div>
+                                        <span class="experience-position">Owner</span>
+                                        <p class="experience-description">Leading operations and direction with a focus on fair gameplay and community growth.</p>
                                     </div>
                                 </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(48, 209, 88, 0.70), rgba(10, 132, 255, 0.55))">
-                                        <div class="badge">37 Downloads</div>
+                                <div>
+                                    <div class="experience-header">
+                                        <i class="fas fa-history" style="color: rgba(255, 149, 0, 1)"></i>
+                                        <div>Strategic Experience</div>
                                     </div>
-                                    <div class="project-body">
-                                        <h3>ItemFlip</h3>
-                                        <p>Automated item trading and market system with real-time price updates and profit calculation.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.6</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 37</div>
-                                        </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/ItemFlipPlugin" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> GitHub
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 159, 10, 0.75), rgba(255, 69, 58, 0.55))">
-                                        <div class="badge">12 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>ChestDrop</h3>
-                                        <p>Custom chest loot and drop system with configurable drop rates and animated effects.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.4</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 12</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">SwiftBox</div>
+                                            <span class="experience-date">2025</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/ChestDrop" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> GitHub
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">Co-Owner</span>
+                                        <p class="experience-description">
+                                            Managed the staff team by overseeing promotions, demotions, and staff waves. Ensured team performance and server integrity.
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(191, 90, 242, 0.75), rgba(10, 132, 255, 0.55))">
-                                        <div class="badge">181 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>Duelssystem</h3>
-                                        <p>Advanced player duel and PvP system with statistics tracking and spectator mode.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.9</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 181</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">PolishBox</div>
+                                            <span class="experience-date">2025</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/Duelssystem" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> GitHub
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">JrAdmin</span>
+                                        <p class="experience-description">
+                                            Assisted in server management and handled player applications. Gained experience in server administration and player support.
+                                        </p>
                                     </div>
-                                </div>
-                            </div>
 
-                            <div class="projects-grid" id="skriptsList" style="display: none">
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 159, 10, 0.75), rgba(255, 69, 58, 0.55))">
-                                        <div class="badge">24 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>Advanced Economy</h3>
-                                        <p>Complete economy system with shops, banks, and trading using Skript. Features interest rates and loan systems.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.7</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 24</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">ScytheMC</div>
+                                            <span class="experience-date">2025</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/AdvancedEconomy" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> View
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">System Admin</span>
+                                        <p class="experience-description">
+                                            Managed server operations and player communities. Implemented custom features and ensured smooth gameplay experience.
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(48, 209, 88, 0.70), rgba(10, 132, 255, 0.55))">
-                                        <div class="badge">42 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>Quest System</h3>
-                                        <p>Dynamic quest system with multiple quest types, progress tracking, and reward distribution using Skript.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.9</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 42</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">LittleGens22</div>
+                                            <span class="experience-date">2025</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/QuestSystem" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> View
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">Staff Manager</span>
+                                        <p class="experience-description">
+                                            Managed the staff team, conducted training sessions, and handled staff related issues. Improved team efficiency and communication.
+                                        </p>
                                     </div>
-                                </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(191, 90, 242, 0.75), rgba(88, 86, 214, 0.55))">
-                                        <div class="badge">18 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>Custom Enchants</h3>
-                                        <p>Collection of unique custom enchantments with particle effects and special abilities created with Skript.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.5</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 18</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">Atlas Roblox Scripts</div>
+                                            <span class="experience-date">Past</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/CustomEnchants" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> View
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">Supporter</span>
+                                        <p class="experience-description">Provided support and community help across releases and updates.</p>
                                     </div>
-                                </div>
 
-                                <div class="card project">
-                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 45, 85, 0.75), rgba(255, 159, 10, 0.55))">
-                                        <div class="badge">31 Downloads</div>
-                                    </div>
-                                    <div class="project-body">
-                                        <h3>Player Warps</h3>
-                                        <p>Advanced warping system with cooldowns, costs, and permission-based warps implemented in Skript.</p>
-                                        <div class="meta-row">
-                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.6</div>
-                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 31</div>
+                                    <div class="experience-item">
+                                        <div class="experience-role">
+                                            <div class="experience-title">Smppixel</div>
+                                            <span class="experience-date">Past</span>
                                         </div>
-                                        <div class="link-row">
-                                            <a class="mini-btn github" href="https://github.com/SleepyBH/PlayerWarps" target="_blank" rel="noreferrer">
-                                                <i class="fab fa-github"></i> View
-                                            </a>
-                                        </div>
+                                        <span class="experience-position">Staff Manager</span>
+                                        <p class="experience-description">Led staffing and team coordination to keep moderation and support running smoothly.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </section>
 
-                    <section class="section fade" id="code">
-                        <div class="section-title">
-                            <h2>Development Showcase</h2>
-                            <span>clean iOS code block</span>
-                        </div>
-
-                        <div class="codebox">
-                            <div class="topbar">
-                                <span><i class="fas fa-terminal" style="margin-right: 8px"></i> WelcomePlugin.java</span>
-                                <span style="color: rgba(255, 255, 255, 0.55)">Spigot</span>
+                    <section class="animate-in delay-2" id="projects">
+                        <div class="macos-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Featured Projects</h2>
                             </div>
-                            <pre class="code"><span class="kw">import</span> org.bukkit.<span class="fn">event</span>.EventListener;
+
+                            <div class="project-categories">
+                                <button class="project-category-btn active" data-category="plugins" type="button">Plugins</button>
+                                <button class="project-category-btn" data-category="skripts" type="button">Skripts</button>
+                            </div>
+
+                            <div class="project-category active" id="plugins-category">
+                                <div class="projects-grid">
+                                    <div class="macos-card project-card">
+                                        <div class="project-image">
+                                            <span class="project-badge">37 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">ReportSystem</h3>
+                                            <p class="project-description">
+                                                Advanced player reporting and moderation system with Discord integration and MySQL database logging.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.8</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>37</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/reportplugin" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> GitHub Repository
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(52, 199, 89, 1), rgba(0, 122, 255, 1))">
+                                            <span class="project-badge">37 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">ItemFlip</h3>
+                                            <p class="project-description">
+                                                Automated item trading and market system with real-time price updates and profit calculation.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.6</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>37</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/ItemFlipPlugin" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> GitHub Repository
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(255, 149, 0, 1), rgba(255, 59, 48, 1))">
+                                            <span class="project-badge">12 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">ChestDrop</h3>
+                                            <p class="project-description">
+                                                Custom chest loot and drop system with configurable drop rates and animated effects.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.4</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>12</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/ChestDrop" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> GitHub Repository
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(175, 82, 222, 1), rgba(0, 122, 255, 1))">
+                                            <span class="project-badge">181 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">Duelssystem</h3>
+                                            <p class="project-description">
+                                                Advanced player duel and PvP system with statistics tracking and spectator mode.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.9</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>181</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/Duelssystem" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> GitHub Repository
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="project-category" id="skripts-category">
+                                <div class="projects-grid">
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(255, 149, 0, 1), rgba(255, 59, 48, 1))">
+                                            <span class="project-badge">24 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">Advanced Economy</h3>
+                                            <p class="project-description">
+                                                Complete economy system with shops, banks, and trading using Skript. Features interest rates and loan systems.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.7</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>24</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/AdvancedEconomy" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> View Skript
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(52, 199, 89, 1), rgba(0, 122, 255, 1))">
+                                            <span class="project-badge">42 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">Quest System</h3>
+                                            <p class="project-description">
+                                                Dynamic quest system with multiple quest types, progress tracking, and reward distribution using Skript.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.9</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>42</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/QuestSystem" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> View Skript
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(175, 82, 222, 1), rgba(88, 86, 214, 1))">
+                                            <span class="project-badge">18 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">Custom Enchants</h3>
+                                            <p class="project-description">
+                                                Collection of unique custom enchantments with particle effects and special abilities created with Skript.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.5</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>18</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/CustomEnchants" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> View Skript
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="macos-card project-card">
+                                        <div class="project-image" style="background: linear-gradient(135deg, rgba(255, 45, 85, 1), rgba(255, 149, 0, 1))">
+                                            <span class="project-badge">31 Downloads</span>
+                                        </div>
+                                        <div class="project-content">
+                                            <h3 class="project-title">Player Warps</h3>
+                                            <p class="project-description">
+                                                Advanced warping system with cooldowns, costs, and permission-based warps implemented in Skript.
+                                            </p>
+                                            <div class="project-stats">
+                                                <div class="stat"><i class="fas fa-star" style="color: rgba(255, 214, 10, 1)"></i> <span>4.6</span></div>
+                                                <div class="stat"><i class="fas fa-download" style="color: rgba(0, 122, 255, 1)"></i> <span>31</span></div>
+                                            </div>
+                                            <a class="macos-btn primary" href="https://github.com/SleepyBH/PlayerWarps" target="_blank" rel="noreferrer" style="margin-top: 12px; justify-content: center; width: 100%">
+                                                <i class="fab fa-github"></i> View Skript
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="animate-in delay-1" id="code">
+                        <div class="macos-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Development Showcase</h2>
+                            </div>
+
+                            <div class="code-snippet">
+                                <div class="code">
+<span class="kw">import</span> org.bukkit.<span class="fn">event</span>.EventListener;
 <span class="kw">import</span> org.bukkit.<span class="fn">event</span>.player.PlayerJoinEvent;
 
 <span class="kw">public class</span> <span class="fn">WelcomePlugin</span> {
@@ -1571,252 +2181,326 @@
             )
         );
     }
-}</pre>
-                        </div>
-                    </section>
-
-                    <section class="section fade" id="contact">
-                        <div class="section-title">
-                            <h2>Collaborate With Me</h2>
-                            <span>quick contact</span>
-                        </div>
-
-                        <div class="grid">
-                            <div class="card">
-                                <div class="contact-grid">
-                                    <div class="field">
-                                        <div class="label">Your Name</div>
-                                        <input class="input" id="nameInput" placeholder="Enter your name" />
-                                    </div>
-
-                                    <div class="field">
-                                        <div class="label">Email Address</div>
-                                        <input class="input" id="emailInput" placeholder="your@email.com" type="email" />
-                                    </div>
-
-                                    <div class="field">
-                                        <div class="label">Project Details</div>
-                                        <textarea class="textarea" id="detailsInput" placeholder="Tell me about your project vision..."></textarea>
-                                    </div>
-
-                                    <a class="btn primary" href="javascript:void(0)" id="sendBtn">
-                                        <i class="fas fa-paper-plane"></i> Send
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div class="card">
-                                <div class="pill-title">
-                                    <h3><i class="fas fa-link" style="color: var(--ios-accent); margin-right: 8px"></i>Connect Directly</h3>
-                                    <span class="date">Fast</span>
-                                </div>
-
-                                <div class="direct" style="margin-top: 12px">
-                                    <div class="direct-item">
-                                        <div class="direct-icon"><i class="fas fa-envelope"></i></div>
-                                        <div>
-                                            <strong>Email</strong>
-                                            <span>sleepyxemail@gmail.com</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="direct-item">
-                                        <div class="direct-icon" style="background: rgba(88, 101, 242, 0.22); border-color: rgba(88, 101, 242, 0.25)">
-                                            <i class="fab fa-discord"></i>
-                                        </div>
-                                        <div>
-                                            <strong>Discord</strong>
-                                            <span>okaysleepyx</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="direct-item">
-                                        <div class="direct-icon" style="background: rgba(255, 255, 255, 0.10); border-color: rgba(255, 255, 255, 0.12)">
-                                            <i class="fab fa-github"></i>
-                                        </div>
-                                        <div>
-                                            <strong>GitHub</strong>
-                                            <span>github.com/SleepyBH</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="link-row">
-                                        <a class="mini-btn github" href="https://github.com/SleepyBH" target="_blank" rel="noreferrer">
-                                            <i class="fab fa-github"></i> Profile
-                                        </a>
-                                        <a class="mini-btn discord" href="https://discord.com/users/1042473740145016863" target="_blank" rel="noreferrer">
-                                            <i class="fab fa-discord"></i> DM
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="footer">
-                                    <div>© 2025 SleepyBH</div>
-                                    <div class="social">
-                                        <a href="https://github.com/SleepyBH" target="_blank" rel="noreferrer"><i class="fab fa-github"></i></a>
-                                        <a href="https://discord.com/users/1042473740145016863" target="_blank" rel="noreferrer"><i class="fab fa-discord"></i></a>
-                                        <a href="https://tiktok.com/@okaysleepyx" target="_blank" rel="noreferrer"><i class="fab fa-tiktok"></i></a>
-                                    </div>
-                                </div>
+}</div>
                             </div>
                         </div>
                     </section>
-                </div>
 
-                <div class="tabs">
-                    <div class="tabs-inner">
-                        <a class="tab active" href="#hero" data-target="hero"><i class="fas fa-user"></i><span>Profile</span></a>
-                        <a class="tab" href="#skills" data-target="skills"><i class="fas fa-code"></i><span>Skills</span></a>
-                        <a class="tab" href="#experience" data-target="experience"><i class="fas fa-briefcase"></i><span>XP</span></a>
-                        <a class="tab" href="#projects" data-target="projects"><i class="fas fa-diagram-project"></i><span>Work</span></a>
-                        <a class="tab" href="#contact" data-target="contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
-                    </div>
+                    <section class="animate-in delay-2" id="contact">
+                        <div class="macos-card">
+                            <div class="card-header">
+                                <h2 class="card-title">Collaborate With Me</h2>
+                            </div>
+
+                            <div class="contact-grid">
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">Your Name</label>
+                                        <input class="form-input" id="nameInput" placeholder="Enter your name" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Email Address</label>
+                                        <input class="form-input" id="emailInput" placeholder="your@email.com" type="email" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Project Details</label>
+                                        <textarea class="form-input" id="detailsInput" placeholder="Tell me about your project vision..." rows="5"></textarea>
+                                    </div>
+
+                                    <button class="macos-btn primary" id="sendBtn" type="button">
+                                        <i class="fas fa-paper-plane"></i> Send Proposal
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <div class="form-group">
+                                        <label class="form-label">Connect Directly</label>
+                                        <div class="macos-card" style="padding: 16px; margin-bottom: 0">
+                                            <div style="display: grid; gap: 12px">
+                                                <div style="display: flex; align-items: center; gap: 12px">
+                                                    <div
+                                                        style="
+                                                            width: 40px;
+                                                            height: 40px;
+                                                            border-radius: 14px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            background: rgba(0, 122, 255, 0.10);
+                                                            border: 1px solid rgba(0, 122, 255, 0.14);
+                                                            color: rgba(0, 122, 255, 1);
+                                                        "
+                                                    >
+                                                        <i class="fas fa-envelope"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div style="font-weight: 900; letter-spacing: -0.2px">Email</div>
+                                                        <div style="color: rgba(60, 60, 67, 0.72); font-weight: 700">sleepyxemail@gmail.com</div>
+                                                    </div>
+                                                </div>
+
+                                                <div style="display: flex; align-items: center; gap: 12px">
+                                                    <div
+                                                        style="
+                                                            width: 40px;
+                                                            height: 40px;
+                                                            border-radius: 14px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            background: rgba(88, 101, 242, 0.12);
+                                                            border: 1px solid rgba(88, 101, 242, 0.18);
+                                                            color: rgba(88, 101, 242, 1);
+                                                        "
+                                                    >
+                                                        <i class="fab fa-discord"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div style="font-weight: 900; letter-spacing: -0.2px">Discord</div>
+                                                        <div style="color: rgba(60, 60, 67, 0.72); font-weight: 700">okaysleepyx</div>
+                                                    </div>
+                                                </div>
+
+                                                <div style="display: flex; align-items: center; gap: 12px">
+                                                    <div
+                                                        style="
+                                                            width: 40px;
+                                                            height: 40px;
+                                                            border-radius: 14px;
+                                                            display: flex;
+                                                            align-items: center;
+                                                            justify-content: center;
+                                                            background: rgba(0, 0, 0, 0.06);
+                                                            border: 1px solid rgba(0, 0, 0, 0.10);
+                                                            color: rgba(29, 29, 31, 0.92);
+                                                        "
+                                                    >
+                                                        <i class="fab fa-github"></i>
+                                                    </div>
+                                                    <div>
+                                                        <div style="font-weight: 900; letter-spacing: -0.2px">GitHub</div>
+                                                        <div style="color: rgba(60, 60, 67, 0.72); font-weight: 700">github.com/SleepyBH</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="social-links" style="justify-content: flex-start">
+                                                    <a class="social-link" href="https://github.com/SleepyBH" target="_blank" rel="noreferrer"><i class="fab fa-github"></i></a>
+                                                    <a class="social-link" href="https://discord.com/users/1042473740145016863" target="_blank" rel="noreferrer"><i class="fab fa-discord"></i></a>
+                                                    <a class="social-link" href="https://tiktok.com/@okaysleepyx" target="_blank" rel="noreferrer"><i class="fab fa-tiktok"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="footer">
+                                        <div>© 2025 SleepyBH. Crafting digital experiences with precision and passion.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div style="height: 12px"></div>
                 </div>
             </div>
         </div>
 
-        <div class="toast" id="toast">Saved</div>
-
         <script>
-            const toast = document.getElementById("toast");
-            const content = document.getElementById("content");
+            const body = document.body;
 
-            function showToast(msg) {
-                toast.textContent = msg;
-                toast.classList.add("show");
-                clearTimeout(showToast.t);
-                showToast.t = setTimeout(() => toast.classList.remove("show"), 2200);
+            function setTheme(theme) {
+                body.classList.remove("default-bg", "galaxy-bg", "ocean-bg", "sunset-bg");
+                body.classList.add(theme + "-bg");
+                localStorage.setItem("portfolioTheme", theme);
+                const label = document.getElementById("themeLabel");
+                const map = { default: "Theme", galaxy: "Galaxy", ocean: "Ocean", sunset: "Sunset" };
+                label.textContent = map[theme] || "Theme";
             }
 
-            function pad2(n) {
-                return String(n).padStart(2, "0");
-            }
-
-            function updateTime() {
-                const d = new Date();
-                const h = d.getHours();
-                const m = d.getMinutes();
-                document.getElementById("timeText").textContent = `${h}:${pad2(m)}`;
-            }
-
-            updateTime();
-            setInterval(updateTime, 15000);
-
-            const splash = document.getElementById("splash");
-            const progressBar = document.getElementById("progressBar");
-            const splashPct = document.getElementById("splashPct");
-
-            let p = 0;
-            const tick = () => {
-                p = Math.min(100, p + Math.floor(Math.random() * 18) + 8);
-                progressBar.style.width = `${p}%`;
-                splashPct.textContent = `${p}%`;
-                if (p < 100) return setTimeout(tick, 380);
+            (function () {
+                const saved = localStorage.getItem("portfolioTheme") || "default";
+                setTheme(saved);
                 setTimeout(() => {
-                    splash.classList.add("hide");
-                }, 220);
+                    body.classList.remove("preload");
+                }, 60);
+            })();
+
+            function closeWindow() {
+                const win = document.getElementById("window");
+                const ok = confirm("Are you sure you want to close this window?");
+                if (!ok) return;
+                win.style.opacity = "0";
                 setTimeout(() => {
-                    splash.style.display = "none";
-                }, 900);
+                    win.style.display = "none";
+                }, 240);
+            }
+
+            function minimizeWindow() {
+                const win = document.getElementById("window");
+                win.style.transform = "translateX(-50%) scale(0.985)";
+                win.style.opacity = "0.75";
+                setTimeout(() => {
+                    win.style.transform = "translateX(-50%) scale(1)";
+                    win.style.opacity = "1";
+                }, 520);
+            }
+
+            function maximizeWindow() {
+                const win = document.getElementById("window");
+                const isFull = win.dataset.full === "1";
+                if (isFull) {
+                    win.dataset.full = "0";
+                    win.style.width = "calc(100% - 36px)";
+                    win.style.height = "calc(100vh - 36px)";
+                    win.style.top = "18px";
+                    win.style.left = "50%";
+                    win.style.transform = "translateX(-50%)";
+                    win.style.borderRadius = "18px";
+                } else {
+                    win.dataset.full = "1";
+                    win.style.width = "100%";
+                    win.style.height = "100vh";
+                    win.style.top = "0";
+                    win.style.left = "0";
+                    win.style.transform = "none";
+                    win.style.borderRadius = "0";
+                }
+            }
+
+            const themeToggleBtn = document.getElementById("themeToggleBtn");
+            const themeDropdown = document.getElementById("themeDropdown");
+
+            themeToggleBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                themeDropdown.classList.toggle("show");
+            });
+
+            document.addEventListener("click", () => {
+                themeDropdown.classList.remove("show");
+            });
+
+            themeDropdown.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+
+            document.querySelectorAll(".theme-option").forEach((opt) => {
+                opt.addEventListener("click", () => {
+                    const theme = opt.dataset.theme;
+                    themeDropdown.classList.remove("show");
+                    setTheme(theme);
+                });
+            });
+
+            const mainContent = document.getElementById("mainContent");
+            const navItems = Array.from(document.querySelectorAll(".nav-item"));
+
+            function setActiveNav(targetId) {
+                navItems.forEach((n) => n.classList.toggle("active", n.dataset.target === targetId));
+            }
+
+            function scrollToSection(sectionId) {
+                const el = document.getElementById(sectionId);
+                if (!el) return;
+                const top = el.offsetTop;
+                mainContent.scrollTo({ top: top - 18, behavior: "smooth" });
+                setActiveNav(sectionId);
+            }
+
+            navItems.forEach((item) => {
+                item.addEventListener("click", () => scrollToSection(item.dataset.target));
+            });
+
+            document.querySelectorAll("[data-target]").forEach((btn) => {
+                if (!btn.classList.contains("nav-item")) {
+                    btn.addEventListener("click", () => scrollToSection(btn.dataset.target));
+                }
+            });
+
+            const sections = ["hero", "skills", "experience", "projects", "code", "contact"]
+                .map((id) => document.getElementById(id))
+                .filter(Boolean);
+
+            const sectionObserver = new IntersectionObserver(
+                (entries) => {
+                    const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                    if (visible && visible.target && visible.target.id) setActiveNav(visible.target.id);
+                },
+                { root: mainContent, threshold: [0.18, 0.28, 0.38, 0.48, 0.58] }
+            );
+
+            sections.forEach((s) => sectionObserver.observe(s));
+
+            const projectCategoryBtns = document.querySelectorAll(".project-category-btn");
+            const projectCategories = {
+                plugins: document.getElementById("plugins-category"),
+                skripts: document.getElementById("skripts-category"),
             };
 
-            document.addEventListener("DOMContentLoaded", () => {
-                document.body.classList.remove("preload");
-                tick();
-            });
-
-            const fadeEls = Array.from(document.querySelectorAll(".fade"));
-            const obs = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach((e) => {
-                        if (e.isIntersecting) e.target.classList.add("in");
+            projectCategoryBtns.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const category = btn.dataset.category;
+                    projectCategoryBtns.forEach((b) => b.classList.toggle("active", b === btn));
+                    Object.keys(projectCategories).forEach((k) => {
+                        projectCategories[k].classList.toggle("active", k === category);
                     });
-                },
-                { root: content, threshold: 0.12 }
-            );
-            fadeEls.forEach((el) => obs.observe(el));
-
-            function jumpTo(id) {
-                const target = document.getElementById(id);
-                if (!target) return;
-                content.scrollTo({ top: target.offsetTop - 12, behavior: "smooth" });
-            }
-
-            document.querySelectorAll("[data-jump]").forEach((a) => {
-                a.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    jumpTo(a.getAttribute("data-jump"));
                 });
             });
-
-            const tabs = Array.from(document.querySelectorAll(".tab"));
-            tabs.forEach((t) => {
-                t.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    const id = t.getAttribute("data-target");
-                    jumpTo(id);
-                });
-            });
-
-            const sectionIds = ["hero", "skills", "experience", "projects", "contact"];
-            const sectionEls = sectionIds.map((id) => document.getElementById(id));
-
-            function setActiveTab(id) {
-                tabs.forEach((t) => t.classList.toggle("active", t.getAttribute("data-target") === id));
-            }
-
-            const tabObserver = new IntersectionObserver(
-                (entries) => {
-                    const visible = entries
-                        .filter((e) => e.isIntersecting)
-                        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-                    if (visible && visible.target && visible.target.id) setActiveTab(visible.target.id);
-                },
-                { root: content, threshold: [0.18, 0.28, 0.38, 0.48, 0.58] }
-            );
-
-            sectionEls.forEach((el) => tabObserver.observe(el));
-
-            const segPlugins = document.getElementById("segPlugins");
-            const segSkripts = document.getElementById("segSkripts");
-            const pluginsList = document.getElementById("pluginsList");
-            const skriptsList = document.getElementById("skriptsList");
-
-            function setSegment(which) {
-                const isPlugins = which === "plugins";
-                segPlugins.classList.toggle("active", isPlugins);
-                segSkripts.classList.toggle("active", !isPlugins);
-                pluginsList.style.display = isPlugins ? "grid" : "none";
-                skriptsList.style.display = !isPlugins ? "grid" : "none";
-                showToast(isPlugins ? "Showing Plugins" : "Showing Skripts");
-            }
-
-            segPlugins.addEventListener("click", () => setSegment("plugins"));
-            segSkripts.addEventListener("click", () => setSegment("skripts"));
 
             const sendBtn = document.getElementById("sendBtn");
             const nameInput = document.getElementById("nameInput");
             const emailInput = document.getElementById("emailInput");
             const detailsInput = document.getElementById("detailsInput");
 
-            function markInvalid(el, bad) {
-                el.style.borderColor = bad ? "rgba(255, 69, 58, 0.85)" : "rgba(255, 255, 255, 0.12)";
+            function markInvalid(input, bad) {
+                input.style.borderColor = bad ? "rgba(255, 59, 48, 0.85)" : "";
             }
 
             sendBtn.addEventListener("click", () => {
                 const n = nameInput.value.trim();
                 const e = emailInput.value.trim();
                 const d = detailsInput.value.trim();
-                const ok = Boolean(n && e && d);
+
                 markInvalid(nameInput, !n);
                 markInvalid(emailInput, !e);
                 markInvalid(detailsInput, !d);
 
-                if (!ok) return showToast("Please complete all fields");
+                if (!n || !e || !d) {
+                    alert("Please complete all fields to continue.");
+                    return;
+                }
+
+                alert("Project proposal received. I will connect with you soon.");
                 nameInput.value = "";
                 emailInput.value = "";
                 detailsInput.value = "";
-                showToast("Project proposal received");
+                markInvalid(nameInput, false);
+                markInvalid(emailInput, false);
+                markInvalid(detailsInput, false);
+            });
+
+            const startup = document.getElementById("startup");
+            const startupFill = document.getElementById("startupFill");
+            const startupPct = document.getElementById("startupPct");
+
+            let progress = 0;
+
+            function tickStartup() {
+                progress = Math.min(100, progress + Math.floor(Math.random() * 16) + 8);
+                startupFill.style.width = progress + "%";
+                startupPct.textContent = progress + "%";
+                if (progress < 100) return setTimeout(tickStartup, 340);
+                setTimeout(() => {
+                    startup.classList.add("hide");
+                }, 260);
+                setTimeout(() => {
+                    startup.style.display = "none";
+                }, 900);
+            }
+
+            window.addEventListener("load", () => {
+                tickStartup();
             });
         </script>
     </body>
