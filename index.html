@@ -1,342 +1,1823 @@
-<!doctypehtml><html lang="en"><meta charset="UTF-8"><meta content="width=device-width,initial-scale=1"name="viewport"><title>SleepyBH - Minecraft Developer</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Mono:wght@400;500&display=swap"rel="stylesheet"><style>:root{--macos-bg:#f5f5f7;--macos-card:#ffffff;--macos-text:#1d1d1f;--macos-text-secondary:#86868b;--macos-border:#d2d2d7;--macos-blue:#007AFF;--macos-green:#34C759;--macos-orange:#FF9500;--macos-red:#FF3B30;--macos-purple:#AF52DE;--macos-shadow:rgba(0, 0, 0, 0.05);--macos-shadow-lg:rgba(0, 0, 0, 0.1);--macos-glass:rgba(255, 255, 255, 0.8);--macos-sidebar:#f8f9fa}html{scroll-behavior:smooth}*{margin:0;padding:0;box-sizing:border-box;font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,sans-serif}body{background-color:var(--macos-bg);color:var(--macos-text);line-height:1.6;overflow-x:hidden;min-height:100vh;background-attachment:fixed;background-size:cover;background-position:center}body.preload{opacity:0;transition:none!important}body.default-bg{background-image:linear-gradient(135deg,#f5f7fa 0,#c3cfe2 100%)}body.galaxy-bg{background-image:radial-gradient(ellipse at top,transparent 0,#000 70%),radial-gradient(ellipse at bottom,#190a05 0,transparent 70%),radial-gradient(circle at 20% 50%,#1a0b2e 0,transparent 50%),radial-gradient(circle at 80% 20%,#0c1b33 0,transparent 50%);background-color:#000}body.ocean-bg{background-image:linear-gradient(to bottom,rgba(9,35,175,.8),rgba(0,212,255,.8)),url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)}body.sunset-bg{background-image:linear-gradient(45deg,rgba(255,107,107,.8),rgba(255,142,83,.8),rgba(255,199,95,.8)),url(https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80)}.theme-transition{opacity:0;transition:opacity .8s ease-in-out}.theme-transition.active{opacity:1}.container{max-width:1200px;margin:0 auto;padding:0 20px}.macos-window{position:fixed;top:20px;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:1400px;height:calc(100vh - 40px);background:rgba(245,245,247,.9);border-radius:16px;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,.25);z-index:1;border:1px solid var(--macos-border);backdrop-filter:blur(10px);transition:background-color .8s ease-in-out;opacity:0;animation:fadeIn .5s ease forwards;animation-delay:.2s}@keyframes fadeIn{from{opacity:0}to{opacity:1}}body.galaxy-bg .macos-window{background:rgba(15,15,20,.9);border-color:rgba(255,255,255,.1)}body.ocean-bg .macos-window{background:rgba(255,255,255,.85)}body.sunset-bg .macos-window{background:rgba(255,255,255,.9)}.title-bar{height:52px;background:linear-gradient(to bottom,#f5f5f7,#e8e8ed);display:flex;align-items:center;padding:0 20px;border-bottom:1px solid var(--macos-border);position:relative;z-index:100;-webkit-user-select:none;user-select:none;transition:all .3s ease}body.galaxy-bg .title-bar{background:linear-gradient(to bottom,#1a1a2e,#16213e);border-bottom-color:rgba(255,255,255,.1)}body.ocean-bg .title-bar{background:linear-gradient(to bottom,#0f3460,#1a1a2e);border-bottom-color:rgba(255,255,255,.1)}body.sunset-bg .title-bar{background:linear-gradient(to bottom,#ff6b6b,#ff8e53);border-bottom-color:rgba(255,255,255,.1)}.traffic-lights{display:flex;gap:8px;margin-right:40px}.traffic-light{width:12px;height:12px;border-radius:50%;cursor:pointer;transition:all .2s ease}.traffic-light.close{background:#ff5f57}.traffic-light.minimize{background:#ffbd2e}.traffic-light.maximize{background:#28ca42}.traffic-light:hover{transform:scale(1.1)}.window-title{font-size:13px;color:var(--macos-text-secondary);font-weight:500;flex:1;text-align:center;transition:color .3s ease}body.galaxy-bg .window-title{color:rgba(255,255,255,.7)}.theme-toggle-btn{background:var(--macos-blue);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;transition:all .3s ease;display:flex;align-items:center;gap:6px;margin-left:20px}.theme-toggle-btn:hover{background:#0056cc;transform:translateY(-1px)}.theme-dropdown{position:absolute;top:100%;right:20px;background:var(--macos-card);border:1px solid var(--macos-border);border-radius:8px;padding:8px;min-width:150px;box-shadow:0 4px 12px rgba(0,0,0,.1);opacity:0;visibility:hidden;transform:translateY(-10px);transition:all .3s ease;z-index:1000}.theme-dropdown.show{opacity:1;visibility:visible;transform:translateY(0)}.theme-option{padding:8px 12px;border-radius:4px;cursor:pointer;transition:all .2s ease;font-size:13px;color:var(--macos-text)}.theme-option:hover{background:rgba(0,122,255,.1);color:var(--macos-blue)}.theme-option i{margin-right:8px;width:16px;text-align:center}.sidebar{width:240px;height:calc(100% - 52px);background:var(--macos-sidebar);border-right:1px solid var(--macos-border);position:absolute;top:52px;left:0;padding:30px 0;z-index:10;transition:all .3s ease}body.galaxy-bg .sidebar{background:rgba(26,26,46,.8);border-right-color:rgba(255,255,255,.1)}body.ocean-bg .sidebar{background:rgba(15,52,96,.8);border-right-color:rgba(255,255,255,.1)}body.sunset-bg .sidebar{background:rgba(255,107,107,.1);border-right-color:rgba(255,255,255,.1)}.logo-container{padding:0 24px 40px;border-bottom:1px solid var(--macos-border);margin-bottom:30px;transition:all .3s ease}body.galaxy-bg .logo-container{border-bottom-color:rgba(255,255,255,.1)}.logo{font-size:24px;font-weight:700;color:var(--macos-text);display:flex;align-items:center;gap:12px;transition:color .3s ease}body.galaxy-bg .logo{color:#fff}.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--macos-blue),var(--macos-purple));border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px}.nav-items{list-style:none}.nav-item{padding:12px 24px;display:flex;align-items:center;gap:12px;color:var(--macos-text-secondary);text-decoration:none;transition:all .2s ease;cursor:pointer;border-left:3px solid transparent;position:relative}body.galaxy-bg .nav-item{color:rgba(255,255,255,.7)}.nav-item:hover{background:rgba(0,122,255,.05);color:var(--macos-text)}body.galaxy-bg .nav-item:hover{background:rgba(255,255,255,.1);color:#fff}.nav-item.active{background:rgba(0,122,255,.1);color:var(--macos-blue);border-left-color:var(--macos-blue)}body.galaxy-bg .nav-item.active{background:rgba(0,122,255,.2);color:#fff}.nav-item i{width:20px;text-align:center}.main-content{margin-left:240px;height:calc(100% - 52px);overflow-y:auto;padding:40px;scroll-behavior:smooth}.macos-card{background:var(--macos-card);border-radius:12px;padding:24px;border:1px solid var(--macos-border);box-shadow:0 4px 6px var(--macos-shadow);transition:all .3s ease;margin-bottom:24px}body.galaxy-bg .macos-card{background:rgba(26,26,46,.8);border-color:rgba(255,255,255,.1);box-shadow:0 4px 6px rgba(0,0,0,.2)}.macos-card:hover{box-shadow:0 8px 24px var(--macos-shadow-lg);transform:translateY(-2px)}body.galaxy-bg .macos-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.3)}.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--macos-border);transition:all .3s ease}body.galaxy-bg .card-header{border-bottom-color:rgba(255,255,255,.1)}.card-title{font-size:20px;font-weight:600;color:var(--macos-text);transition:color .3s ease}body.galaxy-bg .card-title{color:#fff}.card-subtitle{font-size:14px;color:var(--macos-text-secondary);margin-top:4px;transition:color .3s ease}body.galaxy-bg .card-subtitle{color:rgba(255,255,255,.6)}.hero-section{display:flex;align-items:center;gap:60px;margin-bottom:60px}.hero-content{flex:1}.hero-avatar{width:200px;height:200px;border-radius:20px;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(0,122,255,.2);overflow:hidden;border:4px solid #fff;transition:all .3s ease}body.galaxy-bg .hero-avatar{border-color:rgba(255,255,255,.2)}.hero-avatar img{width:100%;height:100%;object-fit:cover}.hero-title{font-size:42px;font-weight:700;line-height:1.1;margin-bottom:16px;background:linear-gradient(135deg,var(--macos-blue),var(--macos-purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}.hero-subtitle{font-size:20px;color:var(--macos-text-secondary);margin-bottom:24px;font-style:italic}body.galaxy-bg .hero-subtitle{color:rgba(255,255,255,.8)}.tag-container{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}.tag{background:rgba(0,122,255,.1);color:var(--macos-blue);padding:8px 16px;border-radius:20px;font-size:14px;font-weight:500;border:1px solid rgba(0,122,255,.2);transition:all .3s ease}body.galaxy-bg .tag{background:rgba(0,122,255,.2);color:#fff;border-color:rgba(0,122,255,.4)}.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin:30px 0}.stat-card{text-align:center;padding:24px}.stat-number{font-size:36px;font-weight:700;color:var(--macos-blue);margin-bottom:8px;transition:color .3s ease}body.galaxy-bg .stat-number{color:#64d2ff}.stat-label{font-size:14px;color:var(--macos-text-secondary);transition:color .3s ease}body.galaxy-bg .stat-label{color:rgba(255,255,255,.6)}.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:24px}.skill-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--macos-border);transition:all .3s ease}body.galaxy-bg .skill-item{border-bottom-color:rgba(255,255,255,.1)}.skill-name{display:flex;align-items:center;gap:12px}.skill-icon{width:32px;height:32px;background:rgba(0,122,255,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--macos-blue);transition:all .3s ease}body.galaxy-bg .skill-icon{background:rgba(100,210,255,.2);color:#64d2ff}.skill-bar{flex:1;height:8px;background:var(--macos-border);border-radius:4px;margin:0 16px;overflow:hidden;transition:all .3s ease}body.galaxy-bg .skill-bar{background:rgba(255,255,255,.1)}.skill-progress{height:100%;background:linear-gradient(to right,var(--macos-blue),var(--macos-purple));border-radius:4px}.skill-percent{font-family:'SF Mono',monospace;font-size:14px;color:var(--macos-text-secondary);transition:color .3s ease}body.galaxy-bg .skill-percent{color:rgba(255,255,255,.7)}.experience-section{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:24px}@media (max-width:768px){.experience-section{grid-template-columns:1fr}}.experience-column{display:flex;flex-direction:column;gap:20px}.experience-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--macos-border);transition:all .3s ease}body.galaxy-bg .experience-header{border-bottom-color:rgba(255,255,255,.1)}.experience-header i{color:var(--macos-green);font-size:20px}.experience-item{padding:20px;border-radius:12px;border:1px solid var(--macos-border);background:var(--macos-card);transition:all .3s ease;position:relative}body.galaxy-bg .experience-item{background:rgba(26,26,46,.8);border-color:rgba(255,255,255,.1)}.experience-item:hover{border-color:var(--macos-blue);transform:translateX(5px)}.experience-role{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.experience-title{font-weight:600;font-size:18px;color:var(--macos-text);transition:color .3s ease}body.galaxy-bg .experience-title{color:#fff}.experience-date{font-size:14px;color:var(--macos-text-secondary);background:rgba(0,122,255,.1);padding:4px 12px;border-radius:20px;transition:all .3s ease}body.galaxy-bg .experience-date{background:rgba(100,210,255,.2);color:#64d2ff}.experience-position{color:var(--macos-blue);font-weight:500;margin-bottom:12px;display:block;transition:color .3s ease}body.galaxy-bg .experience-position{color:#64d2ff}.experience-description{color:var(--macos-text-secondary);font-size:14px;line-height:1.6;transition:color .3s ease;margin-bottom:15px}body.galaxy-bg .experience-description{color:rgba(255,255,255,.7)}.discord-btn{display:inline-flex;align-items:center;gap:8px;background:#5865f2;color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:500;text-decoration:none;transition:all .3s ease;border:none;cursor:pointer}.discord-btn:hover{background:#4752c4;transform:translateY(-2px);box-shadow:0 4px 12px rgba(88,101,242,.3)}.discord-btn i{font-size:14px}.project-categories{display:flex;gap:15px;margin-bottom:25px;border-bottom:2px solid var(--macos-border);padding-bottom:10px}.project-category-btn{background:0 0;border:none;padding:10px 20px;border-radius:8px;font-size:15px;font-weight:500;color:var(--macos-text-secondary);cursor:pointer;transition:all .3s ease}.project-category-btn.active{background:rgba(0,122,255,.1);color:var(--macos-blue)}.project-category-btn:hover:not(.active){background:rgba(0,0,0,.05);color:var(--macos-text)}body.galaxy-bg .project-category-btn{color:rgba(255,255,255,.7)}body.galaxy-bg .project-category-btn.active{background:rgba(100,210,255,.2);color:#64d2ff}body.galaxy-bg .project-category-btn:hover:not(.active){background:rgba(255,255,255,.1);color:#fff}.project-category{display:none;opacity:0;transform:translateY(20px);transition:all .5s ease}.project-category.active{display:block;opacity:1;transform:translateY(0)}.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:24px}.project-card{padding:0;overflow:hidden}.project-image{height:160px;background:linear-gradient(135deg,var(--macos-blue),var(--macos-purple));position:relative}.project-badge{position:absolute;top:16px;right:16px;background:var(--macos-card);padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;color:var(--macos-blue);transition:all .3s ease}body.galaxy-bg .project-badge{background:rgba(26,26,46,.9);color:#64d2ff}.project-content{padding:20px}.project-title{font-size:18px;font-weight:600;margin-bottom:8px;color:var(--macos-text);transition:color .3s ease}body.galaxy-bg .project-title{color:#fff}.project-description{font-size:14px;color:var(--macos-text-secondary);margin-bottom:16px;line-height:1.5;transition:color .3s ease}body.galaxy-bg .project-description{color:rgba(255,255,255,.7)}.project-stats{display:flex;align-items:center;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--macos-border);transition:all .3s ease}body.galaxy-bg .project-stats{border-top-color:rgba(255,255,255,.1)}.stat{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--macos-text-secondary);transition:color .3s ease}body.galaxy-bg .stat{color:rgba(255,255,255,.6)}.achievements-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:24px}.achievement-card{padding:24px;text-align:center;background:var(--macos-card);border:1px solid var(--macos-border);border-radius:12px;transition:all .3s ease;opacity:.5;filter:grayscale(1);position:relative;overflow:hidden}body.galaxy-bg .achievement-card{background:rgba(26,26,46,.8);border-color:rgba(255,255,255,.1)}.achievement-card::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,rgba(0,122,255,.1),rgba(175,82,222,.1));opacity:0;transition:opacity .3s ease}.achievement-card.unlocked{opacity:1;filter:grayscale(0);border-color:var(--macos-blue);transform:scale(1.05);box-shadow:0 8px 24px rgba(0,122,255,.15)}.achievement-card.unlocked::before{opacity:1}body.galaxy-bg .achievement-card.unlocked{background:rgba(26,26,46,.9);box-shadow:0 8px 24px rgba(0,122,255,.25)}.achievement-icon{font-size:2.5rem;color:var(--macos-text-secondary);margin-bottom:16px;transition:all .3s ease;position:relative;z-index:1}.achievement-card.unlocked .achievement-icon{color:var(--macos-blue)}body.galaxy-bg .achievement-card.unlocked .achievement-icon{color:#64d2ff}.achievement-title{font-weight:600;margin-bottom:8px;color:var(--macos-text);transition:all .3s ease;position:relative;z-index:1}.achievement-card.unlocked .achievement-title{color:var(--macos-blue)}body.galaxy-bg .achievement-card.unlocked .achievement-title{color:#fff}.achievement-desc{font-size:14px;color:var(--macos-text-secondary);transition:all .3s ease;position:relative;z-index:1}.achievement-card.unlocked .achievement-desc{color:var(--macos-text)}body.galaxy-bg .achievement-card.unlocked .achievement-desc{color:rgba(255,255,255,.8)}.code-snippet{background:#1d1d1f;border-radius:8px;padding:20px;margin:16px 0;overflow-x:auto;font-family:'SF Mono',monospace;font-size:13px;color:#f5f5f7}.code-line{line-height:1.8}.code-comment{color:#6c6c70}.code-keyword{color:#ff7ab2}.code-string{color:#64d2ff}.code-function{color:gold}.code-number{color:#ff9500}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:24px}.form-group{margin-bottom:20px}.form-label{display:block;margin-bottom:8px;font-size:14px;font-weight:500;color:var(--macos-text);transition:color .3s ease}body.galaxy-bg .form-label{color:#fff}.form-input{width:100%;padding:12px 16px;border:1px solid var(--macos-border);border-radius:8px;font-size:14px;transition:all .2s ease;background:var(--macos-card);color:var(--macos-text)}body.galaxy-bg .form-input{background:rgba(26,26,46,.8);border-color:rgba(255,255,255,.1);color:#fff}.form-input:focus{outline:0;border-color:var(--macos-blue);box-shadow:0 0 0 3px rgba(0,122,255,.1)}body.galaxy-bg .form-input:focus{border-color:#64d2ff;box-shadow:0 0 0 3px rgba(100,210,255,.1)}.footer{margin-top:60px;padding-top:40px;border-top:1px solid var(--macos-border);text-align:center;color:var(--macos-text-secondary);font-size:14px;transition:all .3s ease}body.galaxy-bg .footer{border-top-color:rgba(255,255,255,.1);color:rgba(255,255,255,.6)}.social-links{display:flex;justify-content:center;gap:20px;margin-top:20px}.social-link{width:36px;height:36px;background:var(--macos-sidebar);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--macos-text);text-decoration:none;transition:all .2s ease}body.galaxy-bg .social-link{background:rgba(255,255,255,.1);color:#fff}.social-link:hover{background:var(--macos-blue);color:#fff;transform:translateY(-2px)}body.galaxy-bg .social-link:hover{background:#64d2ff}.macos-btn{display:inline-flex;align-items:center;gap:8px;background:var(--macos-blue);color:#fff;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:500;font-size:14px;transition:all .2s ease;border:none;cursor:pointer}.macos-btn:hover{background:#0056cc;transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,122,255,.3)}.macos-btn.secondary{background:0 0;color:var(--macos-text);border:1px solid var(--macos-border)}body.galaxy-bg .macos-btn.secondary{color:#fff;border-color:rgba(255,255,255,.2)}.macos-btn.secondary:hover{background:rgba(0,0,0,.05)}body.galaxy-bg .macos-btn.secondary:hover{background:rgba(255,255,255,.1)}@media (max-width:1024px){.sidebar{width:200px}.main-content{margin-left:200px}}@media (max-width:768px){.macos-window{top:10px;left:10px;width:calc(100% - 20px);height:calc(100vh - 20px);border-radius:12px}.sidebar{display:none}.main-content{margin-left:0;padding:20px}.hero-section{flex-direction:column;text-align:center;gap:30px}.contact-grid{grid-template-columns:1fr}.experience-section{grid-template-columns:1fr}.project-categories{flex-direction:column;gap:10px}}@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}@keyframes unlockAchievement{0%{transform:scale(.8);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}@keyframes backgroundFadeOut{0%{opacity:1}50%{opacity:.5}100%{opacity:1}}.animate-in{animation:fadeInUp .5s ease forwards}.delay-1{animation-delay:.1s}.delay-2{animation-delay:.2s}.delay-3{animation-delay:.3s}.unlocked{animation:unlockAchievement .5s ease forwards}.background-changing{animation:backgroundFadeOut .8s ease-in-out}.main-content::-webkit-scrollbar{width:8px}.main-content::-webkit-scrollbar-track{background:var(--macos-sidebar)}body.galaxy-bg .main-content::-webkit-scrollbar-track{background:rgba(26,26,46,.8)}.main-content::-webkit-scrollbar-thumb{background:var(--macos-border);border-radius:4px}body.galaxy-bg .main-content::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2)}.main-content::-webkit-scrollbar-thumb:hover{background:var(--macos-text-secondary)}body.galaxy-bg .main-content::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.3)}</style><body class="default-bg preload"><div class="macos-window"><div class="title-bar"><div class="traffic-lights"><div class="traffic-light close"onclick="closeWindow()"></div><div class="traffic-light minimize"onclick="minimizeWindow()"></div><div class="traffic-light maximize"onclick="maximizeWindow()"></div></div><div class="window-title">SleepyBH — Minecraft Developer Portfolio</div><button class="theme-toggle-btn"id="themeToggleBtn"><i class="fas fa-palette"></i> Theme</button><div class="theme-dropdown"id="themeDropdown"><div class="theme-option"data-theme="default"><i class="fas fa-desktop"></i> MacOS Default</div><div class="theme-option"data-theme="galaxy"><i class="fas fa-star"></i> Galaxy</div><div class="theme-option"data-theme="ocean"><i class="fas fa-water"></i> Ocean</div><div class="theme-option"data-theme="sunset"><i class="fas fa-sun"></i> Sunset</div></div></div><div class="sidebar"><div class="logo-container"><div class="logo"><div class="logo-icon"><i class="fas fa-cube"></i></div>SleepyBH</div></div><ul class="nav-items"><li><a class="nav-item active"href="#hero"onclick="setActive(this)"><i class="fas fa-user"></i>Profile</a><li><a class="nav-item"href="#skills"onclick="setActive(this)"><i class="fas fa-code"></i>Expertise</a><li><a class="nav-item"href="#experience"onclick="setActive(this)"><i class="fas fa-briefcase"></i>Experience</a><li><a class="nav-item"href="#projects"onclick="setActive(this)"><i class="fas fa-project-diagram"></i>Projects</a><li><a class="nav-item"href="#achievements"onclick="setActive(this)"><i class="fas fa-trophy"></i>Achievements</a><li><a class="nav-item"href="#code"onclick="setActive(this)"><i class="fas fa-terminal"></i>Code Snippets</a><li><a class="nav-item"href="#contact"onclick="setActive(this)"><i class="fas fa-envelope"></i>Contact</a></ul></div><div class="main-content"id="mainContent"><section class="animate-in"id="hero"><div class="hero-section"><div class="hero-content"><h1 class="hero-title">Crafting Digital Worlds</h1><p class="hero-subtitle">Transforming Minecraft visions into reality through expert plugin development and server architecture<div class="tag-container"><span class="tag">Plugin Architect</span> <span class="tag">Server Specialist</span> <span class="tag">Game Mechanic Designer</span> <span class="tag">Community Engineer</span> <span class="tag">Backend Developer</span></div><div class="stats-grid"><div class="macos-card stat-card"><div class="stat-number">4+</div><div class="stat-label">Years Mastery</div></div><div class="macos-card stat-card"><div class="stat-number">117+</div><div class="stat-label">Projects Delivered</div></div><div class="macos-card stat-card"><div class="stat-number">4.7★</div><div class="stat-label">Client Rating</div></div><div class="macos-card stat-card"><div class="stat-number">37K+</div><div class="stat-label">Total Downloads</div></div></div><div style="margin-top:24px"><a class="macos-btn"href="#contact"><i class="fas fa-rocket"></i>Start Project </a><a class="macos-btn secondary"href="#projects"style="margin-left:12px"><i class="fas fa-eye"></i>View Portfolio</a></div></div><div class="animate-in delay-1 hero-avatar"><img alt="PHP Development"src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"></div></div></section><section class="animate-in delay-2"id="skills"><div class="macos-card"><div class="card-header"><h2 class="card-title">Technical Expertise</h2></div><div class="skills-grid"><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-html5"></i></div>HTML5</div><div class="skill-bar"><div class="skill-progress"style="width:92%"></div></div><div class="skill-percent">92%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-css3-alt"></i></div>CSS3</div><div class="skill-bar"><div class="skill-progress"style="width:90%"></div></div><div class="skill-percent">90%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-js"></i></div>JavaScript</div><div class="skill-bar"><div class="skill-progress"style="width:90%"></div></div><div class="skill-percent">90%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-java"></i></div>Java</div><div class="skill-bar"><div class="skill-progress"style="width:88%"></div></div><div class="skill-percent">88%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-php"></i></div>PHP</div><div class="skill-bar"><div class="skill-progress"style="width:85%"></div></div><div class="skill-percent">85%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fas fa-code"></i></div>Lua</div><div class="skill-bar"><div class="skill-progress"style="width:85%"></div></div><div class="skill-percent">85%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fas fa-cube"></i></div>Skript</div><div class="skill-bar"><div class="skill-progress"style="width:95%"></div></div><div class="skill-percent">95%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fab fa-python"></i></div>Python</div><div class="skill-bar"><div class="skill-progress"style="width:80%"></div></div><div class="skill-percent">80%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fas fa-server"></i></div>Server Management</div><div class="skill-bar"><div class="skill-progress"style="width:92%"></div></div><div class="skill-percent">92%</div></div><div class="skill-item"><div class="skill-name"><div class="skill-icon"><i class="fas fa-database"></i></div>Database Design</div><div class="skill-bar"><div class="skill-progress"style="width:87%"></div></div><div class="skill-percent">87%</div></div></div></div></section><section class="animate-in delay-1"id="experience"><div class="macos-card"><div class="card-header"><h2 class="card-title">Professional Journey</h2></div><div class="experience-section"><div class="experience-column"><div class="experience-header"><i class="fas fa-rocket"></i><h3 style="font-weight:600">Current Leadership</h3></div><div class="experience-item"><div class="experience-role"><div class="experience-title">MaceSMP - Survival</div><span class="experience-date">2025 - Present</span></div><span class="experience-position">Owner</span><p class="experience-description">Owner pluh.</p><a class="discord-btn"href="https://discord.gg/SgY6XXp3tF"target="_blank"><i class="fab fa-discord"></i> Join Survival Server</a></div><div class="experience-item"><div class="experience-role"><div class="experience-title">MaceSMP - BoxGen</div><span class="experience-date">2025 - Present</span></div><span class="experience-position">Owner</span><p class="experience-description">Owner pluh.</p><a class="discord-btn"href="https://discord.gg/macesmp"target="_blank"><i class="fab fa-discord"></i> Join BoxGen Server</a></div><div class="experience-item"><div class="experience-role"><div class="experience-title">BlitzBox</div><span class="experience-date">2025 - Present</span></div><span class="experience-position">Developer</span><p class="experience-description">One of the developers behind plugins / The AntiCheat system.</p><a class="discord-btn"href="https://discord.gg/zDpmazrUve"target="_blank"><i class="fab fa-discord"></i> Join BlitzBox</a></div></div><div class="experience-column"><div class="experience-header"><i class="fas fa-history"></i><h3 style="font-weight:600">Strategic Experience</h3></div><div class="experience-item"><div class="experience-role"><div class="experience-title">SwiftBox</div><span class="experience-date">2025 - 2025</span></div><span class="experience-position">Co-Owner</span><p class="experience-description">Managed the staff team by overseeing promotions, demotions, and staff waves. Ensured team performance and server integrity.</div><div class="experience-item"><div class="experience-role"><div class="experience-title">PolishBox</div><span class="experience-date">2025 - 2025</span></div><span class="experience-position">JrAdmin</span><p class="experience-description">Assisted in server management and handled player applications. Gained experience in server administration and player support.</div><div class="experience-item"><div class="experience-role"><div class="experience-title">DripLeaf</div><span class="experience-date">2025 - 2025</span></div><span class="experience-position">Manager</span><p class="experience-description">Moderate ElytraPvP gameplay by enforcing rules, preventing unfair advantages, and conducting screenshares to detect cheats.</div><div class="experience-item"><div class="experience-role"><div class="experience-title">ScytheMC</div><span class="experience-date">2025 - 2025</span></div><span class="experience-position">System Admin</span><p class="experience-description">Managed server operations and player communities. Implemented custom features and ensured smooth gameplay experience for all players.</div><div class="experience-item"><div class="experience-role"><div class="experience-title">LittleGens22</div><span class="experience-date">2025 - 2025</span></div><span class="experience-position">Staff Manager</span><p class="experience-description">Managed the staff team, conducted training sessions, and handled staff-related issues. Improved team efficiency and communication.</div></div></div></div></section><section class="animate-in delay-2"id="projects"><div class="macos-card"><div class="card-header"><h2 class="card-title">Featured Projects</h2></div><div class="project-categories"><button class="active project-category-btn"data-category="plugins">Plugins</button> <button class="project-category-btn"data-category="skripts">Skripts</button></div><div class="active project-category"id="plugins-category"><div class="projects-grid"><div class="macos-card project-card"><div class="project-image"><span class="project-badge">37 Downloads</span></div><div class="project-content"><h3 class="project-title">ReportSystem</h3><p class="project-description">Advanced player reporting and moderation system with Discord integration and MySQL database logging.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.8</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>37</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/reportplugin"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>GitHub Repository</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,var(--macos-green),var(--macos-blue))"><span class="project-badge">37 Downloads</span></div><div class="project-content"><h3 class="project-title">ItemFlip</h3><p class="project-description">Automated item trading and market system with real-time price updates and profit calculation.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.6</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>37</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/ItemFlipPlugin"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>GitHub Repository</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,var(--macos-orange),var(--macos-red))"><span class="project-badge">12 Downloads</span></div><div class="project-content"><h3 class="project-title">ChestDrop</h3><p class="project-description">Custom chest loot and drop system with configurable drop rates and animated effects.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.4</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>12</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/ChestDrop"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>GitHub Repository</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,var(--macos-purple),var(--macos-blue))"><span class="project-badge">181 Downloads</span></div><div class="project-content"><h3 class="project-title">Duelssystem</h3><p class="project-description">Advanced player duel and PvP system with statistics tracking and spectator mode.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.9</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>181</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/Duelssystem"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>GitHub Repository</a></div></div></div></div><div class="project-category"id="skripts-category"><div class="projects-grid"><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,#ff9500,#ff3b30)"><span class="project-badge">24 Downloads</span></div><div class="project-content"><h3 class="project-title">Advanced Economy</h3><p class="project-description">Complete economy system with shops, banks, and trading using Skript. Features interest rates and loan systems.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.7</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>24</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/AdvancedEconomy"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>View Skript</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,#34c759,#007aff)"><span class="project-badge">42 Downloads</span></div><div class="project-content"><h3 class="project-title">Quest System</h3><p class="project-description">Dynamic quest system with multiple quest types, progress tracking, and reward distribution using Skript.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.9</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>42</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/QuestSystem"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>View Skript</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,#af52de,#5856d6)"><span class="project-badge">18 Downloads</span></div><div class="project-content"><h3 class="project-title">Custom Enchants</h3><p class="project-description">Collection of unique custom enchantments with particle effects and special abilities created with Skript.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.5</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>18</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/CustomEnchants"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>View Skript</a></div></div><div class="macos-card project-card"><div class="project-image"style="background:linear-gradient(135deg,#ff2d55,#ff9500)"><span class="project-badge">31 Downloads</span></div><div class="project-content"><h3 class="project-title">Player Warps</h3><p class="project-description">Advanced warping system with cooldowns, costs, and permission-based warps implemented in Skript.<div class="project-stats"><div class="stat"><i class="fas fa-star"style="color:gold"></i> <span>4.6</span></div><div class="stat"><i class="fas fa-download"style="color:var(--macos-blue)"></i> <span>31</span></div></div><a class="macos-btn"href="https://github.com/SleepyBH/PlayerWarps"target="_blank"style="margin-top:16px;width:100%;justify-content:center"><i class="fab fa-github"></i>View Skript</a></div></div></div></div></div></section><section class="animate-in delay-1"id="achievements"><div class="macos-card"><div class="card-header"><h2 class="card-title">Milestones Unlocked</h2></div><p style="margin-bottom:24px;color:var(--macos-text-secondary)">Complete interactive challenges to unlock achievements!<div class="achievements-grid"><div class="achievement-card"id="achievement1"><div class="achievement-icon"><i class="fas fa-scroll"></i></div><h4 class="achievement-title">Exploration Complete</h4><p class="achievement-desc">Journey to the bottom of the portfolio</div><div class="achievement-card"id="achievement2"><div class="achievement-icon"><i class="fas fa-mouse-pointer"></i></div><h4 class="achievement-title">Project Investigator</h4><p class="achievement-desc">Explore all project repositories</div><div class="achievement-card"id="achievement3"><div class="achievement-icon"><i class="fas fa-code"></i></div><h4 class="achievement-title">Code Connoisseur</h4><p class="achievement-desc">Discover the code snippets section</div><div class="achievement-card"id="achievement4"><div class="achievement-icon"><i class="fas fa-paper-plane"></i></div><h4 class="achievement-title">Connection Established</h4><p class="achievement-desc">Initiate contact protocol</div></div><div style="text-align:center;margin-top:24px;padding-top:24px;border-top:1px solid var(--macos-border)"><div style="font-weight:500;color:var(--macos-text)"id="unlockedCounter">Milestones Unlocked: <span id="achievementCount">0</span>/4</div></div></div></section><section class="animate-in delay-2"id="code"><div class="macos-card"><div class="card-header"><h2 class="card-title">Development Showcase</h2></div><pre class="code-snippet">
-<span class="code-keyword">import</span> org.bukkit.<span class="code-function">event</span>.EventListener;
-<span class="code-keyword">import</span> org.bukkit.<span class="code-function">event</span>.player.PlayerJoinEvent;
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport" />
+        <title>SleepyBH - Minecraft Developer</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&family=SF+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --ios-bg: #0b0b0f;
+                --ios-card: rgba(255, 255, 255, 0.08);
+                --ios-card-strong: rgba(255, 255, 255, 0.12);
+                --ios-border: rgba(255, 255, 255, 0.12);
+                --ios-text: rgba(255, 255, 255, 0.92);
+                --ios-muted: rgba(255, 255, 255, 0.6);
+                --ios-muted-2: rgba(255, 255, 255, 0.45);
+                --ios-shadow: rgba(0, 0, 0, 0.35);
+                --ios-accent: #0a84ff;
+                --ios-accent-2: #bf5af2;
+                --ios-green: #30d158;
+                --ios-orange: #ff9f0a;
+                --ios-red: #ff453a;
+                --radius-xl: 28px;
+                --radius-lg: 22px;
+                --radius-md: 16px;
+                --safe-top: env(safe-area-inset-top);
+                --safe-bottom: env(safe-area-inset-bottom);
+            }
 
-<span class="code-keyword">public class</span> <span class="code-function">WelcomePlugin</span> {
-    
-    <span class="code-comment">// Handle player join events</span>
-    @<span class="code-function">EventHandler</span>
-    <span class="code-keyword">public void</span> <span class="code-function">onPlayerJoin</span>(PlayerJoinEvent event) {
-        Player player = event.<span class="code-function">getPlayer</span>();
-        
-        <span class="code-comment">// Send welcome message</span>
-        player.<span class="code-function">sendMessage</span>(
-            ChatColor.<span class="code-function">GREEN</span> + <span class="code-string">"Welcome to the server, "</span> + 
-            player.<span class="code-function">getName</span>() + <span class="code-string">"!"</span>
+            html {
+                scroll-behavior: smooth;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+
+            body {
+                min-height: 100vh;
+                background: radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.22), transparent 45%),
+                    radial-gradient(circle at 85% 25%, rgba(191, 90, 242, 0.18), transparent 45%),
+                    radial-gradient(circle at 40% 85%, rgba(48, 209, 88, 0.14), transparent 45%),
+                    linear-gradient(180deg, #07070a 0%, #0b0b0f 40%, #07070a 100%);
+                color: var(--ios-text);
+                overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            body.preload {
+                opacity: 0;
+            }
+
+            .noise {
+                pointer-events: none;
+                position: fixed;
+                inset: 0;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
+                mix-blend-mode: overlay;
+                opacity: 0.5;
+            }
+
+            .bg-orb {
+                position: fixed;
+                inset: -20vh;
+                filter: blur(60px);
+                opacity: 0.75;
+                z-index: 0;
+                background: radial-gradient(circle at 30% 30%, rgba(10, 132, 255, 0.26), transparent 55%),
+                    radial-gradient(circle at 70% 40%, rgba(191, 90, 242, 0.22), transparent 55%),
+                    radial-gradient(circle at 55% 80%, rgba(48, 209, 88, 0.16), transparent 55%);
+                animation: floatOrbs 12s ease-in-out infinite;
+            }
+
+            @keyframes floatOrbs {
+                0% {
+                    transform: translate3d(0, 0, 0) scale(1);
+                }
+                50% {
+                    transform: translate3d(2vw, -2vh, 0) scale(1.04);
+                }
+                100% {
+                    transform: translate3d(0, 0, 0) scale(1);
+                }
+            }
+
+            .shell {
+                position: relative;
+                z-index: 1;
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+                padding: 20px 14px calc(20px + var(--safe-bottom));
+            }
+
+            .phone {
+                width: min(430px, 100%);
+                height: min(900px, 92vh);
+                border-radius: 44px;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .phone::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.10), transparent 42%);
+                pointer-events: none;
+            }
+
+            .statusbar {
+                position: sticky;
+                top: 0;
+                z-index: 30;
+                height: calc(56px + var(--safe-top));
+                padding-top: var(--safe-top);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-left: 18px;
+                padding-right: 18px;
+                background: rgba(10, 10, 14, 0.55);
+                backdrop-filter: blur(16px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .status-left {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                font-weight: 600;
+                letter-spacing: 0.2px;
+                color: rgba(255, 255, 255, 0.88);
+                font-size: 14px;
+            }
+
+            .pill {
+                height: 28px;
+                padding: 0 12px;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.10);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                color: rgba(255, 255, 255, 0.82);
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .pill i {
+                color: rgba(255, 255, 255, 0.86);
+            }
+
+            .status-right {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                color: rgba(255, 255, 255, 0.82);
+                font-size: 12px;
+                font-weight: 600;
+            }
+
+            .status-dot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--ios-green);
+                box-shadow: 0 0 0 4px rgba(48, 209, 88, 0.12);
+            }
+
+            .content {
+                height: calc(100% - 56px - var(--safe-top));
+                overflow: auto;
+                padding: 18px 16px 108px;
+                scroll-behavior: smooth;
+            }
+
+            .content::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            .content::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .content::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.14);
+                border-radius: 999px;
+            }
+
+            .content::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.22);
+            }
+
+            .card {
+                background: var(--ios-card);
+                border: 1px solid var(--ios-border);
+                border-radius: var(--radius-xl);
+                padding: 18px;
+                box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+                backdrop-filter: blur(16px);
+                transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-2px);
+                border-color: rgba(10, 132, 255, 0.35);
+                background: rgba(255, 255, 255, 0.10);
+            }
+
+            .section {
+                margin-bottom: 14px;
+            }
+
+            .section-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 14px 6px 10px;
+            }
+
+            .section-title h2 {
+                font-size: 18px;
+                font-weight: 700;
+                letter-spacing: -0.3px;
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .section-title span {
+                font-size: 12px;
+                color: var(--ios-muted);
+                font-weight: 600;
+            }
+
+            .hero {
+                display: grid;
+                gap: 14px;
+            }
+
+            .hero-top {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .avatar {
+                width: 72px;
+                height: 72px;
+                border-radius: 22px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                background: linear-gradient(135deg, rgba(10, 132, 255, 0.32), rgba(191, 90, 242, 0.28));
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+                flex: 0 0 auto;
+            }
+
+            .avatar img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: scale(1.06);
+            }
+
+            .hero-headline {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .hero-headline h1 {
+                font-size: 26px;
+                font-weight: 800;
+                letter-spacing: -0.5px;
+                line-height: 1.1;
+                background: linear-gradient(135deg, #64d2ff, #0a84ff, #bf5af2);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .hero-headline p {
+                margin-top: 6px;
+                font-size: 14px;
+                color: rgba(255, 255, 255, 0.72);
+                line-height: 1.45;
+            }
+
+            .tag-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                margin-top: 10px;
+            }
+
+            .tag {
+                padding: 7px 10px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.10);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                font-size: 12px;
+                font-weight: 700;
+                color: rgba(255, 255, 255, 0.82);
+                letter-spacing: 0.2px;
+            }
+
+            .stats {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-top: 10px;
+            }
+
+            .stat {
+                padding: 14px;
+                border-radius: var(--radius-lg);
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                display: grid;
+                gap: 4px;
+            }
+
+            .stat strong {
+                font-size: 18px;
+                font-weight: 800;
+                color: rgba(255, 255, 255, 0.94);
+                letter-spacing: -0.2px;
+            }
+
+            .stat span {
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.62);
+                font-weight: 700;
+            }
+
+            .cta-row {
+                display: flex;
+                gap: 10px;
+                margin-top: 12px;
+            }
+
+            .btn {
+                flex: 1;
+                height: 44px;
+                border-radius: 14px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                font-size: 13px;
+                font-weight: 800;
+                letter-spacing: 0.2px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.10);
+                color: rgba(255, 255, 255, 0.92);
+                text-decoration: none;
+                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            }
+
+            .btn.primary {
+                border-color: rgba(10, 132, 255, 0.35);
+                background: linear-gradient(135deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.75));
+                box-shadow: 0 14px 30px rgba(10, 132, 255, 0.18);
+            }
+
+            .btn:hover {
+                transform: translateY(-1px);
+                border-color: rgba(255, 255, 255, 0.22);
+                background: rgba(255, 255, 255, 0.12);
+            }
+
+            .btn.primary:hover {
+                background: linear-gradient(135deg, rgba(10, 132, 255, 1), rgba(191, 90, 242, 0.85));
+                border-color: rgba(10, 132, 255, 0.55);
+            }
+
+            .grid {
+                display: grid;
+                gap: 10px;
+            }
+
+            .skills {
+                display: grid;
+                gap: 10px;
+            }
+
+            .skill {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                align-items: center;
+                gap: 12px;
+                padding: 12px 12px;
+                border-radius: var(--radius-lg);
+                background: rgba(255, 255, 255, 0.07);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .skill .icon {
+                width: 34px;
+                height: 34px;
+                border-radius: 12px;
+                display: grid;
+                place-items: center;
+                background: rgba(10, 132, 255, 0.18);
+                color: rgba(255, 255, 255, 0.92);
+                border: 1px solid rgba(10, 132, 255, 0.18);
+            }
+
+            .skill .name {
+                font-weight: 800;
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.90);
+            }
+
+            .skill .bar {
+                grid-column: 2 / 4;
+                height: 8px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.10);
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                margin-top: 8px;
+            }
+
+            .skill .fill {
+                height: 100%;
+                width: var(--w, 50%);
+                background: linear-gradient(90deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.85));
+                border-radius: 999px;
+            }
+
+            .skill .pct {
+                font-family: "SF Mono", ui-monospace, Menlo, Monaco, "SF Mono", monospace;
+                font-size: 12px;
+                color: rgba(255, 255, 255, 0.64);
+                font-weight: 700;
+            }
+
+            .two-col {
+                display: grid;
+                gap: 10px;
+            }
+
+            .pill-title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+            }
+
+            .pill-title h3 {
+                font-size: 14px;
+                font-weight: 900;
+                color: rgba(255, 255, 255, 0.92);
+                letter-spacing: -0.2px;
+            }
+
+            .date {
+                font-size: 11px;
+                font-weight: 900;
+                color: rgba(255, 255, 255, 0.80);
+                padding: 6px 10px;
+                border-radius: 999px;
+                background: rgba(10, 132, 255, 0.16);
+                border: 1px solid rgba(10, 132, 255, 0.20);
+            }
+
+            .role {
+                margin-top: 6px;
+                font-size: 12px;
+                font-weight: 900;
+                color: rgba(100, 210, 255, 0.92);
+                letter-spacing: 0.2px;
+            }
+
+            .desc {
+                margin-top: 8px;
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.66);
+                line-height: 1.5;
+            }
+
+            .link-row {
+                margin-top: 10px;
+                display: flex;
+                gap: 10px;
+            }
+
+            .mini-btn {
+                height: 38px;
+                flex: 1;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                font-size: 12px;
+                font-weight: 900;
+                border-radius: 14px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.90);
+                text-decoration: none;
+                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            }
+
+            .mini-btn.discord {
+                background: rgba(88, 101, 242, 0.22);
+                border-color: rgba(88, 101, 242, 0.25);
+            }
+
+            .mini-btn.github {
+                background: rgba(255, 255, 255, 0.08);
+            }
+
+            .mini-btn:hover {
+                transform: translateY(-1px);
+                background: rgba(255, 255, 255, 0.10);
+                border-color: rgba(255, 255, 255, 0.20);
+            }
+
+            .tabs {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 40;
+                padding: 10px 12px calc(10px + var(--safe-bottom));
+                background: rgba(10, 10, 14, 0.62);
+                backdrop-filter: blur(16px);
+                border-top: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .tabs-inner {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 8px;
+            }
+
+            .tab {
+                height: 46px;
+                border-radius: 18px;
+                display: grid;
+                place-items: center;
+                gap: 4px;
+                text-decoration: none;
+                color: rgba(255, 255, 255, 0.62);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                background: rgba(255, 255, 255, 0.06);
+                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            }
+
+            .tab i {
+                font-size: 16px;
+            }
+
+            .tab span {
+                font-size: 10px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+            }
+
+            .tab.active {
+                color: rgba(255, 255, 255, 0.92);
+                background: linear-gradient(135deg, rgba(10, 132, 255, 0.85), rgba(191, 90, 242, 0.55));
+                border-color: rgba(10, 132, 255, 0.45);
+                box-shadow: 0 12px 26px rgba(10, 132, 255, 0.15);
+            }
+
+            .tab:active {
+                transform: scale(0.98);
+            }
+
+            .projects-toggle {
+                display: flex;
+                gap: 10px;
+                padding: 10px;
+                border-radius: 20px;
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                margin-bottom: 10px;
+            }
+
+            .seg {
+                flex: 1;
+                height: 38px;
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                background: rgba(255, 255, 255, 0.06);
+                color: rgba(255, 255, 255, 0.72);
+                font-weight: 900;
+                font-size: 12px;
+                letter-spacing: 0.2px;
+                cursor: pointer;
+                transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+            }
+
+            .seg.active {
+                color: rgba(255, 255, 255, 0.92);
+                background: rgba(10, 132, 255, 0.22);
+                border-color: rgba(10, 132, 255, 0.25);
+            }
+
+            .seg:active {
+                transform: scale(0.98);
+            }
+
+            .projects-grid {
+                display: grid;
+                gap: 10px;
+            }
+
+            .project {
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .project-top {
+                height: 120px;
+                background: linear-gradient(135deg, rgba(10, 132, 255, 0.75), rgba(191, 90, 242, 0.55));
+                border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+                position: relative;
+            }
+
+            .badge {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                padding: 7px 10px;
+                border-radius: 999px;
+                background: rgba(10, 10, 14, 0.55);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.88);
+                font-size: 11px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+                backdrop-filter: blur(12px);
+            }
+
+            .project-body {
+                padding: 14px 14px 14px;
+            }
+
+            .project-body h3 {
+                font-size: 15px;
+                font-weight: 900;
+                color: rgba(255, 255, 255, 0.92);
+                letter-spacing: -0.2px;
+            }
+
+            .project-body p {
+                margin-top: 6px;
+                font-size: 13px;
+                color: rgba(255, 255, 255, 0.62);
+                line-height: 1.45;
+            }
+
+            .meta-row {
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+                padding-top: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.10);
+                color: rgba(255, 255, 255, 0.64);
+                font-size: 12px;
+                font-weight: 800;
+            }
+
+            .meta-row i {
+                margin-right: 6px;
+                color: rgba(255, 255, 255, 0.8);
+            }
+
+            .codebox {
+                border-radius: var(--radius-xl);
+                background: rgba(10, 10, 14, 0.75);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                overflow: hidden;
+            }
+
+            .codebox .topbar {
+                height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 14px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                color: rgba(255, 255, 255, 0.72);
+                font-weight: 900;
+                font-size: 12px;
+                letter-spacing: 0.2px;
+            }
+
+            pre.code {
+                padding: 14px;
+                overflow: auto;
+                font-family: "SF Mono", ui-monospace, Menlo, Monaco, "SF Mono", monospace;
+                font-size: 12px;
+                line-height: 1.6;
+                color: rgba(255, 255, 255, 0.86);
+            }
+
+            pre.code::-webkit-scrollbar {
+                height: 8px;
+            }
+
+            pre.code::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.14);
+                border-radius: 999px;
+            }
+
+            .kw {
+                color: #ff7ab2;
+                font-weight: 800;
+            }
+
+            .fn {
+                color: #ffd60a;
+                font-weight: 800;
+            }
+
+            .st {
+                color: #64d2ff;
+                font-weight: 800;
+            }
+
+            .cm {
+                color: rgba(255, 255, 255, 0.38);
+            }
+
+            .num {
+                color: #ff9f0a;
+                font-weight: 800;
+            }
+
+            .contact-grid {
+                display: grid;
+                gap: 10px;
+            }
+
+            .field {
+                display: grid;
+                gap: 8px;
+            }
+
+            .label {
+                font-size: 12px;
+                font-weight: 900;
+                color: rgba(255, 255, 255, 0.82);
+                letter-spacing: 0.2px;
+            }
+
+            .input,
+            .textarea {
+                width: 100%;
+                border-radius: 16px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.07);
+                padding: 12px 12px;
+                color: rgba(255, 255, 255, 0.90);
+                outline: none;
+                font-weight: 700;
+                font-size: 13px;
+                transition: border-color 0.2s ease, background 0.2s ease;
+            }
+
+            .textarea {
+                min-height: 110px;
+                resize: vertical;
+            }
+
+            .input:focus,
+            .textarea:focus {
+                border-color: rgba(10, 132, 255, 0.55);
+                background: rgba(255, 255, 255, 0.09);
+            }
+
+            .direct {
+                display: grid;
+                gap: 10px;
+            }
+
+            .direct-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 12px;
+                border-radius: var(--radius-lg);
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .direct-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 16px;
+                display: grid;
+                place-items: center;
+                background: rgba(10, 132, 255, 0.18);
+                border: 1px solid rgba(10, 132, 255, 0.18);
+                color: rgba(255, 255, 255, 0.92);
+                flex: 0 0 auto;
+            }
+
+            .direct-item strong {
+                display: block;
+                font-size: 12px;
+                font-weight: 900;
+                color: rgba(255, 255, 255, 0.90);
+                letter-spacing: 0.2px;
+            }
+
+            .direct-item span {
+                display: block;
+                font-size: 13px;
+                font-weight: 800;
+                color: rgba(255, 255, 255, 0.66);
+                margin-top: 2px;
+                word-break: break-word;
+            }
+
+            .footer {
+                margin: 18px 6px 0;
+                color: rgba(255, 255, 255, 0.52);
+                font-size: 12px;
+                font-weight: 800;
+                text-align: center;
+            }
+
+            .social {
+                margin-top: 10px;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .social a {
+                width: 44px;
+                height: 44px;
+                border-radius: 16px;
+                display: grid;
+                place-items: center;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.06);
+                color: rgba(255, 255, 255, 0.88);
+                text-decoration: none;
+                transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            }
+
+            .social a:hover {
+                transform: translateY(-1px);
+                background: rgba(255, 255, 255, 0.10);
+                border-color: rgba(255, 255, 255, 0.20);
+            }
+
+            .toast {
+                position: fixed;
+                left: 50%;
+                transform: translateX(-50%);
+                bottom: calc(120px + var(--safe-bottom));
+                padding: 12px 14px;
+                border-radius: 16px;
+                background: rgba(10, 10, 14, 0.70);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.92);
+                font-size: 12px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+                box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+                backdrop-filter: blur(16px);
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s ease, transform 0.25s ease;
+                z-index: 80;
+                width: min(360px, calc(100% - 28px));
+                text-align: center;
+            }
+
+            .toast.show {
+                opacity: 1;
+                transform: translateX(-50%) translateY(-2px);
+            }
+
+            .fade {
+                opacity: 0;
+                transform: translateY(10px);
+                transition: opacity 0.6s ease, transform 0.6s ease;
+            }
+
+            .fade.in {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .splash {
+                position: fixed;
+                inset: 0;
+                background: radial-gradient(circle at 20% 20%, rgba(10, 132, 255, 0.26), transparent 55%),
+                    radial-gradient(circle at 85% 25%, rgba(191, 90, 242, 0.22), transparent 55%),
+                    linear-gradient(180deg, #07070a 0%, #0b0b0f 55%, #07070a 100%);
+                z-index: 200;
+                display: grid;
+                place-items: center;
+                padding: 26px;
+                transition: opacity 0.55s ease, transform 0.55s ease;
+            }
+
+            .splash.hide {
+                opacity: 0;
+                transform: scale(1.02);
+                pointer-events: none;
+            }
+
+            .splash-card {
+                width: min(430px, 100%);
+                border-radius: 44px;
+                padding: 22px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                backdrop-filter: blur(18px);
+                box-shadow: 0 30px 90px rgba(0, 0, 0, 0.55);
+            }
+
+            .splash-top {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+            }
+
+            .splash-brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .splash-icon {
+                width: 52px;
+                height: 52px;
+                border-radius: 18px;
+                display: grid;
+                place-items: center;
+                background: linear-gradient(135deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.75));
+                box-shadow: 0 16px 34px rgba(10, 132, 255, 0.18);
+                color: white;
+                font-size: 18px;
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .splash-brand strong {
+                display: block;
+                font-size: 14px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+                color: rgba(255, 255, 255, 0.92);
+            }
+
+            .splash-brand span {
+                display: block;
+                margin-top: 2px;
+                font-size: 12px;
+                font-weight: 800;
+                color: rgba(255, 255, 255, 0.62);
+            }
+
+            .splash-chip {
+                height: 32px;
+                padding: 0 12px;
+                border-radius: 999px;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                color: rgba(255, 255, 255, 0.78);
+                font-size: 12px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+            }
+
+            .splash-mid {
+                margin-top: 18px;
+                padding: 18px;
+                border-radius: 28px;
+                background: rgba(10, 10, 14, 0.55);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+            }
+
+            .splash-mid h1 {
+                font-size: 22px;
+                font-weight: 900;
+                letter-spacing: -0.4px;
+                background: linear-gradient(135deg, #64d2ff, #0a84ff, #bf5af2);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+            .splash-mid p {
+                margin-top: 8px;
+                font-size: 13px;
+                font-weight: 800;
+                color: rgba(255, 255, 255, 0.62);
+                line-height: 1.45;
+            }
+
+            .progress {
+                margin-top: 16px;
+                height: 10px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.10);
+                border: 1px solid rgba(255, 255, 255, 0.10);
+                overflow: hidden;
+            }
+
+            .progress > div {
+                height: 100%;
+                width: 0%;
+                border-radius: 999px;
+                background: linear-gradient(90deg, rgba(10, 132, 255, 0.95), rgba(191, 90, 242, 0.85));
+                transition: width 0.6s ease;
+            }
+
+            .splash-foot {
+                margin-top: 14px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                color: rgba(255, 255, 255, 0.55);
+                font-size: 12px;
+                font-weight: 900;
+                letter-spacing: 0.2px;
+            }
+
+            @media (max-width: 380px) {
+                .tabs-inner {
+                    grid-template-columns: repeat(5, 1fr);
+                    gap: 6px;
+                }
+                .tab span {
+                    display: none;
+                }
+                .content {
+                    padding-left: 14px;
+                    padding-right: 14px;
+                }
+            }
+        </style>
+    </head>
+
+    <body class="preload">
+        <div class="bg-orb"></div>
+        <div class="noise"></div>
+
+        <div class="splash" id="splash">
+            <div class="splash-card">
+                <div class="splash-top">
+                    <div class="splash-brand">
+                        <div class="splash-icon"><i class="fas fa-cube"></i></div>
+                        <div>
+                            <strong>SleepyBH</strong>
+                            <span>Minecraft Developer</span>
+                        </div>
+                    </div>
+                    <div class="splash-chip"><i class="fas fa-bolt"></i> iOS Portfolio</div>
+                </div>
+
+                <div class="splash-mid">
+                    <h1>Launching your experience</h1>
+                    <p>Loading sections, polishing visuals, preparing smooth animations.</p>
+                    <div class="progress"><div id="progressBar"></div></div>
+                </div>
+
+                <div class="splash-foot">
+                    <span id="splashTip">Tip: tap the tabs to navigate</span>
+                    <span id="splashPct">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="shell">
+            <div class="phone">
+                <div class="statusbar">
+                    <div class="status-left">
+                        <span id="timeText">9:41</span>
+                        <span class="pill"><i class="fas fa-sparkles"></i> Portfolio</span>
+                    </div>
+                    <div class="status-right">
+                        <span class="status-dot"></span>
+                        <span>Online</span>
+                    </div>
+                </div>
+
+                <div class="content" id="content">
+                    <section class="section fade" id="hero">
+                        <div class="card hero">
+                            <div class="hero-top">
+                                <div class="avatar">
+                                    <img
+                                        alt="Developer"
+                                        src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80"
+                                    />
+                                </div>
+                                <div class="hero-headline">
+                                    <h1>Crafting Digital Worlds</h1>
+                                    <p>Transforming Minecraft visions into reality through expert plugin development and server architecture</p>
+                                </div>
+                            </div>
+
+                            <div class="tag-row">
+                                <span class="tag">Plugin Architect</span>
+                                <span class="tag">Server Specialist</span>
+                                <span class="tag">Game Mechanic Designer</span>
+                                <span class="tag">Community Engineer</span>
+                                <span class="tag">Backend Developer</span>
+                            </div>
+
+                            <div class="stats">
+                                <div class="stat">
+                                    <strong>4+</strong>
+                                    <span>Years Mastery</span>
+                                </div>
+                                <div class="stat">
+                                    <strong>117+</strong>
+                                    <span>Projects Delivered</span>
+                                </div>
+                                <div class="stat">
+                                    <strong>4.7★</strong>
+                                    <span>Client Rating</span>
+                                </div>
+                                <div class="stat">
+                                    <strong>37K+</strong>
+                                    <span>Total Downloads</span>
+                                </div>
+                            </div>
+
+                            <div class="cta-row">
+                                <a class="btn primary" href="#contact" data-jump="contact"><i class="fas fa-rocket"></i> Start Project</a>
+                                <a class="btn" href="#projects" data-jump="projects"><i class="fas fa-eye"></i> View Work</a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section fade" id="skills">
+                        <div class="section-title">
+                            <h2>Technical Expertise</h2>
+                            <span>iOS style progress</span>
+                        </div>
+
+                        <div class="card">
+                            <div class="skills">
+                                <div class="skill" style="--w: 92%">
+                                    <div class="icon"><i class="fab fa-html5"></i></div>
+                                    <div class="name">HTML5</div>
+                                    <div class="pct">92%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 90%">
+                                    <div class="icon"><i class="fab fa-css3-alt"></i></div>
+                                    <div class="name">CSS3</div>
+                                    <div class="pct">90%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 90%">
+                                    <div class="icon"><i class="fab fa-js"></i></div>
+                                    <div class="name">JavaScript</div>
+                                    <div class="pct">90%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 88%">
+                                    <div class="icon"><i class="fab fa-java"></i></div>
+                                    <div class="name">Java</div>
+                                    <div class="pct">88%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 85%">
+                                    <div class="icon"><i class="fab fa-php"></i></div>
+                                    <div class="name">PHP</div>
+                                    <div class="pct">85%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 85%">
+                                    <div class="icon"><i class="fas fa-code"></i></div>
+                                    <div class="name">Lua</div>
+                                    <div class="pct">85%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 95%">
+                                    <div class="icon"><i class="fas fa-cube"></i></div>
+                                    <div class="name">Skript</div>
+                                    <div class="pct">95%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 80%">
+                                    <div class="icon"><i class="fab fa-python"></i></div>
+                                    <div class="name">Python</div>
+                                    <div class="pct">80%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 92%">
+                                    <div class="icon"><i class="fas fa-server"></i></div>
+                                    <div class="name">Server Management</div>
+                                    <div class="pct">92%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+
+                                <div class="skill" style="--w: 87%">
+                                    <div class="icon"><i class="fas fa-database"></i></div>
+                                    <div class="name">Database Design</div>
+                                    <div class="pct">87%</div>
+                                    <div class="bar"><div class="fill"></div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section fade" id="experience">
+                        <div class="section-title">
+                            <h2>Professional Journey</h2>
+                            <span>present and past</span>
+                        </div>
+
+                        <div class="grid">
+                            <div class="card">
+                                <div class="pill-title">
+                                    <h3><i class="fas fa-rocket" style="color: var(--ios-green); margin-right: 8px"></i>Current Leadership</h3>
+                                    <span class="date">Now</span>
+                                </div>
+
+                                <div class="grid" style="margin-top: 12px">
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>MaceSMP - Survival</h3>
+                                            <span class="date">2025 - Present</span>
+                                        </div>
+                                        <div class="role">Owner</div>
+                                        <div class="desc">Owner pluh.</div>
+                                        <div class="link-row">
+                                            <a class="mini-btn discord" href="https://discord.gg/SgY6XXp3tF" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-discord"></i> Join
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>MaceSMP - BoxGen</h3>
+                                            <span class="date">2025 - Present</span>
+                                        </div>
+                                        <div class="role">Owner</div>
+                                        <div class="desc">Owner pluh.</div>
+                                        <div class="link-row">
+                                            <a class="mini-btn discord" href="https://discord.gg/macesmp" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-discord"></i> Join
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>BlitzBox</h3>
+                                            <span class="date">2025 - Present</span>
+                                        </div>
+                                        <div class="role">Developer</div>
+                                        <div class="desc">One of the developers behind plugins and the AntiCheat system.</div>
+                                        <div class="link-row">
+                                            <a class="mini-btn discord" href="https://discord.gg/zDpmazrUve" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-discord"></i> Join
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>DripLeaf</h3>
+                                            <span class="date">2025 - Present</span>
+                                        </div>
+                                        <div class="role">Owner</div>
+                                        <div class="desc">Leading operations, team direction, and gameplay integrity for ElytraPvP.</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="pill-title">
+                                    <h3><i class="fas fa-history" style="color: var(--ios-orange); margin-right: 8px"></i>Strategic Experience</h3>
+                                    <span class="date">Past</span>
+                                </div>
+
+                                <div class="grid" style="margin-top: 12px">
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>SwiftBox</h3>
+                                            <span class="date">2025</span>
+                                        </div>
+                                        <div class="role">Co-Owner</div>
+                                        <div class="desc">Managed the staff team by overseeing promotions, demotions, and staff waves. Ensured team performance and server integrity.</div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>PolishBox</h3>
+                                            <span class="date">2025</span>
+                                        </div>
+                                        <div class="role">JrAdmin</div>
+                                        <div class="desc">Assisted in server management and handled player applications. Built experience in server administration and player support.</div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>ScytheMC</h3>
+                                            <span class="date">2025</span>
+                                        </div>
+                                        <div class="role">System Admin</div>
+                                        <div class="desc">Managed server operations and player communities. Implemented custom features and ensured smooth gameplay experience.</div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>LittleGens22</h3>
+                                            <span class="date">2025</span>
+                                        </div>
+                                        <div class="role">Staff Manager</div>
+                                        <div class="desc">Managed the staff team, conducted training sessions, and handled staff related issues to improve team efficiency.</div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>Atlas Roblox Scripts</h3>
+                                            <span class="date">Past</span>
+                                        </div>
+                                        <div class="role">Supporter</div>
+                                        <div class="desc">Provided support and community assistance for scripts and releases.</div>
+                                    </div>
+
+                                    <div class="card" style="padding: 14px; background: rgba(255, 255, 255, 0.06)">
+                                        <div class="pill-title">
+                                            <h3>Smppixel</h3>
+                                            <span class="date">Past</span>
+                                        </div>
+                                        <div class="role">Staff Manager</div>
+                                        <div class="desc">Led staffing operations, onboarding, and coordination to keep moderation and support running smoothly.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section fade" id="projects">
+                        <div class="section-title">
+                            <h2>Featured Projects</h2>
+                            <span>plugins and skripts</span>
+                        </div>
+
+                        <div class="card">
+                            <div class="projects-toggle">
+                                <button class="seg active" id="segPlugins" type="button">Plugins</button>
+                                <button class="seg" id="segSkripts" type="button">Skripts</button>
+                            </div>
+
+                            <div class="projects-grid" id="pluginsList">
+                                <div class="card project">
+                                    <div class="project-top">
+                                        <div class="badge">37 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>ReportSystem</h3>
+                                        <p>Advanced player reporting and moderation system with Discord integration and MySQL database logging.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.8</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 37</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/reportplugin" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(48, 209, 88, 0.70), rgba(10, 132, 255, 0.55))">
+                                        <div class="badge">37 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>ItemFlip</h3>
+                                        <p>Automated item trading and market system with real-time price updates and profit calculation.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.6</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 37</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/ItemFlipPlugin" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 159, 10, 0.75), rgba(255, 69, 58, 0.55))">
+                                        <div class="badge">12 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>ChestDrop</h3>
+                                        <p>Custom chest loot and drop system with configurable drop rates and animated effects.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.4</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 12</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/ChestDrop" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(191, 90, 242, 0.75), rgba(10, 132, 255, 0.55))">
+                                        <div class="badge">181 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>Duelssystem</h3>
+                                        <p>Advanced player duel and PvP system with statistics tracking and spectator mode.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.9</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 181</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/Duelssystem" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> GitHub
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="projects-grid" id="skriptsList" style="display: none">
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 159, 10, 0.75), rgba(255, 69, 58, 0.55))">
+                                        <div class="badge">24 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>Advanced Economy</h3>
+                                        <p>Complete economy system with shops, banks, and trading using Skript. Features interest rates and loan systems.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.7</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 24</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/AdvancedEconomy" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(48, 209, 88, 0.70), rgba(10, 132, 255, 0.55))">
+                                        <div class="badge">42 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>Quest System</h3>
+                                        <p>Dynamic quest system with multiple quest types, progress tracking, and reward distribution using Skript.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.9</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 42</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/QuestSystem" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(191, 90, 242, 0.75), rgba(88, 86, 214, 0.55))">
+                                        <div class="badge">18 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>Custom Enchants</h3>
+                                        <p>Collection of unique custom enchantments with particle effects and special abilities created with Skript.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.5</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 18</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/CustomEnchants" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card project">
+                                    <div class="project-top" style="background: linear-gradient(135deg, rgba(255, 45, 85, 0.75), rgba(255, 159, 10, 0.55))">
+                                        <div class="badge">31 Downloads</div>
+                                    </div>
+                                    <div class="project-body">
+                                        <h3>Player Warps</h3>
+                                        <p>Advanced warping system with cooldowns, costs, and permission-based warps implemented in Skript.</p>
+                                        <div class="meta-row">
+                                            <div><i class="fas fa-star" style="color: #ffd60a"></i> 4.6</div>
+                                            <div><i class="fas fa-download" style="color: #64d2ff"></i> 31</div>
+                                        </div>
+                                        <div class="link-row">
+                                            <a class="mini-btn github" href="https://github.com/SleepyBH/PlayerWarps" target="_blank" rel="noreferrer">
+                                                <i class="fab fa-github"></i> View
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="section fade" id="code">
+                        <div class="section-title">
+                            <h2>Development Showcase</h2>
+                            <span>clean iOS code block</span>
+                        </div>
+
+                        <div class="codebox">
+                            <div class="topbar">
+                                <span><i class="fas fa-terminal" style="margin-right: 8px"></i> WelcomePlugin.java</span>
+                                <span style="color: rgba(255, 255, 255, 0.55)">Spigot</span>
+                            </div>
+                            <pre class="code"><span class="kw">import</span> org.bukkit.<span class="fn">event</span>.EventListener;
+<span class="kw">import</span> org.bukkit.<span class="fn">event</span>.player.PlayerJoinEvent;
+
+<span class="kw">public class</span> <span class="fn">WelcomePlugin</span> {
+
+    <span class="cm">Handle player join events</span>
+    @<span class="fn">EventHandler</span>
+    <span class="kw">public void</span> <span class="fn">onPlayerJoin</span>(PlayerJoinEvent event) {
+        Player player = event.<span class="fn">getPlayer</span>();
+
+        <span class="cm">Send welcome message</span>
+        player.<span class="fn">sendMessage</span>(
+            ChatColor.<span class="fn">GREEN</span> + <span class="st">"Welcome to the server, "</span> +
+            player.<span class="fn">getName</span>() + <span class="st">"!"</span>
         );
-        
-        <span class="code-comment">// Add glowing effect for 10 seconds</span>
-        player.<span class="code-function">addPotionEffect</span>(
-            <span class="code-keyword">new</span> PotionEffect(
-                PotionEffectType.<span class="code-function">GLOWING</span>,
-                <span class="code-number">200</span>,  <span class="code-comment">// 10 seconds</span>
-                <span class="code-number">1</span>,
-                <span class="code-keyword">true</span>,
-                <span class="code-keyword">true</span>
+
+        <span class="cm">Add glowing effect for 10 seconds</span>
+        player.<span class="fn">addPotionEffect</span>(
+            <span class="kw">new</span> PotionEffect(
+                PotionEffectType.<span class="fn">GLOWING</span>,
+                <span class="num">200</span>,
+                <span class="num">1</span>,
+                <span class="kw">true</span>,
+                <span class="kw">true</span>
             )
         );
     }
-}</pre></div></section><section class="animate-in delay-1"id="contact"><div class="macos-card"><div class="card-header"><h2 class="card-title">Collaborate With Me</h2></div><div class="contact-grid"><div><div class="form-group"><label class="form-label">Your Name</label> <input class="form-input"placeholder="Enter your name"></div><div class="form-group"><label class="form-label">Email Address</label> <input class="form-input"placeholder="your@email.com"type="email"></div><div class="form-group"><label class="form-label">Project Details</label> <textarea class="form-input"placeholder="Tell me about your project vision..."rows="5"></textarea></div><button class="macos-btn"onclick='unlockAchievement("achievement4")'><i class="fas fa-rocket"></i>Launch Project</button></div><div><h3 style="margin-bottom:20px;font-weight:600">Connect Directly</h3><div style="margin-bottom:30px"><div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><div style="width:40px;height:40px;background:rgba(0,122,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--macos-blue)"><i class="fas fa-envelope"></i></div><div><div style="font-weight:500">Email</div><div style="color:var(--macos-text-secondary)">sleepyxemail@gmail.com</div></div></div><div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><div style="width:40px;height:40px;background:rgba(88,86,214,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#5856d6"><i class="fab fa-discord"></i></div><div><div style="font-weight:500">Discord</div><div style="color:var(--macos-text-secondary)">okaysleepyx</div></div></div><div style="display:flex;align-items:center;gap:12px"><div style="width:40px;height:40px;background:rgba(28,28,30,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#1c1c1e"><i class="fab fa-github"></i></div><div><div style="font-weight:500">GitHub</div><div style="color:var(--macos-text-secondary)">github.com/SleepyBH</div></div></div></div></div></div></div></section><footer class="footer"><p>© 2025 SleepyBH. Crafting digital experiences with precision and passion.<div class="social-links"><a class="social-link"href="https://github.com/SleepyBH"target="_blank"><i class="fab fa-github"></i> </a><a class="social-link"href="https://discord.com/users/1042473740145016863"target="_blank"><i class="fab fa-discord"></i> </a><a class="social-link"href="https://tiktok.com/@okaysleepyx"target="_blank"><i class="fab fa-tiktok"></i></a></div></footer></div></div><script>// Prevent flash by setting theme immediately
-        (function() {
-            const savedTheme = localStorage.getItem('portfolioTheme') || 'default';
-            document.body.className = savedTheme + '-bg';
-            
-            // Remove preload class after a short delay to prevent flash
-            setTimeout(() => {
-                document.body.classList.remove('preload');
-            }, 100);
-        })();
+}</pre>
+                        </div>
+                    </section>
 
-        // macOS Window Controls
-        function closeWindow() {
-            if (confirm('Are you sure you want to close this window?')) {
-                document.querySelector('.macos-window').style.opacity = '0';
-                setTimeout(() => {
-                    document.querySelector('.macos-window').style.display = 'none';
-                }, 300);
+                    <section class="section fade" id="contact">
+                        <div class="section-title">
+                            <h2>Collaborate With Me</h2>
+                            <span>quick contact</span>
+                        </div>
+
+                        <div class="grid">
+                            <div class="card">
+                                <div class="contact-grid">
+                                    <div class="field">
+                                        <div class="label">Your Name</div>
+                                        <input class="input" id="nameInput" placeholder="Enter your name" />
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="label">Email Address</div>
+                                        <input class="input" id="emailInput" placeholder="your@email.com" type="email" />
+                                    </div>
+
+                                    <div class="field">
+                                        <div class="label">Project Details</div>
+                                        <textarea class="textarea" id="detailsInput" placeholder="Tell me about your project vision..."></textarea>
+                                    </div>
+
+                                    <a class="btn primary" href="javascript:void(0)" id="sendBtn">
+                                        <i class="fas fa-paper-plane"></i> Send
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="pill-title">
+                                    <h3><i class="fas fa-link" style="color: var(--ios-accent); margin-right: 8px"></i>Connect Directly</h3>
+                                    <span class="date">Fast</span>
+                                </div>
+
+                                <div class="direct" style="margin-top: 12px">
+                                    <div class="direct-item">
+                                        <div class="direct-icon"><i class="fas fa-envelope"></i></div>
+                                        <div>
+                                            <strong>Email</strong>
+                                            <span>sleepyxemail@gmail.com</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="direct-item">
+                                        <div class="direct-icon" style="background: rgba(88, 101, 242, 0.22); border-color: rgba(88, 101, 242, 0.25)">
+                                            <i class="fab fa-discord"></i>
+                                        </div>
+                                        <div>
+                                            <strong>Discord</strong>
+                                            <span>okaysleepyx</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="direct-item">
+                                        <div class="direct-icon" style="background: rgba(255, 255, 255, 0.10); border-color: rgba(255, 255, 255, 0.12)">
+                                            <i class="fab fa-github"></i>
+                                        </div>
+                                        <div>
+                                            <strong>GitHub</strong>
+                                            <span>github.com/SleepyBH</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="link-row">
+                                        <a class="mini-btn github" href="https://github.com/SleepyBH" target="_blank" rel="noreferrer">
+                                            <i class="fab fa-github"></i> Profile
+                                        </a>
+                                        <a class="mini-btn discord" href="https://discord.com/users/1042473740145016863" target="_blank" rel="noreferrer">
+                                            <i class="fab fa-discord"></i> DM
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="footer">
+                                    <div>© 2025 SleepyBH</div>
+                                    <div class="social">
+                                        <a href="https://github.com/SleepyBH" target="_blank" rel="noreferrer"><i class="fab fa-github"></i></a>
+                                        <a href="https://discord.com/users/1042473740145016863" target="_blank" rel="noreferrer"><i class="fab fa-discord"></i></a>
+                                        <a href="https://tiktok.com/@okaysleepyx" target="_blank" rel="noreferrer"><i class="fab fa-tiktok"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="tabs">
+                    <div class="tabs-inner">
+                        <a class="tab active" href="#hero" data-target="hero"><i class="fas fa-user"></i><span>Profile</span></a>
+                        <a class="tab" href="#skills" data-target="skills"><i class="fas fa-code"></i><span>Skills</span></a>
+                        <a class="tab" href="#experience" data-target="experience"><i class="fas fa-briefcase"></i><span>XP</span></a>
+                        <a class="tab" href="#projects" data-target="projects"><i class="fas fa-diagram-project"></i><span>Work</span></a>
+                        <a class="tab" href="#contact" data-target="contact"><i class="fas fa-envelope"></i><span>Contact</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="toast">Saved</div>
+
+        <script>
+            const toast = document.getElementById("toast");
+            const content = document.getElementById("content");
+
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add("show");
+                clearTimeout(showToast.t);
+                showToast.t = setTimeout(() => toast.classList.remove("show"), 2200);
             }
-        }
 
-        function minimizeWindow() {
-            const window = document.querySelector('.macos-window');
-            window.style.transform = 'translateX(-50%) scale(0.9)';
-            window.style.opacity = '0.5';
-            setTimeout(() => {
-                window.style.transform = 'translateX(-50%) scale(1)';
-                window.style.opacity = '1';
-            }, 1000);
-        }
-
-        function maximizeWindow() {
-            const window = document.querySelector('.macos-window');
-            if (window.style.width === '100%') {
-                window.style.width = 'calc(100% - 40px)';
-                window.style.height = 'calc(100vh - 40px)';
-                window.style.top = '20px';
-                window.style.left = '50%';
-                window.style.transform = 'translateX(-50%)';
-                window.style.borderRadius = '16px';
-            } else {
-                window.style.width = '100%';
-                window.style.height = '100vh';
-                window.style.top = '0';
-                window.style.left = '0';
-                window.style.transform = 'none';
-                window.style.borderRadius = '0';
+            function pad2(n) {
+                return String(n).padStart(2, "0");
             }
-        }
 
-        // Theme Background Changer
-        const themeToggleBtn = document.getElementById('themeToggleBtn');
-        const themeDropdown = document.getElementById('themeDropdown');
-        const body = document.body;
+            function updateTime() {
+                const d = new Date();
+                const h = d.getHours();
+                const m = d.getMinutes();
+                document.getElementById("timeText").textContent = `${h}:${pad2(m)}`;
+            }
 
-        themeToggleBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            themeDropdown.classList.toggle('show');
-        });
+            updateTime();
+            setInterval(updateTime, 15000);
 
-        document.addEventListener('click', function() {
-            themeDropdown.classList.remove('show');
-        });
+            const splash = document.getElementById("splash");
+            const progressBar = document.getElementById("progressBar");
+            const splashPct = document.getElementById("splashPct");
 
-        themeDropdown.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        const themeOptions = document.querySelectorAll('.theme-option');
-        themeOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                const theme = this.dataset.theme;
-                
-                // Add fade animation
-                body.classList.add('background-changing');
-                
-                // Change background with delay for animation
+            let p = 0;
+            const tick = () => {
+                p = Math.min(100, p + Math.floor(Math.random() * 18) + 8);
+                progressBar.style.width = `${p}%`;
+                splashPct.textContent = `${p}%`;
+                if (p < 100) return setTimeout(tick, 380);
                 setTimeout(() => {
-                    body.className = theme + '-bg';
-                    themeDropdown.classList.remove('show');
-                    
-                    // Update title bar button text
-                    const themeName = this.textContent.trim();
-                    themeToggleBtn.innerHTML = `<i class="fas fa-palette"></i> ${themeName.split(' ')[0]}`;
-                    
-                    // Save to localStorage
-                    localStorage.setItem('portfolioTheme', theme);
-                }, 400);
-                
-                // Remove animation class after animation completes
+                    splash.classList.add("hide");
+                }, 220);
                 setTimeout(() => {
-                    body.classList.remove('background-changing');
-                }, 800);
+                    splash.style.display = "none";
+                }, 900);
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+                document.body.classList.remove("preload");
+                tick();
             });
-        });
 
-        // Load saved theme and update button text
-        const savedTheme = localStorage.getItem('portfolioTheme');
-        if (savedTheme) {
-            const themeName = savedTheme.charAt(0).toUpperCase() + savedTheme.slice(1);
-            themeToggleBtn.innerHTML = `<i class="fas fa-palette"></i> ${themeName}`;
-        }
-
-        // Project Category Tabs
-        const projectCategoryBtns = document.querySelectorAll('.project-category-btn');
-        const projectCategories = document.querySelectorAll('.project-category');
-        
-        projectCategoryBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                const category = this.dataset.category;
-                
-                // Update active button
-                projectCategoryBtns.forEach(b => b.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Show selected category
-                projectCategories.forEach(cat => {
-                    cat.classList.remove('active');
-                    if (cat.id === `${category}-category`) {
-                        cat.classList.add('active');
-                    }
-                });
-            });
-        });
-
-        // Navigation
-        function setActive(element) {
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            element.classList.add('active');
-        }
-
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('.nav-item').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    const mainContent = document.getElementById('mainContent');
-                    const offsetTop = targetSection.offsetTop;
-                    
-                    mainContent.scrollTo({
-                        top: offsetTop - 100,
-                        behavior: 'smooth'
+            const fadeEls = Array.from(document.querySelectorAll(".fade"));
+            const obs = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((e) => {
+                        if (e.isIntersecting) e.target.classList.add("in");
                     });
-                    
-                    setActive(this);
-                }
-            });
-        });
+                },
+                { root: content, threshold: 0.12 }
+            );
+            fadeEls.forEach((el) => obs.observe(el));
 
-        // Scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                    
-                    // Unlock achievement when code section is viewed
-                    if (entry.target.id === 'code') {
-                        unlockAchievement('achievement3');
-                    }
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Achievement System
-        const achievements = {
-            achievement1: false, // Scroll to bottom
-            achievement2: false, // Click all projects
-            achievement3: false, // View code snippets
-            achievement4: false  // Click contact button
-        };
-
-        function unlockAchievement(achievementId) {
-            if (!achievements[achievementId]) {
-                achievements[achievementId] = true;
-                const achievement = document.getElementById(achievementId);
-                achievement.classList.add('unlocked');
-                
-                // Update counter
-                const count = Object.values(achievements).filter(val => val).length;
-                document.getElementById('achievementCount').textContent = count;
-                
-                // Save to localStorage
-                localStorage.setItem('achievements', JSON.stringify(achievements));
-                
-                // Show notification
-                const title = achievement.querySelector('.achievement-title').textContent;
-                showNotification(`Milestone Unlocked: ${title}`);
+            function jumpTo(id) {
+                const target = document.getElementById(id);
+                if (!target) return;
+                content.scrollTo({ top: target.offsetTop - 12, behavior: "smooth" });
             }
-        }
 
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 100px;
-                right: 20px;
-                background: var(--macos-blue);
-                color: white;
-                padding: 16px 24px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-                z-index: 1000;
-                animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s;
-                animation-fill-mode: forwards;
-            `;
-            
-            // Add keyframes for animations
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes fadeOut {
-                    from { opacity: 1; }
-                    to { opacity: 0; }
-                }
-            `;
-            document.head.appendChild(style);
-            
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
-        }
-
-        // Check scroll position for achievement
-        const mainContent = document.getElementById('mainContent');
-        mainContent.addEventListener('scroll', () => {
-            const scrollPosition = mainContent.scrollTop + mainContent.clientHeight;
-            const scrollHeight = mainContent.scrollHeight;
-            
-            if (scrollPosition >= scrollHeight - 100) {
-                unlockAchievement('achievement1');
-            }
-        });
-
-        // Project links clicked achievement
-        const projectLinks = document.querySelectorAll('.project-card .macos-btn');
-        let clickedCount = 0;
-        
-        projectLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                clickedCount++;
-                if (clickedCount >= projectLinks.length) {
-                    unlockAchievement('achievement2');
-                }
-            });
-        });
-
-        // Load achievements from localStorage
-        const savedAchievements = localStorage.getItem('achievements');
-        if (savedAchievements) {
-            const parsed = JSON.parse(savedAchievements);
-            for (const key in parsed) {
-                if (parsed[key]) {
-                    achievements[key] = true;
-                    document.getElementById(key).classList.add('unlocked');
-                    const count = Object.values(achievements).filter(val => val).length;
-                    document.getElementById('achievementCount').textContent = count;
-                }
-            }
-        }
-
-        // Add some interactivity to cards
-        document.querySelectorAll('.macos-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-4px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Contact form submission
-        document.querySelector('#contact .macos-btn').addEventListener('click', function() {
-            const inputs = document.querySelectorAll('.form-input');
-            let isValid = true;
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = 'var(--macos-red)';
-                } else {
-                    input.style.borderColor = '';
-                }
-            });
-            
-            if (isValid) {
-                showNotification('Project proposal received! I\'ll connect with you soon.');
-                inputs.forEach(input => {
-                    input.value = '';
+            document.querySelectorAll("[data-jump]").forEach((a) => {
+                a.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    jumpTo(a.getAttribute("data-jump"));
                 });
-            } else {
-                showNotification('Please complete all fields to continue.');
+            });
+
+            const tabs = Array.from(document.querySelectorAll(".tab"));
+            tabs.forEach((t) => {
+                t.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    const id = t.getAttribute("data-target");
+                    jumpTo(id);
+                });
+            });
+
+            const sectionIds = ["hero", "skills", "experience", "projects", "contact"];
+            const sectionEls = sectionIds.map((id) => document.getElementById(id));
+
+            function setActiveTab(id) {
+                tabs.forEach((t) => t.classList.toggle("active", t.getAttribute("data-target") === id));
             }
-        });</script>
+
+            const tabObserver = new IntersectionObserver(
+                (entries) => {
+                    const visible = entries
+                        .filter((e) => e.isIntersecting)
+                        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+                    if (visible && visible.target && visible.target.id) setActiveTab(visible.target.id);
+                },
+                { root: content, threshold: [0.18, 0.28, 0.38, 0.48, 0.58] }
+            );
+
+            sectionEls.forEach((el) => tabObserver.observe(el));
+
+            const segPlugins = document.getElementById("segPlugins");
+            const segSkripts = document.getElementById("segSkripts");
+            const pluginsList = document.getElementById("pluginsList");
+            const skriptsList = document.getElementById("skriptsList");
+
+            function setSegment(which) {
+                const isPlugins = which === "plugins";
+                segPlugins.classList.toggle("active", isPlugins);
+                segSkripts.classList.toggle("active", !isPlugins);
+                pluginsList.style.display = isPlugins ? "grid" : "none";
+                skriptsList.style.display = !isPlugins ? "grid" : "none";
+                showToast(isPlugins ? "Showing Plugins" : "Showing Skripts");
+            }
+
+            segPlugins.addEventListener("click", () => setSegment("plugins"));
+            segSkripts.addEventListener("click", () => setSegment("skripts"));
+
+            const sendBtn = document.getElementById("sendBtn");
+            const nameInput = document.getElementById("nameInput");
+            const emailInput = document.getElementById("emailInput");
+            const detailsInput = document.getElementById("detailsInput");
+
+            function markInvalid(el, bad) {
+                el.style.borderColor = bad ? "rgba(255, 69, 58, 0.85)" : "rgba(255, 255, 255, 0.12)";
+            }
+
+            sendBtn.addEventListener("click", () => {
+                const n = nameInput.value.trim();
+                const e = emailInput.value.trim();
+                const d = detailsInput.value.trim();
+                const ok = Boolean(n && e && d);
+                markInvalid(nameInput, !n);
+                markInvalid(emailInput, !e);
+                markInvalid(detailsInput, !d);
+
+                if (!ok) return showToast("Please complete all fields");
+                nameInput.value = "";
+                emailInput.value = "";
+                detailsInput.value = "";
+                showToast("Project proposal received");
+            });
+        </script>
+    </body>
+</html>
